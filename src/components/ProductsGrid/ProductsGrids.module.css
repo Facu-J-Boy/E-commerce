@@ -1,0 +1,6 @@
+.container{
+    display: flex;
+    flex-wrap: wrap; /* Envolver los productos si no caben en una sola fila */
+    /* justify-content: space-between; */
+    justify-content: center;
+  }
