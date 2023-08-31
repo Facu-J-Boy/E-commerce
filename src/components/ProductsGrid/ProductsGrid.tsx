@@ -1,6 +1,6 @@
 import React from 'react'
 import { productsState } from '../../redux/reducers/productsReducer';
-import styles from './ProductsGrids.module.css'
+import styles from './ProductsGrid.module.css'
 import { product } from '../../interfaces/product';
 import ProductsCard from '../ProductCard/ProductsCard';
 
