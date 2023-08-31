@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
-import { getAllProducts } from '../redux/actions/getAllproducts';
+import { getAllProducts } from '../../redux/actions/getAllproducts';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../redux/store';
-import { product } from '../interfaces/product';
+import { AppDispatch } from '../../redux/store';
+import { product } from '../../interfaces/product';
 
-const About: React.FC = (): JSX.Element => {
+const Home: React.FC = (): JSX.Element => {
 
   const dispatch = useDispatch<AppDispatch> ();
 
@@ -31,4 +31,4 @@ const About: React.FC = (): JSX.Element => {
   )
 }
 
-export default About
+export default Home;
