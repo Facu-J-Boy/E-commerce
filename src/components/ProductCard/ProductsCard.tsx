@@ -15,6 +15,7 @@ const ProductsCard: React.FC<ProductCardProps> = ({ image, title, price }) => {
       </div>
       <h1>{`$${price}`}</h1>
       <span>{title}</span>
+      <button className={styles.button}>Buy</button>
     </div>
   );
 };
