@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { product } from '../../interfaces/product';
 import { getSingleProduct } from '../actions/getSingleProduct';
+import { clearProductState } from '../actions/clearProductState';
 
 interface productState {
   product: product | {};
@@ -31,6 +32,9 @@ const singleProductSlice = createSlice({
       .addCase(getSingleProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(clearProductState, (state, action) => {
+        state.product = action.payload;
       });
   }
 });
