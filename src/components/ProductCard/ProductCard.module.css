@@ -9,6 +9,11 @@
   margin: 15px;
 }
 
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+}
+
 .product:hover {
   box-shadow: 0 16px 18px rgba(0, 0, 0, 0.2);
 }

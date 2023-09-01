@@ -1,12 +1,12 @@
-import React from "react";
-import { productsState } from "../../redux/reducers/productsReducer";
-import styles from "./ProductsGrid.module.css";
-import { product } from "../../interfaces/product";
-import ProductsCard from "../ProductCard/ProductsCard";
+import React from 'react';
+import { productsState } from '../../redux/reducers/productsReducer';
+import styles from './ProductsGrid.module.css';
+import { product } from '../../interfaces/product';
+import ProductsCard from '../ProductCard/ProductsCard';
 
 const ProductsGrid: React.FC<productsState> = ({
   products,
-  loading,
+  loading
 }): JSX.Element => {
   return (
     <>
@@ -17,6 +17,7 @@ const ProductsGrid: React.FC<productsState> = ({
           {products.map((p: product) => (
             <ProductsCard
               key={p.id}
+              id={p.id}
               image={p.image}
               title={p.title}
               price={p.price}
