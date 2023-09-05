@@ -1,6 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { getAllProducts } from "../actions/getAllproducts";
-import { product } from "../../interfaces/product";
+import { createSlice } from '@reduxjs/toolkit';
+import { getAllProducts } from '../actions/getAllproducts';
+import { product } from '../../interfaces/product';
+import { searchProducts } from '../actions/searchProducts';
 
 export interface productsState {
   products: product[] | [];
@@ -11,11 +12,11 @@ export interface productsState {
 const initialState: productsState = {
   products: [],
   loading: false,
-  error: null,
+  error: null
 };
 
 const productsSlice = createSlice({
-  name: "products",
+  name: 'products',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -31,8 +32,12 @@ const productsSlice = createSlice({
       .addCase(getAllProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(searchProducts, (state, action) => {
+        state.products = action.payload;
+        state.error = action.error;
       });
-  },
+  }
 });
 
 export default productsSlice.reducer;
