@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
-import { getAllProducts } from "../../redux/actions/getAllproducts";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../redux/store";
-import ProductsGrid from "../../components/ProductsGrid/ProductsGrid";
+import React, { useEffect } from 'react';
+import { getAllProducts } from '../../redux/actions/getAllproducts';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import ProductsGrid from '../../components/ProductsGrid/ProductsGrid';
+import { getAllCategories } from '../../redux/actions/getAllCategories';
 
 const Home: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -11,11 +12,12 @@ const Home: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getAllProducts());
+    dispatch(getAllCategories());
   }, [dispatch]);
 
   return (
     <div>
-      <ProductsGrid products={products} loading={loading} error="" />
+      <ProductsGrid products={products} loading={loading} error='' />
     </div>
   );
 };
