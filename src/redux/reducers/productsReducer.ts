@@ -5,12 +5,14 @@ import { searchProducts } from '../actions/searchProducts';
 
 export interface productsState {
   products: product[] | [];
+  allProducts?: product[] | [];
   loading: boolean;
   error: null | string | undefined;
 }
 
 const initialState: productsState = {
   products: [],
+  allProducts: [],
   loading: false,
   error: null
 };
@@ -28,6 +30,7 @@ const productsSlice = createSlice({
       .addCase(getAllProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.products = action.payload;
+        state.allProducts = action.payload;
       })
       .addCase(getAllProducts.rejected, (state, action) => {
         state.loading = false;
