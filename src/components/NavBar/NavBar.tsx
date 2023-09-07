@@ -3,6 +3,7 @@ import { AppDispatch } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchProducts } from '../../redux/actions/searchProducts';
 import { getAllProducts } from '../../redux/actions/getAllproducts';
+import styles from './NavBar.module.css';
 
 const NavBar: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,10 +22,14 @@ const NavBar: React.FC = (): JSX.Element => {
   };
 
   return (
-    <div>
-      <form onSubmit={searchProduct}>
+    <div className={styles.navBar}>
+      <div className={styles.logo_container}>
+        <img className={styles.logo} src='logo_e-commerce.png' alt='logo' />
+      </div>
+      <form className={styles.nav_input} onSubmit={searchProduct}>
         <input type='text' value={search} onChange={handleInputChange} />
       </form>
+      <button>Dashboard</button>
     </div>
   );
 };
