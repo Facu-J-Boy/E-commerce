@@ -13,6 +13,14 @@ const ProductDetail: React.FC = (): JSX.Element => {
   const { id } = useParams();
 
   useEffect(() => {
+    document.title = `${product.title ? product.title : document.title}`; // Cambia el titulo de la web por el titulo del producto
+
+    return () => {
+      document.title = 'E-commerce'; // Al desmontar el componente el titulo vuelve a la normalidad
+    };
+  }, [product]);
+
+  useEffect(() => {
     dispatch(getSingleProduct(id));
     return () => {
       dispatch(clearProductState());
