@@ -12,7 +12,7 @@ export interface productsState {
 
 const initialState: productsState = {
   products: [],
-  allProducts: [],
+  allProducts: [], //En allProducts se almacenan todos los productos que se utilizarán para ser filtrados en las busquedas
   loading: false,
   error: null
 };

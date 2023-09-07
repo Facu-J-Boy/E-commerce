@@ -8,7 +8,7 @@ import styles from './NavBar.module.css';
 const NavBar: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
   const [search, setSearch] = useState('');
-  const { products } = useSelector((state: any) => state.products);
+  const { allProducts } = useSelector((state: any) => state.products);
 
   const handleInputChange = (ev: any) => {
     setSearch(ev.target.value);
@@ -18,7 +18,7 @@ const NavBar: React.FC = (): JSX.Element => {
     ev.preventDefault();
     !search
       ? dispatch(getAllProducts()) // Si no hay parametro de busqueda se setea el estado global de los productos a su totalidad
-      : dispatch(searchProducts(search, products)); // Caso contrario ejecutamos la acción de busqueda
+      : dispatch(searchProducts(search, allProducts)); // Caso contrario ejecutamos la acción de busqueda
   };
 
   return (
