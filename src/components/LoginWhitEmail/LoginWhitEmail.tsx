@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import LoginWithGoogle from '../LoginWithGoogle/LoginWithGoogle';
 
 const LoginWhitEmail: React.FC = (): JSX.Element => {
   const [email, setEmail] = useState('');
@@ -40,6 +41,7 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
         <br />
         <button type='submit'>Iniciar Sesión</button>
       </form>
+      <LoginWithGoogle />
     </div>
   );
 };
