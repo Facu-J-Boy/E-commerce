@@ -1,14 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppDispatch } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchProducts } from '../../redux/actions/searchProducts';
 import { getAllProducts } from '../../redux/actions/getAllproducts';
 import styles from './NavBar.module.css';
+import { auth } from '../../Firebase';
+import { user } from '../../interfaces/user';
 
 const NavBar: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
   const [search, setSearch] = useState('');
+  const [list, setList] = useState(false);
+  const [user, setUser] = useState<user>({
+    photoURL: '',
+    displayName: ''
+  });
   const { allProducts } = useSelector((state: any) => state.products);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser({ photoURL: user.photoURL, displayName: user.displayName });
+        console.log('User: ', user);
+      }
+    });
+  }, []);
 
   const handleInputChange = (ev: any) => {
     setSearch(ev.target.value);
@@ -21,15 +37,45 @@ const NavBar: React.FC = (): JSX.Element => {
       : dispatch(searchProducts(search, allProducts)); // Caso contrario ejecutamos la acción de busqueda
   };
 
+  const toggleList = () => {
+    setList(!list);
+  };
+
   return (
     <div className={styles.navBar}>
       <div className={styles.logo_container}>
         <img className={styles.logo} src='logo_e-commerce.png' alt='logo' />
       </div>
-      <form className={styles.nav_input} onSubmit={searchProduct}>
-        <input type='text' value={search} onChange={handleInputChange} />
-      </form>
-      <button>Dashboard</button>
+      <div className={styles.nav_elements}>
+        <form onSubmit={searchProduct}>
+          <input
+            type='text'
+            placeholder='Search product'
+            value={search}
+            onChange={handleInputChange}
+          />
+        </form>
+        <div className={styles.user_info}>
+          <button>Dashboard</button>
+          {Object.keys(user).length === 0 ? (
+            <button>Login</button>
+          ) : (
+            <div className={styles.profileImg}>
+              <img
+                src={!user.photoURL ? 'user-image.jpg' : user.photoURL}
+                alt={!user.displayName ? 'undefined' : user.displayName}
+                onClick={toggleList}
+              />
+              {list && (
+                <ul className={styles.list}>
+                  <ol>Dashboard</ol>
+                  <ol>Exit</ol>
+                </ul>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
