@@ -8,6 +8,8 @@ import {
 import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
 import NotFound from './components/NotFound';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/product/:id' element={<ProductDetail />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signUp' element={<SignUp />} />
         {/* Ruta de error */}
         <Route path='*' element={<NotFound />} />
         {/* Redirige a la ruta de error cuando no se encuentra una ruta */}
