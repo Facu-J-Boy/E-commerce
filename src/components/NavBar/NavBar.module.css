@@ -20,7 +20,7 @@
   display: flex;
   position: relative;
   width: 100%;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .nav_elements input {
@@ -30,20 +30,15 @@
   border: solid gray 1px;
   outline-color: #4d4d4d;
   font-size: large;
-}
-
-.user_info {
-  display: flex;
-  width: 30%;
-  justify-content: space-around;
+  margin-left: 10px;
 }
 
 .profileImg {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 60px;
-  height: 60px;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin-right: 40px;
+  padding-left: 60px;
 }
 
 .profileImg img {
@@ -54,38 +49,59 @@
 }
 
 .list_container {
-  position: fixed;
-  top: 0;
+  position: absolute;
   left: 0;
-  z-index: 3;
-  height: 100vh;
-  width: 100%;
-  border: solid red;
 }
 
 .list {
   position: absolute;
   background-color: white;
   list-style-type: none;
-  margin-top: 150px;
+  margin-top: 5px;
   border: solid 1px rgb(206, 204, 204);
   justify-content: center;
   padding: 0px;
   z-index: 1;
   border-radius: 5px;
-  /* text-align: center; */
 }
 
 .list ol {
-  /* margin: 10px 0px; */
-  /* width: 100%; */
   padding: 0;
   margin: 0;
   padding: 10px;
   cursor: pointer;
-  /* text-align: center; */
 }
 
 .list ol:hover {
   background-color: rgb(206, 204, 204);
+}
+
+@media screen and (max-width: 768px) {
+  .navBar {
+    flex-direction: column;
+  }
+
+  .logo_container {
+    margin-left: 5px;
+  }
+
+  .logo {
+    width: 70px;
+  }
+
+  .nav_elements {
+    justify-content: center;
+  }
+
+  .nav_elements input {
+    width: 250px;
+    margin-top: 10px;
+  }
+
+  .profileImg {
+    width: 40px;
+    height: 40px;
+    margin: 10px 20px 10px 10px;
+    padding-left: 30px;
+  }
 }

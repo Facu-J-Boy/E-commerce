@@ -77,26 +77,25 @@ const NavBar: React.FC = (): JSX.Element => {
             onChange={handleInputChange}
           />
         </form>
-        <div className={styles.user_info}>
-          <button>Dashboard</button>
-          {!user.displayName && !user.photoURL ? (
-            <button>Login</button>
-          ) : (
-            <div className={styles.profileImg}>
-              <img
-                src={!user.photoURL ? 'user-image.jpg' : user.photoURL}
-                alt={!user.displayName ? 'undefined' : user.displayName}
-                onClick={toggleList}
-              />
-              {list && (
+        {!user.displayName && !user.photoURL ? (
+          <button>Login</button>
+        ) : (
+          <div className={styles.profileImg}>
+            <img
+              src={!user.photoURL ? 'user-image.jpg' : user.photoURL}
+              alt={!user.displayName ? 'undefined' : user.displayName}
+              onClick={toggleList}
+            />
+            {list && (
+              <div className={styles.list_container}>
                 <ul className={styles.list}>
                   <ol>Dashboard</ol>
                   <ol onClick={logOut}>Exit</ol>
                 </ul>
-              )}
-            </div>
-          )}
-        </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
