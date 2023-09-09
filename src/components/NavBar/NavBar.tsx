@@ -7,6 +7,7 @@ import styles from './NavBar.module.css';
 import { auth } from '../../Firebase';
 import { user } from '../../interfaces/user';
 import { getAuth, signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 const NavBar: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,6 +18,8 @@ const NavBar: React.FC = (): JSX.Element => {
     displayName: ''
   });
   const { allProducts } = useSelector((state: any) => state.products);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -52,7 +55,6 @@ const NavBar: React.FC = (): JSX.Element => {
   }, [list, toggleList]); // Cuando la lista es visible podemos cerrarla haciendo click en cualquier lugar para cerrarla
 
   const logOut = async () => {
-    console.log('logOut ejecutado');
     try {
       const auth = getAuth();
       await signOut(auth).then(() => {
@@ -66,7 +68,15 @@ const NavBar: React.FC = (): JSX.Element => {
   return (
     <div className={styles.navBar}>
       <div className={styles.logo_container}>
-        <img className={styles.logo} src='logo_e-commerce.png' alt='logo' />
+        <img
+          className={styles.logo}
+          onClick={() => {
+            navigate('/');
+          }}
+          style={{ cursor: 'pointer' }}
+          src='logo_e-commerce.png'
+          alt='logo'
+        />
       </div>
       <div className={styles.nav_elements}>
         <form onSubmit={searchProduct}>
@@ -78,7 +88,14 @@ const NavBar: React.FC = (): JSX.Element => {
           />
         </form>
         {!user.displayName && !user.photoURL ? (
-          <button>Login</button>
+          <button
+            className={styles.login_button}
+            onClick={() => {
+              navigate('/login');
+            }}
+          >
+            Login
+          </button>
         ) : (
           <div className={styles.profileImg}>
             <img
@@ -89,7 +106,13 @@ const NavBar: React.FC = (): JSX.Element => {
             {list && (
               <div className={styles.list_container}>
                 <ul className={styles.list}>
-                  <ol>Dashboard</ol>
+                  <ol
+                    onClick={() => {
+                      navigate('/admin');
+                    }}
+                  >
+                    Dashboard
+                  </ol>
                   <ol onClick={logOut}>Exit</ol>
                 </ul>
               </div>

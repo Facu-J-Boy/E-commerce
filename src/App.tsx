@@ -11,6 +11,7 @@ import NotFound from './components/NotFound';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import NavBar from './components/NavBar/NavBar';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path='/product/:id' element={<ProductDetail />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signUp' element={<SignUp />} />
+        <Route path='/admin' element={<AdminDashboard />} />
         {/* Ruta de error */}
         <Route path='*' element={<NotFound />} />
         {/* Redirige a la ruta de error cuando no se encuentra una ruta */}
