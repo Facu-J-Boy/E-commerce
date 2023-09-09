@@ -10,10 +10,12 @@ import ProductDetail from './pages/ProductDetail';
 import NotFound from './components/NotFound';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import NavBar from './components/NavBar/NavBar';
 
 function App() {
   return (
     <Router>
+      <NavBar /> {/* Renderiza la NavBar en todas las rutas */}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/product/:id' element={<ProductDetail />} />
