@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import LoginWithGoogle from '../LoginWithGoogle/LoginWithGoogle';
+import { useNavigate } from 'react-router-dom';
 
 const LoginWhitEmail: React.FC = (): JSX.Element => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,6 +43,13 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
         <br />
         <button type='submit'>Iniciar Sesión</button>
       </form>
+      <button
+        onClick={() => {
+          navigate('/signUp');
+        }}
+      >
+        Sign Up
+      </button>
       <LoginWithGoogle />
     </div>
   );
