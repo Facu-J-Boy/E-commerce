@@ -6,6 +6,7 @@ import { getAllProducts } from '../../redux/actions/getAllproducts';
 import styles from './NavBar.module.css';
 import { auth } from '../../Firebase';
 import { user } from '../../interfaces/user';
+import { getAuth, signOut } from 'firebase/auth';
 
 const NavBar: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -41,6 +42,18 @@ const NavBar: React.FC = (): JSX.Element => {
     setList(!list);
   };
 
+  const logOut = async () => {
+    console.log('logOut ejecutado');
+    try {
+      const auth = getAuth();
+      await signOut(auth).then(() => {
+        setUser({ photoURL: '', displayName: '' });
+      });
+    } catch (error) {
+      console.error('Error of close session:', error);
+    }
+  };
+
   return (
     <div className={styles.navBar}>
       <div className={styles.logo_container}>
@@ -57,7 +70,7 @@ const NavBar: React.FC = (): JSX.Element => {
         </form>
         <div className={styles.user_info}>
           <button>Dashboard</button>
-          {Object.keys(user).length === 0 ? (
+          {!user.displayName && !user.photoURL ? (
             <button>Login</button>
           ) : (
             <div className={styles.profileImg}>
@@ -69,7 +82,7 @@ const NavBar: React.FC = (): JSX.Element => {
               {list && (
                 <ul className={styles.list}>
                   <ol>Dashboard</ol>
-                  <ol>Exit</ol>
+                  <ol onClick={logOut}>Exit</ol>
                 </ul>
               )}
             </div>
