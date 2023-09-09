@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AppDispatch } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchProducts } from '../../redux/actions/searchProducts';
@@ -38,9 +38,18 @@ const NavBar: React.FC = (): JSX.Element => {
       : dispatch(searchProducts(search, allProducts)); // Caso contrario ejecutamos la acción de busqueda
   };
 
-  const toggleList = () => {
+  const toggleList = useCallback(() => {
     setList(!list);
-  };
+  }, [list]);
+
+  useEffect(() => {
+    if (list === true) {
+      document.body.addEventListener('click', toggleList);
+    }
+    return () => {
+      document.body.removeEventListener('click', toggleList);
+    };
+  }, [list, toggleList]); // Cuando la lista es visible podemos cerrarla haciendo click en cualquier lugar para cerrarla
 
   const logOut = async () => {
     console.log('logOut ejecutado');
