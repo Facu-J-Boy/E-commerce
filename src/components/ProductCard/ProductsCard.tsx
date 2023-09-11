@@ -21,14 +21,7 @@ const ProductsCard: React.FC<ProductCardProps> = ({
       <Link to={`/product/${id}`} className={styles.cardLink}>
         <div className={styles.imageContainer}>
           <div className={styles.cart_icon}>
-            <GrCart
-              size={30}
-              style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                padding: '5px',
-                borderRadius: '10px'
-              }}
-            />
+            <GrCart size={30} />
           </div>
           <img src={image} alt={title} />
         </div>
