@@ -25,7 +25,6 @@ const NavBar: React.FC = (): JSX.Element => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setUser({ photoURL: user.photoURL, displayName: user.displayName });
-        console.log('User: ', user);
       }
     });
   }, []);
