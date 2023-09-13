@@ -1,13 +1,12 @@
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
 const SignUpWithEmail: React.FC = (): JSX.Element => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { register, handleSubmit } = useForm();
 
-  const handleRegistration = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const onSubmit = async (data: any) => {
+    const { email, password } = data;
     try {
       const auth = getAuth();
       await createUserWithEmailAndPassword(auth, email, password);
@@ -19,23 +18,15 @@ const SignUpWithEmail: React.FC = (): JSX.Element => {
   return (
     <div>
       <h2>Registrarse</h2>
-      <form onSubmit={handleRegistration}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <label>
           Correo Electrónico:
-          <input
-            type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <input type='email' {...register('email')} />
         </label>
         <br />
         <label>
           Contraseña:
-          <input
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <input type='password' {...register('password')} />
         </label>
         <br />
         <button type='submit'>Registrarse</button>

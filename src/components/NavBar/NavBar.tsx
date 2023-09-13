@@ -24,6 +24,7 @@ const NavBar: React.FC = (): JSX.Element => {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
+        console.log('photo: ', user.photoURL);
         setUser({ photoURL: user.photoURL, displayName: user.displayName });
       }
     });
@@ -86,7 +87,7 @@ const NavBar: React.FC = (): JSX.Element => {
             onChange={handleInputChange}
           />
         </form>
-        {!user.displayName && !user.photoURL ? (
+        {user.displayName === '' && user.photoURL === '' ? (
           <button
             className={styles.login_button}
             onClick={() => {

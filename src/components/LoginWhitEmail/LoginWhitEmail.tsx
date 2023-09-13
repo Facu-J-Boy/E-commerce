@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import LoginWithGoogle from '../LoginWithGoogle/LoginWithGoogle';
 import { useNavigate } from 'react-router-dom';
 
 const LoginWhitEmail: React.FC = (): JSX.Element => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const { register, handleSubmit } = useForm();
 
+  const onSubmit = async (data: any) => {
+    const { email, password } = data;
     try {
       const auth = getAuth();
       await signInWithEmailAndPassword(auth, email, password);
@@ -22,23 +22,15 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
   return (
     <div>
       <h2>Iniciar Sesión</h2>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <label>
           Correo Electrónico:
-          <input
-            type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <input type='email' {...register('email')} />
         </label>
         <br />
         <label>
           Contraseña:
-          <input
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <input type='password' {...register('password')} />
         </label>
         <br />
         <button type='submit'>Iniciar Sesión</button>
