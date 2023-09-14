@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import LoginWithGoogle from '../LoginWithGoogle/LoginWithGoogle';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import styles from './LoginWithEmail.module.css';
 
 const LoginWhitEmail: React.FC = (): JSX.Element => {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
 
   const { register, handleSubmit } = useForm();
@@ -24,30 +24,44 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
   };
 
   return (
-    <div>
-      {loading === true ? <p>loading...</p> : null}
-      <h2>Iniciar Sesión</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>
-          Correo Electrónico:
-          <input type='email' {...register('email')} />
-        </label>
-        <br />
-        <label>
-          Contraseña:
-          <input type='password' {...register('password')} />
-        </label>
-        <br />
-        <button type='submit'>Iniciar Sesión</button>
-      </form>
-      <button
-        onClick={() => {
-          navigate('/signUp');
-        }}
-      >
-        Sign Up
-      </button>
-      <LoginWithGoogle />
+    <div className={styles.formContainer}>
+      <div className={styles.form}>
+        {loading === true ? <p>loading...</p> : null}
+        <h2>Iniciar Sesión</h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <>
+            <label className={styles.label}>Your e-mail:</label>
+            <input
+              className={styles.input}
+              type='email'
+              placeholder='name@company.com'
+              {...register('email')}
+            />
+          </>
+          <br />
+          <>
+            <label className={styles.label}>Password:</label>
+            <input
+              className={styles.input}
+              type='password'
+              placeholder='••••••••'
+              {...register('password')}
+            />
+          </>
+          <br />
+          <button type='submit'>Iniciar Sesión</button>
+        </form>
+        <div className={styles.signUp}>
+          <p>Don’t have an account yet? </p>
+          <Link to='/signUp'>Sign Up</Link>
+        </div>
+        <div className={styles.flexItemsCenter}>
+          <hr />
+          <span>or</span>
+          <hr />
+        </div>
+        <LoginWithGoogle />
+      </div>
     </div>
   );
 };

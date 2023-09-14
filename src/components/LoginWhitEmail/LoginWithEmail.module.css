@@ -1,0 +1,46 @@
+.formContainer {
+  border: solid red;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+.form {
+  border: solid red;
+  width: 400px;
+  height: 400px;
+  padding: 0px 20px 0px 20px;
+}
+
+.label {
+  display: block;
+}
+
+.input {
+  width: 100%;
+  height: 30px;
+  font-size: medium;
+  padding-left: 10px;
+  border-radius: 10px;
+  border: solid 1px;
+  margin-top: 5px;
+}
+
+.signUp {
+  display: flex;
+  align-items: center;
+}
+
+.signUp p {
+  margin-right: 5px;
+}
+
+.flexItemsCenter {
+  display: flex;
+  align-items: center;
+}
+
+.flexItemsCenter hr {
+  flex-grow: 1;
+  margin: 0px 8px 0px 8px;
+}

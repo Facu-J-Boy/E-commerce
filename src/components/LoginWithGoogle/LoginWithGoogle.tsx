@@ -13,7 +13,7 @@ const LoginWithGoogle = () => {
   };
   return (
     <div>
-      <button onClick={handleSignInWithGoogle}>Google</button>
+      <button onClick={handleSignInWithGoogle}>Sign In with Google</button>
     </div>
   );
 };
