@@ -1,0 +1,15 @@
+.LogInGoogle {
+  display: flex;
+  width: 250px;
+  margin: 10px;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.LogInGoogle:hover {
+  background-color: #e0dfdf;
+}

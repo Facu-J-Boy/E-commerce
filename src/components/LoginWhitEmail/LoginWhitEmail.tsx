@@ -27,40 +27,53 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
     <div className={styles.formContainer}>
       <div className={styles.form}>
         {loading === true ? <p>loading...</p> : null}
-        <h2>Iniciar Sesión</h2>
+        <div className={styles.logo}>
+          <img
+            style={{ width: '150px' }}
+            src='logo_e-commerce.png'
+            alt='E-commerce'
+          />
+        </div>
+        <h2 style={{ color: '#333' }}> Sign in to your account</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <>
-            <label className={styles.label}>Your e-mail:</label>
-            <input
-              className={styles.input}
-              type='email'
-              placeholder='name@company.com'
-              {...register('email')}
-            />
-          </>
+          <label>Your e-mail:</label>
+          <input
+            type='email'
+            placeholder='name@company.com'
+            {...register('email')}
+          />
           <br />
-          <>
-            <label className={styles.label}>Password:</label>
-            <input
-              className={styles.input}
-              type='password'
-              placeholder='••••••••'
-              {...register('password')}
-            />
-          </>
+          <label>Password:</label>
+          <input
+            type='password'
+            placeholder='••••••••'
+            {...register('password')}
+          />
           <br />
-          <button type='submit'>Iniciar Sesión</button>
+          <button className={styles.submit} type='submit'>
+            Sign in
+          </button>
         </form>
         <div className={styles.signUp}>
           <p>Don’t have an account yet? </p>
-          <Link to='/signUp'>Sign Up</Link>
+          <Link style={{ fontSize: 'small' }} to='/signUp'>
+            Sign Up
+          </Link>
         </div>
         <div className={styles.flexItemsCenter}>
           <hr />
           <span>or</span>
           <hr />
         </div>
-        <LoginWithGoogle />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
+          <LoginWithGoogle />
+        </div>
       </div>
     </div>
   );

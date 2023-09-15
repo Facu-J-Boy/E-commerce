@@ -1,8 +1,10 @@
 import { getRedirectResult, signInWithRedirect } from 'firebase/auth';
 import React from 'react';
 import { auth, provider } from '../../Firebase';
+import logo from './google-logo.png';
+import styles from './LoginWithGoogle.module.css';
 
-const LoginWithGoogle = () => {
+const LoginWithGoogle: React.FC = (): JSX.Element => {
   const handleSignInWithGoogle = async () => {
     try {
       await signInWithRedirect(auth, provider);
@@ -13,7 +15,10 @@ const LoginWithGoogle = () => {
   };
   return (
     <div>
-      <button onClick={handleSignInWithGoogle}>Sign In with Google</button>
+      <button className={styles.LogInGoogle} onClick={handleSignInWithGoogle}>
+        <img style={{ width: '30px', height: '30px' }} src={logo} alt='' />
+        Sign In with Google
+      </button>
     </div>
   );
 };
