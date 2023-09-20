@@ -2,11 +2,7 @@ import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './SignUpWithEmail.module.css';
-
-interface FormData {
-  email: string;
-  password: string;
-}
+import { FormData } from '../../interfaces/formData';
 
 const SignUpWithEmail: React.FC = (): JSX.Element => {
   const {
