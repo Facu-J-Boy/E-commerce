@@ -73,7 +73,7 @@ const SignUpWithEmail: React.FC = (): JSX.Element => {
               }}
             >
               <input
-                type={!showPassword ? 'password' : 'text'}
+                type={!showPassword ? 'password' : 'text'} // Si showPassword es false no se mostrará la contraseña
                 style={errors.password && { borderColor: 'red' }}
                 placeholder='••••••••'
                 {...register('password', {
@@ -94,9 +94,9 @@ const SignUpWithEmail: React.FC = (): JSX.Element => {
                 onClick={togglePasswordVisibility}
               >
                 {!showPassword ? (
-                  <AiOutlineEyeInvisible size={25} />
+                  <AiOutlineEyeInvisible size={25} /> // Si showPasword es false el icono será el ojo tachado
                 ) : (
-                  <AiOutlineEye size={25} />
+                  <AiOutlineEye size={25} /> // Si showPassword es true el icono será el ojo normal
                 )}
               </button>
             </div>
