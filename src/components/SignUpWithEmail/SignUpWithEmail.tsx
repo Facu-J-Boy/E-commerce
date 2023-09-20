@@ -48,6 +48,7 @@ const SignUpWithEmail: React.FC = (): JSX.Element => {
           <label>
             E-mail:
             <input
+              style={errors.email && { borderColor: 'red' }}
               placeholder='name@company.com'
               {...register('email', {
                 required: { value: true, message: 'e-mail is required' }, // Si no hay nada escrito en el input de email se coloca un mensaje
@@ -66,6 +67,7 @@ const SignUpWithEmail: React.FC = (): JSX.Element => {
             Password:
             <input
               type='password'
+              style={errors.password && { borderColor: 'red' }}
               placeholder='••••••••'
               {...register('password', {
                 required: { value: true, message: 'Password is required' },
