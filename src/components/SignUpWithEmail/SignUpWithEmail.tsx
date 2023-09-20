@@ -47,7 +47,7 @@ const SignUpWithEmail: React.FC = (): JSX.Element => {
               style={errors.email && { borderColor: 'red' }}
               placeholder='name@company.com'
               {...register('email', {
-                required: { value: true, message: 'e-mail is required' }, // Si no hay nada escrito en el input de email se coloca un mensaje
+                required: { value: true, message: 'Email is required' }, // Si no hay nada escrito en el input de email se coloca un mensaje
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, // Si en el input no se cumple con esta expreción regular se coloca un mensaje distinto
                   message: 'Invalid email'

@@ -26,12 +26,11 @@
 
 .form input {
   width: 97%;
-  height: 30px;
+  height: 40px;
   font-size: medium;
   padding-left: 10px;
   border-radius: 10px;
   border: solid 1px grey;
-  margin-top: 5px;
   background-color: rgb(243, 243, 243);
 }
 

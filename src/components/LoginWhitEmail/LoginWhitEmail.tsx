@@ -5,9 +5,16 @@ import LoginWithGoogle from '../LoginWithGoogle/LoginWithGoogle';
 import { Link } from 'react-router-dom';
 import styles from './LoginWithEmail.module.css';
 import { FormData } from '../../interfaces/formData';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 const LoginWhitEmail: React.FC = (): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
+
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const {
     register,
@@ -47,7 +54,7 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
               style={errors.email && { borderColor: 'red' }}
               placeholder='name@company.com'
               {...register('email', {
-                required: { value: true, message: 'e-mail is required' }, // Si no hay nada escrito en el input de email se coloca un mensaje
+                required: { value: true, message: 'Email is required' }, // Si no hay nada escrito en el input de email se coloca un mensaje
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, // Si en el input no se cumple con esta expreción regular se coloca un mensaje distinto
                   message: 'Invalid email'
@@ -61,15 +68,41 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
           <br />
           <label>
             Password:
-            <input
-              style={errors.password && { borderColor: 'red' }}
-              type='password'
-              placeholder='••••••••'
-              {...register('password', {
-                required: { value: true, message: 'Password is required' },
-                minLength: { value: 6, message: 'Min 6 character' }
-              })}
-            />
+            <div
+              style={{
+                display: 'flex',
+                position: 'relative',
+                alignItems: 'center'
+              }}
+            >
+              <input
+                style={errors.password && { borderColor: 'red' }}
+                type={!showPassword ? 'password' : 'text'}
+                placeholder='••••••••'
+                {...register('password', {
+                  required: { value: true, message: 'Password is required' },
+                  minLength: { value: 6, message: 'Min 6 character' }
+                })}
+              />
+              <button
+                style={{
+                  position: 'absolute',
+                  right: '3px',
+                  padding: '5px',
+                  borderRadius: '50px',
+                  backgroundColor: 'none',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+                onClick={togglePasswordVisibility}
+              >
+                {!showPassword ? (
+                  <AiOutlineEyeInvisible size={25} />
+                ) : (
+                  <AiOutlineEye size={25} />
+                )}
+              </button>
+            </div>
             {errors.password && (
               <span className={styles.error}>{errors.password.message}</span>
             )}
