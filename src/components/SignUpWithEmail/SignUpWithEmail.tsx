@@ -3,17 +3,21 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './SignUpWithEmail.module.css';
 import { FormData } from '../../interfaces/formData';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 const SignUpWithEmail: React.FC = (): JSX.Element => {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<FormData>();
-
-  console.log('errors:', errors);
-
-  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data: any) => {
     setLoading(true); // Comienza  a ejecutarse la funcion
@@ -61,15 +65,41 @@ const SignUpWithEmail: React.FC = (): JSX.Element => {
           <br />
           <label>
             Password:
-            <input
-              type='password'
-              style={errors.password && { borderColor: 'red' }}
-              placeholder='••••••••'
-              {...register('password', {
-                required: { value: true, message: 'Password is required' },
-                minLength: { value: 6, message: 'Min 6 character' }
-              })}
-            />
+            <div
+              style={{
+                display: 'flex',
+                position: 'relative',
+                alignItems: 'center'
+              }}
+            >
+              <input
+                type={!showPassword ? 'password' : 'text'}
+                style={errors.password && { borderColor: 'red' }}
+                placeholder='••••••••'
+                {...register('password', {
+                  required: { value: true, message: 'Password is required' },
+                  minLength: { value: 6, message: 'Min 6 character' }
+                })}
+              />
+              <button
+                style={{
+                  position: 'absolute',
+                  right: '3px',
+                  padding: '5px',
+                  borderRadius: '50px',
+                  backgroundColor: 'none',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+                onClick={togglePasswordVisibility}
+              >
+                {!showPassword ? (
+                  <AiOutlineEyeInvisible size={25} />
+                ) : (
+                  <AiOutlineEye size={25} />
+                )}
+              </button>
+            </div>
             {errors.password && (
               <span className={styles.error}>{errors.password.message}</span>
             )}

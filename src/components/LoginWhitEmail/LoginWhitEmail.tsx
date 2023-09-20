@@ -76,8 +76,8 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
               }}
             >
               <input
-                style={errors.password && { borderColor: 'red' }}
                 type={!showPassword ? 'password' : 'text'}
+                style={errors.password && { borderColor: 'red' }}
                 placeholder='••••••••'
                 {...register('password', {
                   required: { value: true, message: 'Password is required' },
