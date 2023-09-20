@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import styles from './SignUpWithEmail.module.css';
 
 const SignUpWithEmail: React.FC = (): JSX.Element => {
   const { register, handleSubmit } = useForm();
@@ -21,22 +22,41 @@ const SignUpWithEmail: React.FC = (): JSX.Element => {
     }
   };
   return (
-    <div>
-      {loading === true ? <p>loading...</p> : null}
-      <h2>Registrarse</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>
-          Correo Electrónico:
-          <input type='email' {...register('email')} />
-        </label>
-        <br />
-        <label>
-          Contraseña:
-          <input type='password' {...register('password')} />
-        </label>
-        <br />
-        <button type='submit'>Registrarse</button>
-      </form>
+    <div className={styles.formContainer}>
+      <div className={styles.form}>
+        {loading === true ? <p>loading...</p> : null}
+        <div className={styles.logo}>
+          <img
+            style={{ width: '150px' }}
+            src='logo_e-commerce.png'
+            alt='E-commerce'
+          />
+        </div>
+        <h2 style={{ color: '#333' }}>Sign up to E-commerce</h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <label>
+            E-mail:
+            <input
+              type='email'
+              placeholder='name@company.com'
+              {...register('email')}
+            />
+          </label>
+          <br />
+          <label>
+            Password:
+            <input
+              type='password'
+              placeholder='••••••••'
+              {...register('password')}
+            />
+          </label>
+          <br />
+          <button className={styles.submit} type='submit'>
+            Sign Up
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
