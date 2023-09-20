@@ -31,7 +31,7 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
       const auth = getAuth();
       await signInWithEmailAndPassword(auth, email, password);
       setLoading(false); // Si el usuario se logueó correctamente termina el loading
-      navigate('/');
+      navigate('/'); //Si el usuario de logueó redirige a home
     } catch (error) {
       setLoading(false); // Si hay un error también
       console.error('Error: ', error);
@@ -41,7 +41,6 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
   return (
     <div className={styles.formContainer}>
       <div className={styles.form}>
-        {loading === true ? <p>loading...</p> : null}
         <div className={styles.logo}>
           <img
             style={{ width: '150px' }}
@@ -112,7 +111,11 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
             )}
           </label>
           <br />
-          <button className={styles.submit} type='submit'>
+          <button
+            className={!loading ? styles.submit : styles.submit_disable}
+            disabled={loading}
+            type='submit'
+          >
             Sign in
           </button>
         </form>

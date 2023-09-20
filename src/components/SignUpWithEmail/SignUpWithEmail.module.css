@@ -49,6 +49,21 @@
   cursor: pointer;
 }
 
+.submit_disable {
+  width: 100%;
+  color: white;
+  background-color: #494848;
+  border: none;
+  outline: none;
+  font-weight: medium;
+  border-radius: 8px;
+  font-size: 1rem;
+  padding: 10px 20px;
+  text-align: center;
+  margin: 10px 0px;
+  cursor: pointer;
+}
+
 .signUp {
   display: flex;
   align-items: center;
