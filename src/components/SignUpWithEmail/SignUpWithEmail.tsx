@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import styles from './SignUpWithEmail.module.css';
 import { FormData } from '../../interfaces/formData';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpWithEmail: React.FC = (): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -13,6 +14,9 @@ const SignUpWithEmail: React.FC = (): JSX.Element => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -26,6 +30,7 @@ const SignUpWithEmail: React.FC = (): JSX.Element => {
       const auth = getAuth();
       await createUserWithEmailAndPassword(auth, email, password);
       setLoading(false); // Si el usuario se logueó correctamente termina el loading
+      navigate('/');
     } catch (error) {
       setLoading(false); // Si hay un error también
       console.error('Error: ', error);
@@ -82,6 +87,7 @@ const SignUpWithEmail: React.FC = (): JSX.Element => {
                 })}
               />
               <button
+                type='button'
                 style={{
                   position: 'absolute',
                   right: '3px',
