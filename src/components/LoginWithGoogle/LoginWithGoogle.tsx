@@ -17,7 +17,7 @@ const LoginWithGoogle: React.FC = (): JSX.Element => {
     <div>
       <button className={styles.LogInGoogle} onClick={handleSignInWithGoogle}>
         <img style={{ width: '30px', height: '30px' }} src={logo} alt='' />
-        Sign In with Google
+        Continue with Google
       </button>
     </div>
   );

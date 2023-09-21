@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import LoginWithGoogle from '../LoginWithGoogle/LoginWithGoogle';
@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './LoginWithEmail.module.css';
 import { FormData } from '../../interfaces/formData';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { auth } from '../../Firebase';
 
 const LoginWhitEmail: React.FC = (): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -17,6 +18,12 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
   };
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      user && navigate('/');
+    });
+  }, [navigate]);
 
   const {
     register,
@@ -31,7 +38,6 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
       const auth = getAuth();
       await signInWithEmailAndPassword(auth, email, password);
       setLoading(false); // Si el usuario se logueó correctamente termina el loading
-      navigate('/'); //Si el usuario de logueó redirige a home
     } catch (error) {
       setLoading(false); // Si hay un error también
       console.error('Error: ', error);
