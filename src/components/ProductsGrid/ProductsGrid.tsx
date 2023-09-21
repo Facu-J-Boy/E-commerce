@@ -3,17 +3,23 @@ import { productsState } from '../../redux/reducers/productsReducer';
 import styles from './ProductsGrid.module.css';
 import { product } from '../../interfaces/product';
 import ProductsCard from '../ProductCard/ProductsCard';
+import Skeleton from '../Skeleton/Skeleton';
 
 const ProductsGrid: React.FC<productsState> = ({
   products,
   loading
 }): JSX.Element => {
+  const pendingProduct = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   return (
-    <>
+    <div className={styles.container}>
       {loading ? (
-        <>loading...</>
+        <>
+          {pendingProduct.map((e) => (
+            <Skeleton key={e} />
+          ))}
+        </>
       ) : (
-        <div className={styles.container}>
+        <>
           {products.map((p: product) => (
             <ProductsCard
               key={p.id}
@@ -23,9 +29,9 @@ const ProductsGrid: React.FC<productsState> = ({
               price={p.price}
             />
           ))}
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 };
 
