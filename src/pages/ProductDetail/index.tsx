@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { getSingleProduct } from '../../redux/actions/getSingleProduct';
 import { AppDispatch } from '../../redux/store';
 import { clearProductState } from '../../redux/actions/clearProductState';
+import SingleProduct from '../../components/SingleProduct/SingleProduct';
 
 const ProductDetail: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,7 +34,18 @@ const ProductDetail: React.FC = (): JSX.Element => {
         <>Loading...</>
       ) : (
         <div>
-          <img src={product.image} alt={product.title} />
+          <SingleProduct
+            image={product.image}
+            title={product.title}
+            id={0}
+            price={0}
+            description={''}
+            category={''}
+            rating={{
+              rate: 0,
+              count: 0
+            }}
+          />
         </div>
       )}
     </div>
