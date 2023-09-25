@@ -37,14 +37,11 @@ const ProductDetail: React.FC = (): JSX.Element => {
           <SingleProduct
             image={product.image}
             title={product.title}
-            id={0}
-            price={0}
+            id={product.id}
+            price={product.price}
             description={''}
             category={''}
-            rating={{
-              rate: 0,
-              count: 0
-            }}
+            rating={product.rating}
           />
         </div>
       )}
