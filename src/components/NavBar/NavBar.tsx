@@ -64,6 +64,8 @@ const NavBar: React.FC = (): JSX.Element => {
     }
   };
 
+  const logo = 'logo_e-commerce.png';
+
   return (
     <div className={styles.navBar}>
       <div className={styles.logo_container}>
@@ -73,7 +75,7 @@ const NavBar: React.FC = (): JSX.Element => {
             navigate('/');
           }}
           style={{ cursor: 'pointer' }}
-          src='logo_e-commerce.png'
+          src={logo}
           alt='E-commerce'
         />
       </div>

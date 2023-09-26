@@ -25,6 +25,14 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
     });
   }, [navigate]);
 
+  useEffect(() => {
+    document.title = 'Login'; // Cambia el titulo de la web por el titulo del producto
+
+    return () => {
+      document.title = 'E-commerce'; // Al desmontar el componente el titulo vuelve a la normalidad
+    };
+  }, []);
+
   const {
     register,
     handleSubmit,
