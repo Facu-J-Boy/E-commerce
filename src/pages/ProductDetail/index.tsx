@@ -39,9 +39,12 @@ const ProductDetail: React.FC = (): JSX.Element => {
             title={product.title}
             id={product.id}
             price={product.price}
-            description={''}
+            description={product.description}
             category={''}
-            rating={product.rating}
+            rating={{
+              rate: product.rating?.rate,
+              count: product.rating?.count
+            }}
           />
         </div>
       )}

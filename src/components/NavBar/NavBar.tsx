@@ -74,7 +74,7 @@ const NavBar: React.FC = (): JSX.Element => {
           }}
           style={{ cursor: 'pointer' }}
           src='logo_e-commerce.png'
-          alt='logo'
+          alt='E-commerce'
         />
       </div>
       <div className={styles.nav_elements}>
