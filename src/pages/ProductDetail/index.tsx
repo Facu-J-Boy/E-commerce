@@ -6,11 +6,18 @@ import { AppDispatch } from '../../redux/store';
 import { clearProductState } from '../../redux/actions/clearProductState';
 import SingleProduct from '../../components/SingleProduct/SingleProduct';
 import SkeletonDetail from '../../components/SkeletonDetail/SkeletonDetail';
+import { getComments } from '../../redux/actions/getComments';
 
 const ProductDetail: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { product, loading } = useSelector((state: any) => state.product);
+  const { product, productLoading } = useSelector(
+    (state: any) => state.product
+  );
+
+  const { comments, commentsLoading } = useSelector(
+    (state: any) => state.comments
+  );
 
   const { id } = useParams();
 
@@ -24,6 +31,7 @@ const ProductDetail: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getSingleProduct(id));
+    dispatch(getComments(id));
     return () => {
       dispatch(clearProductState());
     };
@@ -31,7 +39,7 @@ const ProductDetail: React.FC = (): JSX.Element => {
 
   return (
     <div>
-      {loading ? (
+      {productLoading ? (
         <>
           <SkeletonDetail />
         </>
@@ -51,6 +59,7 @@ const ProductDetail: React.FC = (): JSX.Element => {
           />
         </div>
       )}
+      {commentsLoading ? <>loading...</> : <>comments</>}
     </div>
   );
 };

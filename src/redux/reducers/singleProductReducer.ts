@@ -5,13 +5,13 @@ import { clearProductState } from '../actions/clearProductState';
 
 interface productState {
   product: product | {};
-  loading: boolean;
+  productLoading: boolean;
   error: null | string | undefined;
 }
 
 const initialState: productState = {
   product: {},
-  loading: false,
+  productLoading: false,
   error: null
 };
 
@@ -22,15 +22,15 @@ const singleProductSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getSingleProduct.pending, (state) => {
-        state.loading = true;
+        state.productLoading = true;
         state.error = null;
       })
       .addCase(getSingleProduct.fulfilled, (state, action) => {
-        state.loading = false;
+        state.productLoading = false;
         state.product = action.payload;
       })
       .addCase(getSingleProduct.rejected, (state, action) => {
-        state.loading = false;
+        state.productLoading = false;
         state.error = action.error.message;
       })
       .addCase(clearProductState, (state, action) => {

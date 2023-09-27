@@ -4,13 +4,13 @@ import { getComments } from '../actions/getComments';
 
 interface commentsState {
   comments: comment[] | [];
-  loading: boolean;
+  commentsLoading: boolean;
   error: null | string | undefined;
 }
 
 const initialState: commentsState = {
   comments: [],
-  loading: false,
+  commentsLoading: false,
   error: null
 };
 
@@ -21,14 +21,14 @@ const commentsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getComments.pending, (state) => {
-        state.loading = true;
+        state.commentsLoading = true;
       })
       .addCase(getComments.fulfilled, (state, action) => {
-        state.loading = false;
+        state.commentsLoading = false;
         state.comments = action.payload;
       })
       .addCase(getComments.rejected, (state, action) => {
-        state.loading = false;
+        state.commentsLoading = false;
         state.error = action.error.message;
       });
   }
