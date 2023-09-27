@@ -1,0 +1,28 @@
+.container {
+  margin-top: 50px;
+  color: #333;
+}
+
+.title {
+  display: flex;
+  font-size: 30px;
+  font-family: sans-serif;
+  justify-content: center;
+  align-self: center;
+}
+
+.commentsContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 100px;
+}
+
+@media screen and (max-width: 768px) {
+  .commentsContainer {
+    margin: 0px;
+  }
+
+  .container {
+    margin-top: 100px;
+  }
+}
