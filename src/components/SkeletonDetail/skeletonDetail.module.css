@@ -1,0 +1,93 @@
+.container {
+  display: flex;
+  margin: 20px;
+  height: 600px;
+}
+
+.imageSkeleton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin-left: 20px;
+}
+
+.titleSkeleton {
+  height: 30px;
+  width: 40%;
+  margin-bottom: 0px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+.ratingSkeleton {
+  height: 15px;
+  width: 40%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+.priceSkeleton {
+  height: 40px;
+  width: 20%;
+  margin-bottom: 0px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+.descriptionSkeleton {
+  height: 60px;
+  width: 100%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    margin: 0px;
+    padding: 20px;
+  }
+
+  .imageSkeleton {
+    align-self: center;
+    height: 300px;
+  }
+
+  .info {
+    width: 100%;
+    justify-content: center;
+    margin-left: 0px;
+  }
+
+  .titleSkeleton {
+    width: 100%;
+  }
+
+  .ratingSkeleton {
+    width: 80%;
+  }
+}

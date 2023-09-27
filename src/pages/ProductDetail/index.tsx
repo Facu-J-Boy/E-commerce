@@ -5,6 +5,7 @@ import { getSingleProduct } from '../../redux/actions/getSingleProduct';
 import { AppDispatch } from '../../redux/store';
 import { clearProductState } from '../../redux/actions/clearProductState';
 import SingleProduct from '../../components/SingleProduct/SingleProduct';
+import SkeletonDetail from '../../components/SkeletonDetail/SkeletonDetail';
 
 const ProductDetail: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -31,7 +32,9 @@ const ProductDetail: React.FC = (): JSX.Element => {
   return (
     <div>
       {loading ? (
-        <>Loading...</>
+        <>
+          <SkeletonDetail />
+        </>
       ) : (
         <div>
           <SingleProduct

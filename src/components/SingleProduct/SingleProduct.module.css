@@ -1,12 +1,10 @@
 .detailContainer {
-  /* border: solid red; */
   display: flex;
   margin: 20px;
   height: 600px;
 }
 
 .imageContainer {
-  /* border: solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
