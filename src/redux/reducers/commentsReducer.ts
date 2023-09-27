@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { comment } from '../../interfaces/comments';
 import { getComments } from '../actions/getComments';
 
-interface commentsState {
+export interface commentsState {
   comments: comment[] | [];
   commentsLoading: boolean;
   error: null | string | undefined;

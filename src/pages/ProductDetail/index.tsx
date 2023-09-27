@@ -7,6 +7,7 @@ import { clearProductState } from '../../redux/actions/clearProductState';
 import SingleProduct from '../../components/SingleProduct/SingleProduct';
 import SkeletonDetail from '../../components/SkeletonDetail/SkeletonDetail';
 import { getComments } from '../../redux/actions/getComments';
+import CommentsColumn from '../../components/CommentsColumn/CommentsColumn';
 
 const ProductDetail: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -59,7 +60,11 @@ const ProductDetail: React.FC = (): JSX.Element => {
           />
         </div>
       )}
-      {commentsLoading ? <>loading...</> : <>comments</>}
+      <CommentsColumn
+        comments={comments}
+        commentsLoading={commentsLoading}
+        error={undefined}
+      />
     </div>
   );
 };
