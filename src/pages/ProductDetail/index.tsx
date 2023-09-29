@@ -49,7 +49,7 @@ const ProductDetail: React.FC = (): JSX.Element => {
           <SkeletonDetail />
         </>
       ) : (
-        <div>
+        <>
           <SingleProduct
             image={product.image}
             title={product.title}
@@ -62,7 +62,7 @@ const ProductDetail: React.FC = (): JSX.Element => {
               count: product.rating?.count
             }}
           />
-        </div>
+        </>
       )}
       <CommentsColumn
         comments={comments}
