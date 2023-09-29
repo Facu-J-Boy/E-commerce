@@ -23,6 +23,10 @@ const ProductDetail: React.FC = (): JSX.Element => {
   const { id } = useParams();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     document.title = `${product.title ? product.title : document.title}`; // Cambia el titulo de la web por el titulo del producto
 
     return () => {
