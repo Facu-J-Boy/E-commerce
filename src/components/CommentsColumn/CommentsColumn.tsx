@@ -12,7 +12,14 @@ const CommentsColumn: React.FC<commentsState> = ({
       <hr />
       <h2 className={styles.title}>Comments</h2>
       {commentsLoading ? (
-        <>loading...</>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center'
+          }}
+        >
+          <span className={styles.loader}></span>
+        </div>
       ) : (
         <div className={styles.commentsContainer}>
           {comments.map((e) => (
