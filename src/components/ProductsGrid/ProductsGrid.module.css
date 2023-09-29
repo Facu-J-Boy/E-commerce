@@ -3,11 +3,12 @@
   flex-wrap: wrap;
   justify-content: flex-start; /* Centra los elementos horizontalmente */
   align-items: center;
-  padding-left: 80px;
+  padding: 0px 80px;
 }
 
 @media screen and (max-width: 768px) {
   .container {
-    padding-left: 25px;
+    justify-content: center;
+    padding: 0px;
   }
 }

@@ -102,5 +102,6 @@
   .product {
     width: 150px;
     height: 300px;
+    margin: 10px;
   }
 }
