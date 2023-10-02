@@ -21,7 +21,7 @@ const ProductsCard: React.FC<ProductCardProps> = ({
       <Link to={`/product/${id}`} className={styles.cardLink}>
         <div className={styles.imageContainer}>
           <div className={styles.cart_icon}>
-            <GrCart size={30} />
+            <GrCart size={25} />
           </div>
           <img src={image} alt={title} />
         </div>

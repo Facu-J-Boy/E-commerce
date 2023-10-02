@@ -67,11 +67,11 @@
   margin-top: 20px;
 }
 
-/* @keyframes buttonAnimation {
+@keyframes buttonAnimation {
   0% {
-    transform: translateX(40px);
+    transform: translateX(-40px);
   }
-} */
+}
 
 .button {
   display: none;
