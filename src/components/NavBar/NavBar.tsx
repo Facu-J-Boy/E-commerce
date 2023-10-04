@@ -8,6 +8,8 @@ import { auth } from '../../Firebase';
 import { user } from '../../interfaces/user';
 import { getAuth, signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import logo from './e-commerce.png';
+import userImage from './user.jpg';
 
 const NavBar: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -64,7 +66,7 @@ const NavBar: React.FC = (): JSX.Element => {
     }
   };
 
-  const logo = 'logo_e-commerce.png';
+  // const logo = 'e-commerce.png';
 
   return (
     <div className={styles.navBar}>
@@ -100,7 +102,7 @@ const NavBar: React.FC = (): JSX.Element => {
         ) : (
           <div className={styles.profileImg}>
             <img
-              src={!user.photoURL ? 'user-image.jpg' : user.photoURL}
+              src={!user.photoURL ? userImage : user.photoURL}
               alt={!user.displayName ? 'undefined' : user.displayName}
               onClick={toggleList}
             />
