@@ -1,0 +1,58 @@
+.container {
+  margin: 0px 30px;
+}
+
+.myTab {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  margin-bottom: 0px;
+}
+
+/* .navItem { */
+/* border: solid 1px red;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px; */
+/* } */
+
+.navLink {
+  background-color: #333;
+  color: #f0f0f0;
+  border: solid #333;
+  padding: 8px 26px;
+  cursor: pointer;
+  outline: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.active {
+  background-color: #f0f0f0;
+  color: #333;
+  border-top-color: solid 1px#333;
+  border-right-color: solid 1px#333;
+  border-left-color: solid 1px #333;
+  border-bottom-color: #f0f0f0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.myTabContent {
+  margin-top: 0px;
+  border-top-color: #333;
+}
+
+.tabPane {
+  display: none;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.active.tabPane {
+  display: block;
+}
