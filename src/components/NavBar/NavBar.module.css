@@ -76,7 +76,7 @@
 
 .list_container {
   position: absolute;
-  left: 0;
+  left: -50px;
 }
 
 .list {
