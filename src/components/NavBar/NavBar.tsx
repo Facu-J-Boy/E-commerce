@@ -10,6 +10,7 @@ import { getAuth, signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import logo from './e-commerce.png';
 import userImage from './user.jpg';
+import { GrCart } from 'react-icons/gr';
 
 const NavBar: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -66,8 +67,6 @@ const NavBar: React.FC = (): JSX.Element => {
     }
   };
 
-  // const logo = 'e-commerce.png';
-
   return (
     <div className={styles.navBar}>
       <div className={styles.logo_container}>
@@ -82,14 +81,25 @@ const NavBar: React.FC = (): JSX.Element => {
         />
       </div>
       <div className={styles.nav_elements}>
-        <form onSubmit={searchProduct}>
-          <input
-            type='text'
-            placeholder='Search product'
-            value={search}
-            onChange={handleInputChange}
-          />
-        </form>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center'
+          }}
+        >
+          <form onSubmit={searchProduct}>
+            <input
+              type='text'
+              placeholder='Search product'
+              value={search}
+              onChange={handleInputChange}
+            />
+          </form>
+          <div className={styles.cart}>
+            <GrCart size={30} />
+            <span>9</span>
+          </div>
+        </div>
         {user.displayName === '' && user.photoURL === '' ? (
           <button
             className={styles.login_button}
