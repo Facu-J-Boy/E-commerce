@@ -48,7 +48,7 @@ const SingleProduct: React.FC<product> = ({
           <button
             style={{ backgroundColor: '#333', color: 'white', border: 'none' }}
           >
-            Buy
+            Buy Now
           </button>
         </div>
       </div>

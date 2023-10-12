@@ -11,6 +11,10 @@ const Home: React.FC = (): JSX.Element => {
 
   const { products, loading } = useSelector((state: any) => state.products);
 
+  console.log('localStorage: ', localStorage.getItem('cart'));
+
+  // localStorage.clear();
+
   useEffect(() => {
     dispatch(getAllProducts());
     dispatch(getAllCategories());
