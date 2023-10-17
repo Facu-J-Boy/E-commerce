@@ -8,6 +8,7 @@ import SingleProduct from '../../components/SingleProduct/SingleProduct';
 import SkeletonDetail from '../../components/SkeletonDetail/SkeletonDetail';
 import { getComments } from '../../redux/actions/getComments';
 import CommentsColumn from '../../components/CommentsColumn/CommentsColumn';
+import styles from './Detail.module.css';
 
 const ProductDetail: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -43,7 +44,7 @@ const ProductDetail: React.FC = (): JSX.Element => {
   }, [dispatch, id]);
 
   return (
-    <div>
+    <div className={styles.container}>
       {productLoading ? (
         <>
           <SkeletonDetail />
