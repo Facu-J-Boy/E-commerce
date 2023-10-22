@@ -3,7 +3,7 @@ import styles from './ProductCard.module.css';
 import { useNavigate } from 'react-router-dom';
 import { GrCart } from 'react-icons/gr';
 
-interface ProductCardProps {
+export interface ProductCardProps {
   id: number;
   image: string;
   title: string;

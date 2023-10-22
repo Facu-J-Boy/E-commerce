@@ -1,0 +1,49 @@
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 150px;
+  width: 100%;
+  position: relative;
+  border: solid 1px transparent;
+  cursor: pointer;
+}
+
+.content:hover {
+  border: solid 1px #333;
+}
+
+.content h3 {
+  width: 300px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.content h2 {
+  margin: 0px 10px;
+}
+
+.icon {
+  margin: 0px 10px;
+}
+
+.icon:hover {
+  color: rgb(58, 63, 134);
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 100%;
+  margin: 0px 10px;
+}
+
+.imageContainer img {
+  max-width: 100%;
+  height: auto;
+}

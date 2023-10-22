@@ -9,7 +9,9 @@ import Carousel from '../../components/Carousel/Carousel';
 const Home: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { products, loading } = useSelector((state: any) => state.products);
+  const { products, productsLoading } = useSelector(
+    (state: any) => state.products
+  );
 
   console.log('localStorage: ', localStorage.getItem('cart'));
 
@@ -23,7 +25,11 @@ const Home: React.FC = (): JSX.Element => {
   return (
     <div>
       <Carousel />
-      <ProductsGrid products={products} loading={loading} error='' />
+      <ProductsGrid
+        products={products}
+        productsLoading={productsLoading}
+        error=''
+      />
     </div>
   );
 };

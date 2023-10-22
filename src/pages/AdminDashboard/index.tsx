@@ -1,5 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './AdminDashboard.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { getAllProducts } from '../../redux/actions/getAllproducts';
+import { product } from '../../interfaces/product';
+import DashboardProducts from '../../components/DashboardProducts/DashboardProducts';
 
 const AdminDashboard: React.FC = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState('home');
@@ -7,6 +12,16 @@ const AdminDashboard: React.FC = (): JSX.Element => {
   const handleTabClick = (tabId: string) => {
     setActiveTab(tabId);
   };
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { products, productsLoading } = useSelector(
+    (state: any) => state.products
+  );
+
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, [dispatch]);
 
   return (
     <div className={styles.container}>
@@ -22,7 +37,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
             aria-controls='home-tab-pane'
             aria-selected={activeTab === 'home'}
           >
-            Home
+            Products
           </button>
         </li>
         <li className={styles.navItem}>
@@ -76,7 +91,21 @@ const AdminDashboard: React.FC = (): JSX.Element => {
           }`}
           role='tabpanel'
         >
-          Home Content
+          {productsLoading ? (
+            <p>loading...</p>
+          ) : (
+            <>
+              {products.map((p: product) => (
+                <DashboardProducts
+                  key={p.id}
+                  id={p.id}
+                  image={p.image}
+                  title={p.title}
+                  price={p.price}
+                />
+              ))}
+            </>
+          )}
         </div>
         <div
           className={`${styles.tabPane} ${

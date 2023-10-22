@@ -6,14 +6,14 @@ import { searchProducts } from '../actions/searchProducts';
 export interface productsState {
   products: product[] | [];
   allProducts?: product[] | [];
-  loading: boolean;
+  productsLoading: boolean;
   error: null | string | undefined;
 }
 
 const initialState: productsState = {
   products: [],
   allProducts: [], //En allProducts se almacenan todos los productos que se utilizarán para ser filtrados en las busquedas
-  loading: false,
+  productsLoading: false,
   error: null
 };
 
@@ -24,16 +24,16 @@ const productsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllProducts.pending, (state) => {
-        state.loading = true;
+        state.productsLoading = true;
         state.error = null;
       })
       .addCase(getAllProducts.fulfilled, (state, action) => {
-        state.loading = false;
+        state.productsLoading = false;
         state.products = action.payload;
         state.allProducts = action.payload;
       })
       .addCase(getAllProducts.rejected, (state, action) => {
-        state.loading = false;
+        state.productsLoading = false;
         state.error = action.error.message;
       })
       .addCase(searchProducts, (state, action) => {

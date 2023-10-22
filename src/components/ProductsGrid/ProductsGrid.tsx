@@ -7,13 +7,13 @@ import Skeleton from '../Skeleton/Skeleton';
 
 const ProductsGrid: React.FC<productsState> = ({
   products,
-  loading
+  productsLoading
 }): JSX.Element => {
   const pendingProduct = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   return (
     <div className={styles.container}>
-      {loading ? (
+      {productsLoading ? (
         <>
           {pendingProduct.map((e) => (
             <Skeleton key={e} />
