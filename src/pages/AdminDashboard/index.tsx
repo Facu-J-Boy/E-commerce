@@ -6,6 +6,8 @@ import { getAllProducts } from '../../redux/actions/getAllproducts';
 import { product } from '../../interfaces/product';
 import DashboardProducts from '../../components/DashboardProducts/DashboardProducts';
 import Loader from '../../components/Loader/Loader';
+import { getAllCategories } from '../../redux/actions/getAllCategories';
+import Categories from '../../components/Categories/Categories';
 
 const AdminDashboard: React.FC = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState('home');
@@ -20,8 +22,13 @@ const AdminDashboard: React.FC = (): JSX.Element => {
     (state: any) => state.products
   );
 
+  const { categories, categoriesLoading } = useSelector(
+    (state: any) => state.categories
+  );
+
   useEffect(() => {
     dispatch(getAllProducts());
+    dispatch(getAllCategories());
   }, [dispatch]);
 
   return (
@@ -52,7 +59,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
             aria-controls='profile-tab-pane'
             aria-selected={activeTab === 'profile'}
           >
-            Profile
+            Categories
           </button>
         </li>
         <li className={styles.navItem}>
@@ -69,7 +76,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
             Contact
           </button>
         </li>
-        <li className={styles.navItem}>
+        {/* <li className={styles.navItem}>
           <button
             className={`${styles.navLink} ${
               activeTab === 'disabled' && styles.active
@@ -83,7 +90,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
           >
             Disabled
           </button>
-        </li>
+        </li> */}
       </ul>
       <div className={styles.myTabContent}>
         <div
@@ -116,7 +123,19 @@ const AdminDashboard: React.FC = (): JSX.Element => {
           }`}
           role='tabpanel'
         >
-          Profile Content
+          {categoriesLoading ? (
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Loader />
+            </div>
+          ) : (
+            <>
+              {categories.map(
+                (c: string, index: React.Key | null | undefined) => (
+                  <Categories key={index} categorie={c} />
+                )
+              )}
+            </>
+          )}
         </div>
         <div
           className={`${styles.tabPane} ${
@@ -126,14 +145,14 @@ const AdminDashboard: React.FC = (): JSX.Element => {
         >
           Contact Content
         </div>
-        <div
+        {/* <div
           className={`${styles.tabPane} ${
             activeTab === 'disabled' && styles.active
           }`}
           role='tabpanel'
         >
           Disabled Content
-        </div>
+        </div> */}
       </div>
     </div>
   );

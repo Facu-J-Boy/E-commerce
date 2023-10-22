@@ -59,7 +59,6 @@ const ProductsCard: React.FC<ProductCardProps> = ({
   };
   return (
     <div className={styles.product} onClick={handleRedirect}>
-      {/* <Link to={`/product/${id}`} className={styles.cardLink}> */}
       <div className={styles.imageContainer}>
         <button className={styles.cart_icon} onClick={handleAddToCart}>
           <GrCart size={25} />
@@ -69,7 +68,6 @@ const ProductsCard: React.FC<ProductCardProps> = ({
       <h1>{`$${price}`}</h1>
       <span>{title}</span>
       <button className={styles.button}>Buy Now</button>
-      {/* </Link> */}
     </div>
   );
 };

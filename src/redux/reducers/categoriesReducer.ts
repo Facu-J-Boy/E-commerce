@@ -3,13 +3,13 @@ import { getAllCategories } from '../actions/getAllCategories';
 
 interface categoriesState {
   categories: string[] | [];
-  loading: boolean;
+  categoriesLoading: boolean;
   error: null | string | undefined;
 }
 
 const initialState: categoriesState = {
   categories: [],
-  loading: false,
+  categoriesLoading: false,
   error: null
 };
 
@@ -20,14 +20,14 @@ const categoriesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllCategories.pending, (state) => {
-        state.loading = true;
+        state.categoriesLoading = true;
       })
       .addCase(getAllCategories.fulfilled, (state, action) => {
-        state.loading = false;
+        state.categoriesLoading = false;
         state.categories = action.payload;
       })
       .addCase(getAllCategories.rejected, (state, action) => {
-        state.loading = false;
+        state.categoriesLoading = false;
         state.error = action.error.message;
       });
   }

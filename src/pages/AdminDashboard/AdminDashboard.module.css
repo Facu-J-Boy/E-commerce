@@ -37,10 +37,10 @@
   border-top-right-radius: 10px;
 }
 
-.disabled {
+/* .disabled {
   opacity: 0.6;
   cursor: not-allowed;
-}
+} */
 
 .myTabContent {
   margin-top: 0px;
