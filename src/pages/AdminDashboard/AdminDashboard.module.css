@@ -45,6 +45,8 @@
 .myTabContent {
   margin-top: 0px;
   border-top-color: #333;
+  height: 550px;
+  overflow-y: auto;
 }
 
 .tabPane {
@@ -55,4 +57,14 @@
 
 .active.tabPane {
   display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    margin: 0px;
+  }
+
+  .myTabContent {
+    height: 700px;
+  }
 }

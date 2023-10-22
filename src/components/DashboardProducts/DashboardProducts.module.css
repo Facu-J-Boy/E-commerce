@@ -47,3 +47,18 @@
   max-width: 100%;
   height: auto;
 }
+
+@media screen and (max-width: 768px) {
+  .imageContainer {
+    width: 200px;
+    margin: 0px 10px;
+  }
+
+  .content h2 {
+    margin: 0px;
+  }
+
+  .icon {
+    margin: 0px;
+  }
+}
