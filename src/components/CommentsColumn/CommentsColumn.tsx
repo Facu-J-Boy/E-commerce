@@ -2,6 +2,7 @@ import React from 'react';
 import { commentsState } from '../../redux/reducers/commentsReducer';
 import Comments from '../Comments/Comments';
 import styles from './CommentsColumn.module.css';
+import Loader from '../Loader/Loader';
 
 const CommentsColumn: React.FC<commentsState> = ({
   comments,
@@ -18,7 +19,7 @@ const CommentsColumn: React.FC<commentsState> = ({
             justifyContent: 'center'
           }}
         >
-          <span className={styles.loader}></span>
+          <Loader />
         </div>
       ) : (
         <div className={styles.commentsContainer}>

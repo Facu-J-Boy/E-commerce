@@ -5,6 +5,7 @@ import { AppDispatch } from '../../redux/store';
 import { getAllProducts } from '../../redux/actions/getAllproducts';
 import { product } from '../../interfaces/product';
 import DashboardProducts from '../../components/DashboardProducts/DashboardProducts';
+import Loader from '../../components/Loader/Loader';
 
 const AdminDashboard: React.FC = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState('home');
@@ -92,7 +93,9 @@ const AdminDashboard: React.FC = (): JSX.Element => {
           role='tabpanel'
         >
           {productsLoading ? (
-            <p>loading...</p>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Loader />
+            </div>
           ) : (
             <>
               {products.map((p: product) => (
