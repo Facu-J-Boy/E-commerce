@@ -115,7 +115,10 @@ const NavBar: React.FC = (): JSX.Element => {
             />
           </form>
           <div className={styles.cart}>
-            <GrCart size={30} onClick={toggleProducts} />
+            <GrCart
+              size={30}
+              onClick={!cartProducts.length ? undefined : toggleProducts}
+            />
             {productList && (
               <div className={styles.product_list_container}>
                 <ul className={styles.products}>
@@ -132,7 +135,13 @@ const NavBar: React.FC = (): JSX.Element => {
                 </ul>
               </div>
             )}
-            <span>{cartProducts?.length}</span>
+            <span>
+              {cartProducts.length >= 10
+                ? '9+'
+                : !cartProducts.length
+                ? null
+                : cartProducts?.length}
+            </span>
           </div>
         </div>
         {user.displayName === '' && user.photoURL === '' ? (

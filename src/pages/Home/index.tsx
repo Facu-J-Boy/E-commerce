@@ -15,7 +15,7 @@ const Home: React.FC = (): JSX.Element => {
 
   console.log('localStorage: ', localStorage.getItem('cart'));
 
-  // localStorage.clear();
+  localStorage.clear();
 
   useEffect(() => {
     dispatch(getAllProducts());
