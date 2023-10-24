@@ -11,7 +11,11 @@ const SingleProduct: React.FC<product> = ({
   rating,
   description
 }): JSX.Element => {
-  const totalRating = Math.floor(rating.rate);
+  let totalRating = 0;
+
+  if (rating && typeof rating.rate === 'number') {
+    totalRating = Math.floor(rating.rate);
+  }
 
   // Generar un array de estrellas marcadas y desmarcadas
   const stars = Array.from({ length: 5 }, (_, index) =>
@@ -36,7 +40,11 @@ const SingleProduct: React.FC<product> = ({
           }}
         >
           <div style={{ marginRight: 10 }}>{stars}</div>
-          <h4>{`${rating.rate} (${rating.count} reviews)`}</h4>
+          <h4>
+            {rating
+              ? `${rating.rate} (${rating.count} reviews)`
+              : 'Rating is not available'}
+          </h4>
         </div>
         <h2>{`$${price}`}</h2>
         <p>{description}</p>

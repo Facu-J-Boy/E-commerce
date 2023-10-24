@@ -11,16 +11,21 @@ import { useNavigate } from 'react-router-dom';
 import logo from './e-commerce.png';
 import userImage from './user.jpg';
 import { GrCart } from 'react-icons/gr';
+import { product } from '../../interfaces/product';
+import ProductItem from './ProductItem/ProductItem';
 
 const NavBar: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
   const [search, setSearch] = useState('');
   const [list, setList] = useState(false);
+  const [productList, setProductsList] = useState(false);
   const [user, setUser] = useState<user>({
     photoURL: '',
     displayName: ''
   });
   const { allProducts } = useSelector((state: any) => state.products);
+
+  const { cartProducts } = useSelector((state: any) => state.cartProducts);
 
   const navigate = useNavigate();
 
@@ -56,6 +61,19 @@ const NavBar: React.FC = (): JSX.Element => {
       document.body.removeEventListener('click', toggleList);
     };
   }, [list, toggleList]); // Cuando la lista es visible podemos cerrarla haciendo click en cualquier lugar para cerrarla
+
+  const toggleProducts = useCallback(() => {
+    setProductsList(!productList);
+  }, [productList]);
+
+  useEffect(() => {
+    if (productList === true) {
+      document.body.addEventListener('click', toggleProducts);
+    }
+    return () => {
+      document.body.removeEventListener('click', toggleProducts);
+    };
+  }, [productList, toggleProducts]);
 
   const logOut = async () => {
     try {
@@ -97,8 +115,24 @@ const NavBar: React.FC = (): JSX.Element => {
             />
           </form>
           <div className={styles.cart}>
-            <GrCart size={30} />
-            <span>9</span>
+            <GrCart size={30} onClick={toggleProducts} />
+            {productList && (
+              <div className={styles.product_list_container}>
+                <ul className={styles.products}>
+                  {cartProducts.map((p: product) => (
+                    <ol>
+                      <ProductItem
+                        id={p.id}
+                        title={p.title}
+                        price={p.price}
+                        image={p.image}
+                      />
+                    </ol>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <span>{cartProducts?.length}</span>
           </div>
         </div>
         {user.displayName === '' && user.photoURL === '' ? (

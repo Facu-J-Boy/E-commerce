@@ -2,6 +2,9 @@ import React from 'react';
 import styles from './ProductCard.module.css';
 import { useNavigate } from 'react-router-dom';
 import { GrCart } from 'react-icons/gr';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { getCart } from '../../redux/actions/getCart';
 
 export interface ProductCardProps {
   id: number;
@@ -22,6 +25,8 @@ const ProductsCard: React.FC<ProductCardProps> = ({
     title: title,
     price: price
   };
+
+  const dispatch = useDispatch<AppDispatch>();
 
   const navigate = useNavigate();
 
@@ -54,6 +59,7 @@ const ProductsCard: React.FC<ProductCardProps> = ({
 
     // Guardar el carrito actualizado en el localStorage
     localStorage.setItem('cart', JSON.stringify(updatedCart));
+    dispatch(getCart());
 
     return false; // Evitar la propagación del evento de clic
   };

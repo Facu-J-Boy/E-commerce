@@ -37,14 +37,8 @@
   border-top-right-radius: 10px;
 }
 
-/* .disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-} */
-
 .myTabContent {
   margin-top: 0px;
-  border-top-color: #333;
   height: 550px;
   overflow-y: auto;
 }
