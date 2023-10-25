@@ -117,31 +117,43 @@ const NavBar: React.FC = (): JSX.Element => {
             />
           </form>
           <div className={styles.cart}>
-            <GrCart
-              size={30}
-              onClick={!cartProducts.length ? undefined : toggleProducts}
-            />
+            <GrCart size={30} onClick={toggleProducts} />
             {productList && (
               <div className={styles.product_list_container}>
-                <ul className={styles.products}>
-                  <div className={styles.totalContainer}>
-                    <div className={styles.total}>
-                      <h2>Total:</h2>
-                      <h3>{`$${total}`}</h3>
+                {!cartProducts.length ? (
+                  <ul className={styles.products}>
+                    <h4
+                      style={{
+                        display: 'flex',
+                        color: '#333',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      }}
+                    >
+                      Your cart is empty
+                    </h4>
+                  </ul>
+                ) : (
+                  <ul className={styles.products}>
+                    <div className={styles.totalContainer}>
+                      <div className={styles.total}>
+                        <h2>Total:</h2>
+                        <h3>{`$${total}`}</h3>
+                      </div>
+                      <button>Buy</button>
                     </div>
-                    <button>Buy</button>
-                  </div>
-                  {cartProducts.map((p: product) => (
-                    <ol>
-                      <ProductItem
-                        id={p.id}
-                        title={p.title}
-                        price={p.price}
-                        image={p.image}
-                      />
-                    </ol>
-                  ))}
-                </ul>
+                    {cartProducts.map((p: product) => (
+                      <ol>
+                        <ProductItem
+                          id={p.id}
+                          title={p.title}
+                          price={p.price}
+                          image={p.image}
+                        />
+                      </ol>
+                    ))}
+                  </ul>
+                )}
               </div>
             )}
             <span>
