@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ProductCard.module.css';
 import { useNavigate } from 'react-router-dom';
 import { GrCart } from 'react-icons/gr';
-import { useDispatch } from 'react-redux';
+import { BsFillCartXFill } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { getCart } from '../../redux/actions/getCart';
+import { product } from '../../interfaces/product';
 
 export interface ProductCardProps {
   id: number;
@@ -63,12 +65,29 @@ const ProductsCard: React.FC<ProductCardProps> = ({
 
     return false; // Evitar la propagación del evento de clic
   };
+
+  const [inCart, setInCart] = useState(false);
+
+  const { cartProducts } = useSelector((state: any) => state.cartProducts);
+
+  const productId = id;
+
+  useEffect(() => {
+    setInCart(cartProducts.some((p: product) => p.id === productId)); // Comprueba si el producto ya se encuentra en el carrito mediante su id
+  }, [cartProducts, productId]);
+
   return (
     <div className={styles.product} onClick={handleRedirect}>
       <div className={styles.imageContainer}>
-        <button className={styles.cart_icon} onClick={handleAddToCart}>
-          <GrCart size={25} />
-        </button>
+        {!inCart ? (
+          <button className={styles.cart_icon} onClick={handleAddToCart}>
+            <GrCart size={25} />
+          </button>
+        ) : (
+          <button className={styles.cart_icon}>
+            <BsFillCartXFill size={25} />
+          </button>
+        )}
         <img src={image} alt={title} />
       </div>
       <h1>{`$${price}`}</h1>
