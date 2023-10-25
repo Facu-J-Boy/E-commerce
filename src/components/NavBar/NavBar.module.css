@@ -127,7 +127,7 @@
 
 /* Estilos generales de la barra de desplazamiento */
 .products::-webkit-scrollbar {
-  width: 12px; /* ancho de la barra de desplazamiento */
+  width: 3px; /* ancho de la barra de desplazamiento */
 }
 
 .products::-webkit-scrollbar-thumb {
