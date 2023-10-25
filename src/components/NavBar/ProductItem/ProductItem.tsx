@@ -6,6 +6,7 @@ import { deleteToTheCart } from '../../../redux/actions/deleteToTheCart';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import { getCart } from '../../../redux/actions/getCart';
+import { useNavigate } from 'react-router-dom';
 
 const ProductItem: React.FC<product> = ({
   id,
@@ -14,6 +15,8 @@ const ProductItem: React.FC<product> = ({
   price
 }): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
+
+  const navigate = useNavigate();
 
   const handleDeleteToTheCart = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -24,8 +27,12 @@ const ProductItem: React.FC<product> = ({
     return false; // Evitar la propagación del evento de clic
   };
 
+  const handleNavigate = () => {
+    navigate(`/product/${id}`);
+  };
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={handleNavigate}>
       <div className={styles.imageContainer}>
         <img src={image} alt={title} />
       </div>

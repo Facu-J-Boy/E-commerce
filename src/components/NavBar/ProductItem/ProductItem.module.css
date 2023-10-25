@@ -1,7 +1,6 @@
 .container {
   display: flex;
   color: #333;
-  margin-top: 10px;
   align-items: center;
   justify-content: space-between;
   height: 150px;
