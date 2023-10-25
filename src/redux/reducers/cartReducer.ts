@@ -10,10 +10,12 @@ interface product {
 
 interface cartState {
   cartProducts: product[] | [];
+  total: number;
 }
 
 const initialState: cartState = {
-  cartProducts: []
+  cartProducts: [],
+  total: 0
 };
 
 const cartSlice = createSlice({
@@ -22,7 +24,8 @@ const cartSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getCart, (state, action) => {
-      state.cartProducts = action.payload ? action.payload : [];
+      state.cartProducts = action.payload ? action.payload.products : [];
+      state.total = action.payload ? action.payload.total : 0;
     });
   }
 });

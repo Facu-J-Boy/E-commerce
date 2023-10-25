@@ -25,7 +25,9 @@ const NavBar: React.FC = (): JSX.Element => {
   });
   const { allProducts } = useSelector((state: any) => state.products);
 
-  const { cartProducts } = useSelector((state: any) => state.cartProducts);
+  const { cartProducts, total } = useSelector(
+    (state: any) => state.cartProducts
+  );
 
   const navigate = useNavigate();
 
@@ -122,6 +124,13 @@ const NavBar: React.FC = (): JSX.Element => {
             {productList && (
               <div className={styles.product_list_container}>
                 <ul className={styles.products}>
+                  <div className={styles.totalContainer}>
+                    <div className={styles.total}>
+                      <h2>Total:</h2>
+                      <h3>{`$${total}`}</h3>
+                    </div>
+                    <button>Buy</button>
+                  </div>
                   {cartProducts.map((p: product) => (
                     <ol>
                       <ProductItem

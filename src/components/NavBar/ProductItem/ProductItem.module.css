@@ -2,15 +2,20 @@
   display: flex;
   color: #333;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   height: 150px;
 }
 
 .container button {
+  position: absolute;
   cursor: pointer;
   background: none;
   border: none;
-  margin-right: 10px;
+  right: 10px;
+}
+
+.info {
+  margin-left: 10px;
 }
 
 .info h5 {

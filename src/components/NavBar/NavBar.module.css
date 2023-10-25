@@ -92,6 +92,35 @@
   border-radius: 5px;
 }
 
+.totalContainer {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 1px #333;
+}
+
+.totalContainer button {
+  color: #fff;
+  width: 100px;
+  height: 40px;
+  align-self: center;
+  border: none;
+  background-color: #333;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.total {
+  display: flex;
+  align-items: flex-end;
+  margin-left: 10px;
+}
+
+.total h3 {
+  position: relative;
+  margin-left: 5px;
+  bottom: 0px;
+}
+
 .list ol {
   padding: 0;
   margin: 0;
@@ -183,5 +212,19 @@
     margin-top: 40px;
     margin-left: -100px;
     width: 240px;
+  }
+
+  .totalContainer button {
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+  }
+
+  .total h2 {
+    font-size: larger;
+  }
+
+  .total h3 {
+    font-size: medium;
   }
 }
