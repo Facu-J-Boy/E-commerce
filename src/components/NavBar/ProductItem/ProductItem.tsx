@@ -1,12 +1,29 @@
 import React from 'react';
 import { product } from '../../../interfaces/product';
 import styles from './ProductItem.module.css';
+import { BsFillCartXFill } from 'react-icons/bs';
+import { deleteToTheCart } from '../../../redux/actions/deleteToTheCart';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../redux/store';
+import { getCart } from '../../../redux/actions/getCart';
 
 const ProductItem: React.FC<product> = ({
+  id,
   image,
   title,
   price
 }): JSX.Element => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleDeleteToTheCart = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.stopPropagation(); // Evitar la propagación del evento de clic
+    deleteToTheCart(id);
+    dispatch(getCart());
+    return false; // Evitar la propagación del evento de clic
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
@@ -16,6 +33,9 @@ const ProductItem: React.FC<product> = ({
         <h5>{title}</h5>
         <h4>{`$${price}`}</h4>
       </div>
+      <button onClick={handleDeleteToTheCart}>
+        <BsFillCartXFill size={25} />
+      </button>
     </div>
   );
 };
