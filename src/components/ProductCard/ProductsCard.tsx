@@ -8,6 +8,7 @@ import { AppDispatch } from '../../redux/store';
 import { getCart } from '../../redux/actions/getCart';
 import { product } from '../../interfaces/product';
 import { addToCart } from '../../redux/actions/addToCart';
+import { deleteToTheCart } from '../../redux/actions/deleteToTheCart';
 
 export interface ProductCardProps {
   id: number;
@@ -44,6 +45,15 @@ const ProductsCard: React.FC<ProductCardProps> = ({
     return false; // Evitar la propagación del evento de clic
   };
 
+  const handleDeleteToTheCart = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.stopPropagation(); // Evitar la propagación del evento de clic
+    deleteToTheCart(product.id);
+    dispatch(getCart());
+    return false; // Evitar la propagación del evento de clic
+  };
+
   const [inCart, setInCart] = useState(false);
 
   const { cartProducts } = useSelector((state: any) => state.cartProducts);
@@ -57,15 +67,12 @@ const ProductsCard: React.FC<ProductCardProps> = ({
   return (
     <div className={styles.product} onClick={handleRedirect}>
       <div className={styles.imageContainer}>
-        {!inCart ? (
-          <button className={styles.cart_icon} onClick={handleAddToCart}>
-            <GrCart size={25} />
-          </button>
-        ) : (
-          <button className={styles.cart_icon}>
-            <BsFillCartXFill size={25} />
-          </button>
-        )}
+        <button
+          className={styles.cart_icon}
+          onClick={!inCart ? handleAddToCart : handleDeleteToTheCart}
+        >
+          {!inCart ? <GrCart size={25} /> : <BsFillCartXFill size={25} />}
+        </button>
         <img src={image} alt={title} />
       </div>
       <h1>{`$${price}`}</h1>
