@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getAllProducts } from '../actions/getAllproducts';
 import { product } from '../../interfaces/product';
 import { searchProducts } from '../actions/searchProducts';
+import { clearProductsList } from '../actions/clearProductsList';
 
 export interface productsState {
   products: product[] | [];
@@ -39,6 +40,9 @@ const productsSlice = createSlice({
       .addCase(searchProducts, (state, action) => {
         state.products = action.payload;
         state.error = action.error;
+      })
+      .addCase(clearProductsList, (state, action) => {
+        state.products = action.payload;
       });
   }
 });

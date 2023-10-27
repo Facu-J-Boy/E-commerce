@@ -6,6 +6,7 @@ import ProductsGrid from '../../components/ProductsGrid/ProductsGrid';
 import { getAllCategories } from '../../redux/actions/getAllCategories';
 import Carousel from '../../components/Carousel/Carousel';
 import { getCart } from '../../redux/actions/getCart';
+import { clearProductsList } from '../../redux/actions/clearProductsList';
 
 const Home: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,6 +23,9 @@ const Home: React.FC = (): JSX.Element => {
     dispatch(getAllProducts());
     dispatch(getAllCategories());
     dispatch(getCart());
+    return () => {
+      dispatch(clearProductsList());
+    };
   }, [dispatch]);
 
   return (
