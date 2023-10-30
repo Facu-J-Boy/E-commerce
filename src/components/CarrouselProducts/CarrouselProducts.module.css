@@ -1,3 +1,7 @@
 .carrousel {
   border: solid red;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
 }

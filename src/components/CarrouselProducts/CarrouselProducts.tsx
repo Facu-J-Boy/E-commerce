@@ -3,18 +3,32 @@ import { product } from '../../interfaces/product';
 import ProductsCard from '../ProductCard/ProductsCard';
 import styles from './CarrouselProducts.module.css';
 
-const CarrouselProducts: React.FC<product[]> = (products): JSX.Element => {
+interface props {
+  products: product[];
+  loading: boolean;
+}
+
+const CarrouselProducts: React.FC<props> = ({
+  products,
+  loading
+}): JSX.Element => {
   return (
     <div className={styles.carrousel}>
-      {products.map((p: product) => (
-        <ProductsCard
-          key={p.id}
-          id={p.id}
-          image={p.image}
-          title={p.title}
-          price={p.price}
-        />
-      ))}
+      {loading ? (
+        <p>loading...</p>
+      ) : (
+        <>
+          {products.map((p: product) => (
+            <ProductsCard
+              key={p.id}
+              id={p.id}
+              image={p.image}
+              title={p.title}
+              price={p.price}
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 };

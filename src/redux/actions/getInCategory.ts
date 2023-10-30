@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const getInCategory = createAsyncThunk(
   'getInCategory',
-  async (category) => {
+  async (category: string) => {
     try {
       const response = await axios.get(
         `https://fakestoreapi.com/products/category/${category}`

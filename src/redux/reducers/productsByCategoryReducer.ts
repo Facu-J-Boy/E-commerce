@@ -14,7 +14,7 @@ const initialState: productsState = {
   error: null
 };
 
-const productsByCategory = createSlice({
+const productsByCategorySlice = createSlice({
   name: 'productsByCategory',
   initialState,
   reducers: {},
@@ -35,4 +35,4 @@ const productsByCategory = createSlice({
   }
 });
 
-export default productsByCategory.reducer;
+export default productsByCategorySlice.reducer;

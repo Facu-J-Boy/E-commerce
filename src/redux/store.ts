@@ -4,7 +4,7 @@ import singleProductReducer from './reducers/singleProductReducer';
 import categoriesReducer from './reducers/categoriesReducer';
 import commentsSlice from './reducers/commentsReducer';
 import cartReducer from './reducers/cartReducer';
-import productsByCategoryReducer from './reducers/productsByCategoryReducer';
+import productsByCategorySlice from './reducers/productsByCategoryReducer';
 const store = configureStore({
   reducer: {
     products: productsReducer,
@@ -12,7 +12,7 @@ const store = configureStore({
     categories: categoriesReducer,
     comments: commentsSlice,
     cartProducts: cartReducer,
-    productsByCategory: productsByCategoryReducer
+    productsByCategory: productsByCategorySlice
   }
 });
 
