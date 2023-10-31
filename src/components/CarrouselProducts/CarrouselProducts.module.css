@@ -26,8 +26,6 @@
 
 .carrousel {
   display: flex;
-  /* border: solid 1px #888; */
-  /* margin: 0px 60px; */
   width: 90%;
   overflow-x: scroll;
   flex-wrap: nowrap;
@@ -63,4 +61,22 @@
   white-space: nowrap;
   justify-content: center;
   align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    margin: 0px;
+  }
+
+  .carrousel {
+    height: 200px;
+    width: 100%;
+  }
+
+  .carrouselButton {
+    height: 100px;
+    width: auto;
+    font-size: small;
+    margin: 0px 5px;
+  }
 }

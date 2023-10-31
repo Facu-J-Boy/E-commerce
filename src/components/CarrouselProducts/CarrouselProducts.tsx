@@ -1,7 +1,7 @@
 import React from 'react';
 import { product } from '../../interfaces/product';
-import ProductsCard from '../ProductCard/ProductsCard';
 import styles from './CarrouselProducts.module.css';
+import Product from './Product/Product';
 
 interface props {
   products: product[];
@@ -49,7 +49,7 @@ const CarrouselProducts: React.FC<props> = ({
             style={{ width: `${products.length * 100}vh` }}
           >
             {products.map((p: product) => (
-              <ProductsCard
+              <Product
                 key={p.id}
                 id={p.id}
                 image={p.image}
