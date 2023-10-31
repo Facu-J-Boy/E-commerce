@@ -17,7 +17,10 @@ const CarrouselProducts: React.FC<props> = ({
       {loading ? (
         <p>loading...</p>
       ) : (
-        <>
+        <div
+          className={styles.products}
+          style={{ width: `${products.length * 100}vh` }}
+        >
           {products.map((p: product) => (
             <ProductsCard
               key={p.id}
@@ -27,7 +30,7 @@ const CarrouselProducts: React.FC<props> = ({
               price={p.price}
             />
           ))}
-        </>
+        </div>
       )}
     </div>
   );

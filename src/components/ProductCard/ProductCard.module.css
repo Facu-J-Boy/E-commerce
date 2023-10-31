@@ -1,4 +1,5 @@
 .product {
+  flex: 0 0 auto;
   display: inline;
   position: relative;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -8,6 +9,7 @@
   height: 400px;
   margin: 15px;
   cursor: pointer;
+  scroll-snap-align: start;
 }
 
 .product:hover {
