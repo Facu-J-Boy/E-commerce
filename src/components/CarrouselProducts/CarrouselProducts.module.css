@@ -1,12 +1,39 @@
-.carrousel {
+.container {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   border: solid 1px #888;
   margin: 0px 60px;
+}
+
+.carrouselButton {
+  margin: 0px 10px;
+  border: solid 1px #888;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-size: large;
+  cursor: pointer;
+  color: #333;
+  padding: 0px 10px;
+  height: 200px;
+}
+
+.carrouselButton:hover {
+  background-color: #888;
+  color: #fff;
+}
+
+.carrousel {
+  display: flex;
+  /* border: solid 1px #888; */
+  /* margin: 0px 60px; */
   width: 90%;
-  overflow-x: auto;
+  overflow-x: scroll;
   flex-wrap: nowrap;
-  scroll-snap-type: x mandatory; /* Hace que el desplazamiento sea más suave */
+  scroll-snap-type: x proximity; /* Hace que el desplazamiento sea más suave */
   -webkit-overflow-scrolling: touch; /* Agrega desplazamiento suave en iOS */
+  transition: scroll-snap-align 0.3s ease-in-out; /* Agregada transición suave */
 }
 
 /* Estilos generales de la barra de desplazamiento */
