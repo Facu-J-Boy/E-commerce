@@ -69,7 +69,6 @@
 .products {
   display: flex;
   flex-direction: row;
-  /* margin: 0px 60px; */
   white-space: nowrap;
   justify-content: center;
   align-items: center;

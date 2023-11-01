@@ -32,7 +32,7 @@ const Home: React.FC = (): JSX.Element => {
   return (
     <div>
       <Carousel />
-      <CarrouselProducts products={products} loading={false} />
+      <CarrouselProducts products={products} loading={productsLoading} />
       <ProductsGrid
         products={products}
         productsLoading={productsLoading}
