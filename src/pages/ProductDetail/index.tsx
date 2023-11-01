@@ -50,8 +50,8 @@ const ProductDetail: React.FC = (): JSX.Element => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    product && dispatch(getInCategory(product.category));
-  }, [dispatch, product]);
+    product && dispatch(getInCategory({ category: product.category, id: id }));
+  }, [dispatch, product, id]);
 
   return (
     <div className={styles.container}>
