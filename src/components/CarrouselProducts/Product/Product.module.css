@@ -1,5 +1,4 @@
 .product {
-  flex: 0 0 auto;
   display: inline;
   position: relative;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -36,9 +35,9 @@
   font-size: 17px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  overflow: hidden;
   -webkit-line-clamp: 2;
   flex: 1;
-  overflow: hidden;
   text-overflow: ellipsis;
   padding: 2px;
 }

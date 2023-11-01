@@ -2,6 +2,7 @@ import React from 'react';
 import { product } from '../../interfaces/product';
 import styles from './CarrouselProducts.module.css';
 import Product from './Product/Product';
+import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 
 interface props {
   products: product[];
@@ -38,7 +39,7 @@ const CarrouselProducts: React.FC<props> = ({
   return (
     <div className={styles.container}>
       <button className={styles.carrouselButton} onClick={scrollLeft}>
-        <h1>{'<'}</h1>
+        <MdArrowBackIosNew size={25} />
       </button>
       <div className={styles.carrousel}>
         {loading ? (
@@ -61,7 +62,7 @@ const CarrouselProducts: React.FC<props> = ({
         )}
       </div>
       <button className={styles.carrouselButton} onClick={scrollRight}>
-        <h1>{'>'}</h1>
+        <MdArrowForwardIos size={25} />
       </button>
     </div>
   );

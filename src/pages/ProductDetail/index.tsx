@@ -80,6 +80,7 @@ const ProductDetail: React.FC = (): JSX.Element => {
         commentsLoading={commentsLoading}
         error={undefined}
       />
+      <h1>Similar products</h1>
       <CarrouselProducts
         products={productsByCategory}
         loading={productsByCategoryLoading}

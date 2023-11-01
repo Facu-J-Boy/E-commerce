@@ -9,6 +9,7 @@
 
 .carrouselButton {
   margin: 0px 10px;
+  /* position: absolute; */
   border: solid 1px #888;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.8);
@@ -26,7 +27,7 @@
 
 .carrousel {
   display: flex;
-  width: 90%;
+  width: 100%;
   overflow-x: scroll;
   flex-wrap: nowrap;
   scroll-snap-type: x proximity; /* Hace que el desplazamiento sea más suave */
@@ -74,9 +75,6 @@
   }
 
   .carrouselButton {
-    height: 100px;
-    width: auto;
-    font-size: small;
-    margin: 0px 5px;
+    display: none;
   }
 }
