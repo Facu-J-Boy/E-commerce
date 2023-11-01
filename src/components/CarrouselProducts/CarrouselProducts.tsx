@@ -38,9 +38,14 @@ const CarrouselProducts: React.FC<props> = ({
   };
   return (
     <div className={styles.container}>
-      <button className={styles.carrouselButton} onClick={scrollLeft}>
-        <MdArrowBackIosNew size={25} />
-      </button>
+      <div className={styles.buttons}>
+        <button className={styles.carrouselButton} onClick={scrollLeft}>
+          <MdArrowBackIosNew size={25} />
+        </button>
+        <button className={styles.carrouselButton} onClick={scrollRight}>
+          <MdArrowForwardIos size={25} />
+        </button>
+      </div>
       <div className={styles.carrousel}>
         {loading ? (
           <p>loading...</p>
@@ -61,9 +66,6 @@ const CarrouselProducts: React.FC<props> = ({
           </div>
         )}
       </div>
-      <button className={styles.carrouselButton} onClick={scrollRight}>
-        <MdArrowForwardIos size={25} />
-      </button>
     </div>
   );
 };

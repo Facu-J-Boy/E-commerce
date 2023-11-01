@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  position: relative;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -7,9 +8,20 @@
   margin: 0px 60px;
 }
 
+.buttons {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .carrouselButton {
   margin: 0px 10px;
-  /* position: absolute; */
+  z-index: 1;
   border: solid 1px #888;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.8);
@@ -21,8 +33,7 @@
 }
 
 .carrouselButton:hover {
-  background-color: #888;
-  color: #fff;
+  backdrop-filter: blur(10px);
 }
 
 .carrousel {
@@ -70,11 +81,11 @@
   }
 
   .carrousel {
-    height: 200px;
+    height: 300px;
     width: 100%;
   }
 
-  .carrouselButton {
+  .buttons {
     display: none;
   }
 }
