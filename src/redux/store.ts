@@ -5,6 +5,7 @@ import categoriesReducer from './reducers/categoriesReducer';
 import commentsSlice from './reducers/commentsReducer';
 import cartReducer from './reducers/cartReducer';
 import productsByCategorySlice from './reducers/productsByCategoryReducer';
+import historyReducer from './reducers/historyReducer';
 const store = configureStore({
   reducer: {
     products: productsReducer,
@@ -12,7 +13,8 @@ const store = configureStore({
     categories: categoriesReducer,
     comments: commentsSlice,
     cartProducts: cartReducer,
-    productsByCategory: productsByCategorySlice
+    productsByCategory: productsByCategorySlice,
+    historyProducts: historyReducer
   }
 });
 

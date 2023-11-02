@@ -16,7 +16,7 @@ const initialState: cartState = {
   historyProducts: []
 };
 
-const cartSlice = createSlice({
+const historySlice = createSlice({
   name: 'productsHistory',
   initialState,
   reducers: {},
@@ -27,4 +27,4 @@ const cartSlice = createSlice({
   }
 });
 
-export default cartSlice.reducer;
+export default historySlice.reducer;
