@@ -38,7 +38,9 @@ const Home: React.FC = (): JSX.Element => {
   return (
     <div>
       <Carousel />
-      {!historyProducts.length ? null : <h1>History</h1>}
+      {!historyProducts.length ? null : (
+        <h1 style={{ color: '#333', marginLeft: '60px' }}>History</h1>
+      )}
       <CarrouselProducts
         products={historyProducts}
         loading={historyProductsLoading}
