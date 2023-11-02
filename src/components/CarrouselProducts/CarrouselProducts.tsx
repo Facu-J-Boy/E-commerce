@@ -42,7 +42,7 @@ const CarrouselProducts: React.FC<props> = ({
       <br />
       {loading ? (
         <SkeletonCarrousel />
-      ) : (
+      ) : !products.length ? null : (
         <div className={styles.container}>
           <div className={styles.buttons}>
             <button className={styles.carrouselButton} onClick={scrollLeft}>

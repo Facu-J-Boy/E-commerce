@@ -8,12 +8,17 @@ import Carousel from '../../components/Carousel/Carousel';
 import { getCart } from '../../redux/actions/getCart';
 import { clearProductsList } from '../../redux/actions/clearProductsList';
 import CarrouselProducts from '../../components/CarrouselProducts/CarrouselProducts';
+import { getHistory } from '../../redux/actions/getHistory';
 
 const Home: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { products, productsLoading } = useSelector(
     (state: any) => state.products
+  );
+
+  const { historyProductsLoading, historyProducts } = useSelector(
+    (state: any) => state.historyProducts
   );
 
   console.log('localStorage: ', localStorage.getItem('cart'));
@@ -24,6 +29,7 @@ const Home: React.FC = (): JSX.Element => {
     dispatch(getAllProducts());
     dispatch(getAllCategories());
     dispatch(getCart());
+    dispatch(getHistory());
     return () => {
       dispatch(clearProductsList());
     };
@@ -32,7 +38,11 @@ const Home: React.FC = (): JSX.Element => {
   return (
     <div>
       <Carousel />
-      <CarrouselProducts products={products} loading={productsLoading} />
+      {!historyProducts.length ? null : <h1>History</h1>}
+      <CarrouselProducts
+        products={historyProducts}
+        loading={historyProductsLoading}
+      />
       <ProductsGrid
         products={products}
         productsLoading={productsLoading}

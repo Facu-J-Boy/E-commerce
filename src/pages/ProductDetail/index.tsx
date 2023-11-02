@@ -11,6 +11,7 @@ import CommentsColumn from '../../components/CommentsColumn/CommentsColumn';
 import styles from './Detail.module.css';
 import { getInCategory } from '../../redux/actions/getInCategory';
 import CarrouselProducts from '../../components/CarrouselProducts/CarrouselProducts';
+import { addToHistory } from '../../redux/actions/addToHistory';
 
 const ProductDetail: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -39,6 +40,10 @@ const ProductDetail: React.FC = (): JSX.Element => {
     return () => {
       document.title = 'E-commerce'; // Al desmontar el componente el titulo vuelve a la normalidad
     };
+  }, [product]);
+
+  useEffect(() => {
+    product && addToHistory(product);
   }, [product]);
 
   useEffect(() => {

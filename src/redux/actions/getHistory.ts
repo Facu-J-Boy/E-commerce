@@ -5,7 +5,7 @@ export const getHistory = createAction('getHistory', () => {
   const history = historyString ? JSON.parse(historyString) : null;
   return {
     payload: {
-      products: history.reverse()
+      products: history ? history.reverse() : []
     }
   };
 });

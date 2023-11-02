@@ -6,7 +6,7 @@ export const getCart = createAction('getCart', () => {
   const cart = cartString ? JSON.parse(cartString) : null;
   return {
     payload: {
-      products: cart.reverse(),
+      products: cart ? cart.reverse() : [],
       total: cart
         ? cart.reduce((a: number, b: product) => a + b.price, 0).toFixed(2)
         : 0

@@ -10,10 +10,12 @@ interface product {
 
 interface cartState {
   historyProducts: product[] | [];
+  historyProductsLoading: boolean;
 }
 
 const initialState: cartState = {
-  historyProducts: []
+  historyProducts: [],
+  historyProductsLoading: true
 };
 
 const historySlice = createSlice({
@@ -23,6 +25,7 @@ const historySlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getHistory, (state, action) => {
       state.historyProducts = action.payload ? action.payload.products : [];
+      state.historyProductsLoading = false;
     });
   }
 });

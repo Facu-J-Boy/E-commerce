@@ -1,6 +1,6 @@
 import { product } from '../../interfaces/product';
 
-export const addToHistory = (product: product) => {
+export const addToHistory = (newProduct: product) => {
   // Obtener el historial actual desde el localStorage
   const historyString = localStorage.getItem('history') || '[]';
 
@@ -18,9 +18,17 @@ export const addToHistory = (product: product) => {
     history = [];
   }
 
-  // Agregar el nuevo producto al historial
-  const updatedHistory = [...history, product];
+  // Verificar si el nuevo producto no es un objeto vacío
+  const isNonEmptyProduct = Object.keys(newProduct).length > 0;
 
-  // Guardar el historial actualizado en el localStorage
-  localStorage.setItem('cart', JSON.stringify(updatedHistory));
+  if (isNonEmptyProduct) {
+    // Eliminar el producto existente si está presente
+    history = history.filter((item) => item.id !== newProduct.id);
+
+    // Agregar el nuevo producto al historial al final
+    const updatedHistory = [...history, newProduct];
+
+    // Guardar el historial actualizado en el localStorage
+    localStorage.setItem('history', JSON.stringify(updatedHistory));
+  }
 };
