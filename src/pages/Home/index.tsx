@@ -9,6 +9,7 @@ import { getCart } from '../../redux/actions/getCart';
 import { clearProductsList } from '../../redux/actions/clearProductsList';
 import CarrouselProducts from '../../components/CarrouselProducts/CarrouselProducts';
 import { getHistory } from '../../redux/actions/getHistory';
+import styles from './Home.module.css';
 
 const Home: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -38,17 +39,17 @@ const Home: React.FC = (): JSX.Element => {
   return (
     <div>
       <Carousel />
-      {!historyProducts.length ? null : (
-        <h1 style={{ color: '#333', marginLeft: '60px' }}>History</h1>
-      )}
-      <CarrouselProducts
-        products={historyProducts}
-        loading={historyProductsLoading}
-      />
       <ProductsGrid
         products={products}
         productsLoading={productsLoading}
         error=''
+      />
+      {!historyProducts.length ? null : (
+        <h1 className={styles.title}>History</h1>
+      )}
+      <CarrouselProducts
+        products={historyProducts}
+        loading={historyProductsLoading}
       />
     </div>
   );
