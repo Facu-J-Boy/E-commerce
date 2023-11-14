@@ -14,6 +14,7 @@ import { GrCart } from 'react-icons/gr';
 import { product } from '../../interfaces/product';
 import ProductItem from './ProductItem/ProductItem';
 import { addToSearch } from '../../redux/actions/addToSearch';
+import { getSearch } from '../../redux/actions/getSearch';
 
 const NavBar: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -47,7 +48,11 @@ const NavBar: React.FC = (): JSX.Element => {
 
   const searchProduct = (ev: any) => {
     ev.preventDefault();
-    search && addToSearch(search);
+    // search && (addToSearch(search), getSearch());
+    if (search) {
+      addToSearch(search);
+      dispatch(getSearch());
+    }
     !search
       ? dispatch(getAllProducts()) // Si no hay parametro de busqueda se setea el estado global de los productos a su totalidad
       : dispatch(searchProducts(search, allProducts)); // Caso contrario ejecutamos la acción de busqueda

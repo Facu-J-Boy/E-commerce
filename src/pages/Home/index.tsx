@@ -10,6 +10,7 @@ import { clearProductsList } from '../../redux/actions/clearProductsList';
 import CarrouselProducts from '../../components/CarrouselProducts/CarrouselProducts';
 import { getHistory } from '../../redux/actions/getHistory';
 import styles from './Home.module.css';
+import { getSearch } from '../../redux/actions/getSearch';
 
 const Home: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,6 +33,7 @@ const Home: React.FC = (): JSX.Element => {
     dispatch(getAllCategories());
     dispatch(getCart());
     dispatch(getHistory());
+    dispatch(getSearch());
     return () => {
       dispatch(clearProductsList());
     };
