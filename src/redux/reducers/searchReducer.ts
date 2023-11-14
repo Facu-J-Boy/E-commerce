@@ -9,7 +9,7 @@ const initialState: searchState = {
   allsearchs: []
 };
 
-const cartSlice = createSlice({
+const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {},
@@ -20,4 +20,4 @@ const cartSlice = createSlice({
   }
 });
 
-export default cartSlice.reducer;
+export default searchSlice.reducer;

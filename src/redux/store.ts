@@ -6,6 +6,7 @@ import commentsSlice from './reducers/commentsReducer';
 import cartReducer from './reducers/cartReducer';
 import productsByCategorySlice from './reducers/productsByCategoryReducer';
 import historyReducer from './reducers/historyReducer';
+import searchReducer from './reducers/searchReducer';
 const store = configureStore({
   reducer: {
     products: productsReducer,
@@ -13,6 +14,7 @@ const store = configureStore({
     categories: categoriesReducer,
     comments: commentsSlice,
     cartProducts: cartReducer,
+    searchs: searchReducer,
     productsByCategory: productsByCategorySlice,
     historyProducts: historyReducer
   }
