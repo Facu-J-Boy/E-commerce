@@ -21,6 +21,7 @@ const NavBar: React.FC = (): JSX.Element => {
   const [search, setSearch] = useState('');
   const [list, setList] = useState(false);
   const [productList, setProductsList] = useState(false);
+  const [searchList, setSearchList] = useState(false);
   const [user, setUser] = useState<user>({
     photoURL: '',
     displayName: ''
@@ -48,7 +49,6 @@ const NavBar: React.FC = (): JSX.Element => {
 
   const searchProduct = (ev: any) => {
     ev.preventDefault();
-    // search && (addToSearch(search), getSearch());
     if (search) {
       addToSearch(search);
       dispatch(getSearch());
@@ -84,6 +84,19 @@ const NavBar: React.FC = (): JSX.Element => {
     };
   }, [productList, toggleProducts]);
 
+  const deleteSearchList = useCallback(() => {
+    setSearchList(!searchList);
+  }, [searchList]);
+
+  useEffect(() => {
+    if (searchList === true) {
+      document.body.addEventListener('click', deleteSearchList);
+    }
+    return () => {
+      document.body.removeEventListener('click', deleteSearchList);
+    };
+  }, [deleteSearchList, searchList]);
+
   const logOut = async () => {
     try {
       const auth = getAuth();
@@ -93,6 +106,10 @@ const NavBar: React.FC = (): JSX.Element => {
     } catch (error) {
       console.error('Error of close session:', error);
     }
+  };
+
+  const handleSetSearchList = () => {
+    !searchList && setSearchList(true);
   };
 
   return (
@@ -121,7 +138,19 @@ const NavBar: React.FC = (): JSX.Element => {
               placeholder='Search product'
               value={search}
               onChange={handleInputChange}
+              onClick={handleSetSearchList}
             />
+            <div
+              style={{ display: !searchList ? 'none' : 'flex' }}
+              className={styles.searchList}
+            >
+              <ul>
+                <li>hola</li>
+                <li>mundo</li>
+                <li>que</li>
+                <li>tal</li>
+              </ul>
+            </div>
           </form>
           <div className={styles.cart}>
             <GrCart size={30} onClick={toggleProducts} />

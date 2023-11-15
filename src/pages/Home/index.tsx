@@ -23,9 +23,6 @@ const Home: React.FC = (): JSX.Element => {
     (state: any) => state.historyProducts
   );
 
-  // console.log('localStorage: ', localStorage.getItem('cart'));
-  console.log('search: ', localStorage.getItem('search'));
-
   // localStorage.clear();
 
   useEffect(() => {
