@@ -1,8 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { AppDispatch } from '../../redux/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { searchProducts } from '../../redux/actions/searchProducts';
-import { getAllProducts } from '../../redux/actions/getAllproducts';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styles from './NavBar.module.css';
 import { auth } from '../../Firebase';
 import { user } from '../../interfaces/user';
@@ -13,21 +10,15 @@ import userImage from './user.jpg';
 import { GrCart } from 'react-icons/gr';
 import { product } from '../../interfaces/product';
 import ProductItem from './ProductItem/ProductItem';
-import { addToSearch } from '../../redux/actions/addToSearch';
-import { getSearch } from '../../redux/actions/getSearch';
+import SearchInput from './SearchInput/SearchInput';
 
 const NavBar: React.FC = (): JSX.Element => {
-  const dispatch = useDispatch<AppDispatch>();
-  const [search, setSearch] = useState('');
   const [list, setList] = useState(false);
   const [productList, setProductsList] = useState(false);
-  const [searchList, setSearchList] = useState(false);
   const [user, setUser] = useState<user>({
     photoURL: '',
     displayName: ''
   });
-  const [selectedItem, setSelectedItem] = useState<number | null>(null);
-  const { allProducts } = useSelector((state: any) => state.products);
 
   const { cartProducts, total } = useSelector(
     (state: any) => state.cartProducts
@@ -43,21 +34,6 @@ const NavBar: React.FC = (): JSX.Element => {
       }
     });
   }, []);
-
-  const handleInputChange = (ev: any) => {
-    setSearch(ev.target.value);
-  };
-
-  const searchProduct = (ev: any) => {
-    ev.preventDefault();
-    if (search) {
-      addToSearch(search);
-      dispatch(getSearch());
-    }
-    !search
-      ? dispatch(getAllProducts()) // Si no hay parametro de busqueda se setea el estado global de los productos a su totalidad
-      : dispatch(searchProducts(search, allProducts)); // Caso contrario ejecutamos la acción de busqueda
-  };
 
   const toggleList = useCallback(() => {
     setList(!list);
@@ -85,19 +61,6 @@ const NavBar: React.FC = (): JSX.Element => {
     };
   }, [productList, toggleProducts]);
 
-  const deleteSearchList = useCallback(() => {
-    setSearchList(!searchList);
-  }, [searchList]);
-
-  useEffect(() => {
-    if (searchList === true) {
-      document.body.addEventListener('click', deleteSearchList);
-    }
-    return () => {
-      document.body.removeEventListener('click', deleteSearchList);
-    };
-  }, [deleteSearchList, searchList]);
-
   const logOut = async () => {
     try {
       const auth = getAuth();
@@ -108,41 +71,6 @@ const NavBar: React.FC = (): JSX.Element => {
       console.error('Error of close session:', error);
     }
   };
-
-  const handleSetSearchList = () => {
-    !searchList && setSearchList(true);
-  };
-
-  const searchs = useMemo(() => ['hola', 'mundo', 'que', 'tal'], []); // Lista de búsqueda
-
-  const handleKeyDown = useCallback(
-    (e: any) => {
-      // Si se presiona la flecha hacia abajo (código de tecla 40) o hacia arriba (código de tecla 38)
-      if (e.keyCode === 40 || e.keyCode === 38) {
-        e.preventDefault(); // Evita el desplazamiento por defecto del navegador
-
-        // Calcula el nuevo índice basado en la dirección de la flecha
-        const direction = e.keyCode === 40 ? 1 : -1;
-        const newIndex =
-          (selectedItem === null
-            ? 0
-            : selectedItem + direction + searchs.length) % searchs.length;
-        setSelectedItem(newIndex);
-        setSearch(searchs[newIndex]);
-      }
-    },
-    [selectedItem, searchs]
-  );
-
-  useEffect(() => {
-    // Agrega un event listener para el evento keydown al montar el componente
-    document.addEventListener('keydown', handleKeyDown);
-
-    // Limpia el event listener al desmontar el componente
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [selectedItem, handleKeyDown]); // Vuelve a agregar el event listener si el ítem seleccionado cambia
 
   return (
     <div className={styles.navBar}>
@@ -164,34 +92,7 @@ const NavBar: React.FC = (): JSX.Element => {
             alignItems: 'center'
           }}
         >
-          <form onSubmit={searchProduct}>
-            <input
-              type='text'
-              placeholder='Search product'
-              value={search}
-              onChange={handleInputChange}
-              onClick={handleSetSearchList}
-            />
-            <div
-              style={{ display: !searchList ? 'none' : 'flex' }}
-              className={styles.searchList}
-            >
-              <ul>
-                {searchs.map((item, index) => (
-                  <li
-                    key={index}
-                    style={
-                      index === selectedItem
-                        ? { backgroundColor: 'red' }
-                        : undefined
-                    }
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </form>
+          <SearchInput />
           <div className={styles.cart}>
             <GrCart size={30} onClick={toggleProducts} />
             {productList && (

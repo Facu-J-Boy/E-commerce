@@ -24,24 +24,6 @@
   align-items: center;
 }
 
-.nav_elements input {
-  width: 600px;
-  height: 30px;
-  padding-left: 10px;
-  border: solid gray 1px;
-  outline-color: #4d4d4d;
-  font-size: large;
-  margin-left: 10px;
-}
-
-.searchList {
-  position: absolute;
-  border: solid red;
-  background-color: #fff;
-  margin-left: 10px;
-  width: 600px;
-}
-
 .cart {
   display: flex;
   margin: 0px 30px;
@@ -193,11 +175,6 @@
 
   .logo {
     width: 70px;
-  }
-
-  .nav_elements input {
-    width: 200px;
-    margin-top: 10px;
   }
 
   .cart {
