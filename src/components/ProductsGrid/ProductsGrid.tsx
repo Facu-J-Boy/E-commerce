@@ -21,7 +21,7 @@ const ProductsGrid: React.FC<productsState> = ({
         </>
       ) : (
         <>
-          {products.map((p: product) => (
+          {products?.map((p: product) => (
             <ProductsCard
               key={p.id}
               id={p.id}

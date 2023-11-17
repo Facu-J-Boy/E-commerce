@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { AppDispatch } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchProducts } from '../../redux/actions/searchProducts';
@@ -26,6 +26,7 @@ const NavBar: React.FC = (): JSX.Element => {
     photoURL: '',
     displayName: ''
   });
+  const [selectedItem, setSelectedItem] = useState<number | null>(null);
   const { allProducts } = useSelector((state: any) => state.products);
 
   const { cartProducts, total } = useSelector(
@@ -112,6 +113,37 @@ const NavBar: React.FC = (): JSX.Element => {
     !searchList && setSearchList(true);
   };
 
+  const searchs = useMemo(() => ['hola', 'mundo', 'que', 'tal'], []); // Lista de búsqueda
+
+  const handleKeyDown = useCallback(
+    (e: any) => {
+      // Si se presiona la flecha hacia abajo (código de tecla 40) o hacia arriba (código de tecla 38)
+      if (e.keyCode === 40 || e.keyCode === 38) {
+        e.preventDefault(); // Evita el desplazamiento por defecto del navegador
+
+        // Calcula el nuevo índice basado en la dirección de la flecha
+        const direction = e.keyCode === 40 ? 1 : -1;
+        const newIndex =
+          (selectedItem === null
+            ? 0
+            : selectedItem + direction + searchs.length) % searchs.length;
+        setSelectedItem(newIndex);
+        setSearch(searchs[newIndex]);
+      }
+    },
+    [selectedItem, searchs]
+  );
+
+  useEffect(() => {
+    // Agrega un event listener para el evento keydown al montar el componente
+    document.addEventListener('keydown', handleKeyDown);
+
+    // Limpia el event listener al desmontar el componente
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedItem, handleKeyDown]); // Vuelve a agregar el event listener si el ítem seleccionado cambia
+
   return (
     <div className={styles.navBar}>
       <div className={styles.logo_container}>
@@ -145,10 +177,18 @@ const NavBar: React.FC = (): JSX.Element => {
               className={styles.searchList}
             >
               <ul>
-                <li>hola</li>
-                <li>mundo</li>
-                <li>que</li>
-                <li>tal</li>
+                {searchs.map((item, index) => (
+                  <li
+                    key={index}
+                    style={
+                      index === selectedItem
+                        ? { backgroundColor: 'red' }
+                        : undefined
+                    }
+                  >
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
           </form>
