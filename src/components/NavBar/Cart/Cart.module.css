@@ -1,0 +1,123 @@
+.cart {
+  display: flex;
+  margin: 0px 30px;
+  cursor: pointer;
+}
+
+.cart span {
+  border-radius: 50%;
+  padding: 0px 5px;
+  background-color: red;
+  height: 50%;
+  color: #fff;
+  position: relative;
+  top: -10px;
+  right: 12px;
+}
+
+.totalContainer {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 1px #333;
+}
+
+.totalContainer button {
+  color: #fff;
+  width: 100px;
+  height: 40px;
+  align-self: center;
+  border: none;
+  background-color: #333;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.total {
+  display: flex;
+  align-items: flex-end;
+  margin-left: 10px;
+}
+
+.total h3 {
+  position: relative;
+  margin-left: 5px;
+  bottom: 0px;
+}
+
+.list ol {
+  padding: 0;
+  margin: 0;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.list ol:hover {
+  background-color: rgb(206, 204, 204);
+}
+
+.products {
+  position: absolute;
+  background-color: white;
+  list-style-type: none;
+  margin-top: 5px;
+  border: solid 1px rgb(206, 204, 204);
+  padding: 0px;
+  z-index: 1;
+  border-radius: 5px;
+  overflow-y: auto;
+  max-height: 500px;
+  width: 40%;
+}
+
+.products ol {
+  padding-inline-start: 0px;
+}
+
+.products ol:hover {
+  background-color: rgb(241, 241, 241);
+}
+
+/* Estilos generales de la barra de desplazamiento */
+.products::-webkit-scrollbar {
+  width: 3px; /* ancho de la barra de desplazamiento */
+}
+
+.products::-webkit-scrollbar-thumb {
+  background-color: #888; /* color del thumb (el "mango" de la barra) */
+  border-radius: 6px; /* bordes redondeados */
+}
+
+.products::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* color del fondo de la barra de desplazamiento */
+}
+
+/* Estilos específicos para Firefox */
+.products {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+@media screen and (max-width: 768px) {
+  .cart {
+    margin: 0px 0px 0px 10px;
+  }
+  .products {
+    margin-top: 40px;
+    margin-left: -100px;
+    width: 240px;
+  }
+
+  .totalContainer button {
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+  }
+
+  .total h2 {
+    font-size: larger;
+  }
+
+  .total h3 {
+    font-size: medium;
+  }
+}

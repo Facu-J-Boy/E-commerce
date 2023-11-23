@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import styles from './NavBar.module.css';
 import { auth } from '../../Firebase';
 import { user } from '../../interfaces/user';
@@ -7,22 +6,15 @@ import { getAuth, signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import logo from './e-commerce.png';
 import userImage from './user.jpg';
-import { GrCart } from 'react-icons/gr';
-import { product } from '../../interfaces/product';
-import ProductItem from './ProductItem/ProductItem';
 import SearchInput from './SearchInput/SearchInput';
+import Cart from './Cart/Cart';
 
 const NavBar: React.FC = (): JSX.Element => {
   const [list, setList] = useState(false);
-  const [productList, setProductsList] = useState(false);
   const [user, setUser] = useState<user>({
     photoURL: '',
     displayName: ''
   });
-
-  const { cartProducts, total } = useSelector(
-    (state: any) => state.cartProducts
-  );
 
   const navigate = useNavigate();
 
@@ -46,20 +38,7 @@ const NavBar: React.FC = (): JSX.Element => {
     return () => {
       document.body.removeEventListener('click', toggleList);
     };
-  }, [list, toggleList]); // Cuando la lista es visible podemos cerrarla haciendo click en cualquier lugar para cerrarla
-
-  const toggleProducts = useCallback(() => {
-    setProductsList(!productList);
-  }, [productList]);
-
-  useEffect(() => {
-    if (productList === true) {
-      document.body.addEventListener('click', toggleProducts);
-    }
-    return () => {
-      document.body.removeEventListener('click', toggleProducts);
-    };
-  }, [productList, toggleProducts]);
+  }, [list, toggleList]); // Cuando la lista es visible podemos cerrarla haciendo click en cualquier lugar
 
   const logOut = async () => {
     try {
@@ -93,54 +72,7 @@ const NavBar: React.FC = (): JSX.Element => {
           }}
         >
           <SearchInput />
-          <div className={styles.cart}>
-            <GrCart size={30} onClick={toggleProducts} />
-            {productList && (
-              <div className={styles.product_list_container}>
-                {!cartProducts.length ? (
-                  <ul className={styles.products}>
-                    <h4
-                      style={{
-                        display: 'flex',
-                        color: '#333',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                      }}
-                    >
-                      Your cart is empty
-                    </h4>
-                  </ul>
-                ) : (
-                  <ul className={styles.products}>
-                    <div className={styles.totalContainer}>
-                      <div className={styles.total}>
-                        <h2>Total:</h2>
-                        <h3>{`$${total}`}</h3>
-                      </div>
-                      <button>Buy</button>
-                    </div>
-                    {cartProducts.map((p: product) => (
-                      <ol>
-                        <ProductItem
-                          id={p.id}
-                          title={p.title}
-                          price={p.price}
-                          image={p.image}
-                        />
-                      </ol>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            )}
-            <span>
-              {cartProducts.length >= 10
-                ? '9+'
-                : !cartProducts.length
-                ? null
-                : cartProducts?.length}
-            </span>
-          </div>
+          <Cart />
         </div>
         {user.displayName === '' && user.photoURL === '' ? (
           <button
