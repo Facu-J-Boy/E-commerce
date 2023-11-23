@@ -79,6 +79,14 @@ const SearchInput: React.FC = (): JSX.Element => {
     };
   }, [selectedItem, handleKeyDown]); // Vuelve a agregar el event listener si el ítem seleccionado cambia
 
+  const handleMouseEnter = (index: number) => {
+    setSelectedItem(index);
+  };
+
+  const handleClick = (item: string) => {
+    setSearch(item);
+  };
+
   return (
     <>
       <form onSubmit={searchProduct}>
@@ -94,15 +102,17 @@ const SearchInput: React.FC = (): JSX.Element => {
           style={{ display: !searchList ? 'none' : 'flex' }}
           className={styles.searchList}
         >
-          <ul>
+          <ul className={styles.searchs}>
             {searchs.map((item, index) => (
               <li
                 key={index}
                 style={
                   index === selectedItem
-                    ? { backgroundColor: 'red' }
+                    ? { backgroundColor: 'rgb(206, 204, 204)' }
                     : undefined
                 }
+                onMouseEnter={() => handleMouseEnter(index)} // Agregando el manejador onMouseEnter
+                onClick={() => handleClick(item)}
               >
                 {item}
               </li>

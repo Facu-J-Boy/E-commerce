@@ -44,17 +44,6 @@
   bottom: 0px;
 }
 
-.list ol {
-  padding: 0;
-  margin: 0;
-  padding: 10px;
-  cursor: pointer;
-}
-
-.list ol:hover {
-  background-color: rgb(206, 204, 204);
-}
-
 .products {
   position: absolute;
   background-color: white;
