@@ -5,6 +5,7 @@ import { getSearch } from '../../../redux/actions/getSearch';
 import { getAllProducts } from '../../../redux/actions/getAllproducts';
 import { searchProducts } from '../../../redux/actions/searchProducts';
 import { AppDispatch } from '../../../redux/store';
+import { GrHistory } from 'react-icons/gr';
 import styles from './SearchInput.module.css';
 
 const SearchInput: React.FC = (): JSX.Element => {
@@ -48,7 +49,87 @@ const SearchInput: React.FC = (): JSX.Element => {
     !searchList && setSearchList(true);
   };
 
-  const searchs = useMemo(() => ['hola', 'mundo', 'que', 'tal'], []); // Lista de búsqueda
+  const searchs = useMemo(
+    () => [
+      'hola',
+      'mundo',
+      'que',
+      'tal',
+      'dasdsad',
+      'dscdsadcda',
+      'dsadasdasd',
+      'fdacdsfas',
+      'fvdsavds',
+      'fdsfdsfdafa',
+      'fdsfasfdf',
+      'fdsavafa',
+      'dsafsadas',
+      'fsadfdfasdfafds',
+      'dvcsadfas',
+      'vvfdfvff',
+      'vfvfvfv',
+      'vfvfvfvf',
+      'vfvfvfvfvf',
+      'hola',
+      'mundo',
+      'que',
+      'tal',
+      'dasdsad',
+      'dscdsadcda',
+      'dsadasdasd',
+      'fdacdsfas',
+      'fvdsavds',
+      'fdsfdsfdafa',
+      'fdsfasfdf',
+      'fdsavafa',
+      'dsafsadas',
+      'fsadfdfasdfafds',
+      'dvcsadfas',
+      'vvfdfvff',
+      'vfvfvfv',
+      'vfvfvfvf',
+      'vfvfvfvfvf',
+      'hola',
+      'mundo',
+      'que',
+      'tal',
+      'dasdsad',
+      'dscdsadcda',
+      'dsadasdasd',
+      'fdacdsfas',
+      'fvdsavds',
+      'fdsfdsfdafa',
+      'fdsfasfdf',
+      'fdsavafa',
+      'dsafsadas',
+      'fsadfdfasdfafds',
+      'dvcsadfas',
+      'vvfdfvff',
+      'vfvfvfv',
+      'vfvfvfvf',
+      'vfvfvfvfvf',
+      'hola',
+      'mundo',
+      'que',
+      'tal',
+      'dasdsad',
+      'dscdsadcda',
+      'dsadasdasd',
+      'fdacdsfas',
+      'fvdsavds',
+      'fdsfdsfdafa',
+      'fdsfasfdf',
+      'fdsavafa',
+      'dsafsadas',
+      'fsadfdfasdfafds',
+      'dvcsadfas',
+      'vvfdfvff',
+      'vfvfvfv',
+      'vfvfvfvf',
+      'vfvfvfvfvf'
+    ],
+    []
+  ); // Lista de búsqueda
 
   const handleKeyDown = useCallback(
     (e: any) => {
@@ -114,7 +195,11 @@ const SearchInput: React.FC = (): JSX.Element => {
                 onMouseEnter={() => handleMouseEnter(index)} // Agregando el manejador onMouseEnter
                 onClick={() => handleClick(item)}
               >
-                {item}
+                <div>
+                  <GrHistory style={{ margin: '0px 10px' }} />
+                  {item}
+                </div>
+                <button>x</button>
               </li>
             ))}
           </ul>

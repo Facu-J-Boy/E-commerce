@@ -1,5 +1,5 @@
 .searchInput {
-  width: 600px;
+  width: 500px;
   height: 30px;
   padding-left: 10px;
   border: solid gray 1px;
@@ -10,10 +10,33 @@
 
 .searchList {
   position: absolute;
+  z-index: 1;
   border: solid 1px rgb(206, 204, 204);
   background-color: #fff;
   margin-left: 10px;
-  width: 600px;
+  width: 500px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Estilos generales de la barra de desplazamiento */
+.searchList::-webkit-scrollbar {
+  width: 5px; /* ancho de la barra de desplazamiento */
+}
+
+.searchList::-webkit-scrollbar-thumb {
+  background-color: #888; /* color del thumb (el "mango" de la barra) */
+  border-radius: 6px; /* bordes redondeados */
+}
+
+.searchList::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* color del fondo de la barra de desplazamiento */
+}
+
+/* Estilos específicos para Firefox */
+.searchList {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
 }
 
 .searchs {
@@ -29,15 +52,28 @@
   text-align: left;
   padding-left: 10px;
   cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
 }
 
-.searchs li:hover {
-  background-color: rgb(206, 204, 204);
+.searchs li button {
+  background: none;
+  border: none;
+  margin-right: 10px;
+}
+
+.searchs li button:hover {
+  color: #0000ff;
 }
 
 @media screen and (max-width: 768px) {
   .searchInput {
     width: 200px;
     margin-top: 10px;
+  }
+
+  .searchList {
+    width: 200px;
   }
 }
