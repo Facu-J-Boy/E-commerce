@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToSearch } from '../../../redux/actions/addToSearch';
 import { getSearch } from '../../../redux/actions/getSearch';
@@ -49,87 +49,90 @@ const SearchInput: React.FC = (): JSX.Element => {
     !searchList && setSearchList(true);
   };
 
-  const searchs = useMemo(
-    () => [
-      'hola',
-      'mundo',
-      'que',
-      'tal',
-      'dasdsad',
-      'dscdsadcda',
-      'dsadasdasd',
-      'fdacdsfas',
-      'fvdsavds',
-      'fdsfdsfdafa',
-      'fdsfasfdf',
-      'fdsavafa',
-      'dsafsadas',
-      'fsadfdfasdfafds',
-      'dvcsadfas',
-      'vvfdfvff',
-      'vfvfvfv',
-      'vfvfvfvf',
-      'vfvfvfvfvf',
-      'hola',
-      'mundo',
-      'que',
-      'tal',
-      'dasdsad',
-      'dscdsadcda',
-      'dsadasdasd',
-      'fdacdsfas',
-      'fvdsavds',
-      'fdsfdsfdafa',
-      'fdsfasfdf',
-      'fdsavafa',
-      'dsafsadas',
-      'fsadfdfasdfafds',
-      'dvcsadfas',
-      'vvfdfvff',
-      'vfvfvfv',
-      'vfvfvfvf',
-      'vfvfvfvfvf',
-      'hola',
-      'mundo',
-      'que',
-      'tal',
-      'dasdsad',
-      'dscdsadcda',
-      'dsadasdasd',
-      'fdacdsfas',
-      'fvdsavds',
-      'fdsfdsfdafa',
-      'fdsfasfdf',
-      'fdsavafa',
-      'dsafsadas',
-      'fsadfdfasdfafds',
-      'dvcsadfas',
-      'vvfdfvff',
-      'vfvfvfv',
-      'vfvfvfvf',
-      'vfvfvfvfvf',
-      'hola',
-      'mundo',
-      'que',
-      'tal',
-      'dasdsad',
-      'dscdsadcda',
-      'dsadasdasd',
-      'fdacdsfas',
-      'fvdsavds',
-      'fdsfdsfdafa',
-      'fdsfasfdf',
-      'fdsavafa',
-      'dsafsadas',
-      'fsadfdfasdfafds',
-      'dvcsadfas',
-      'vvfdfvff',
-      'vfvfvfv',
-      'vfvfvfvf',
-      'vfvfvfvfvf'
-    ],
-    []
-  ); // Lista de búsqueda
+  const { allSearchs } = useSelector((state: any) => state.searchs);
+
+  // const searchs = useMemo(
+  //   () => [
+  //     'hola',
+  //     'mundo',
+  //     'que',
+  //     'tal',
+  //     'dasdsad',
+  //     'dscdsadcda',
+  //     'dsadasdasd',
+  //     'fdacdsfas',
+  //     'fvdsavds',
+  //     'fdsfdsfdafa',
+  //     'fdsfasfdf',
+  //     'fdsavafa',
+  //     'dsafsadas',
+  //     'fsadfdfasdfafds',
+  //     'dvcsadfas',
+  //     'vvfdfvff',
+  //     'vfvfvfv',
+  //     'vfvfvfvf',
+  //     'vfvfvfvfvf',
+  //     'hola',
+  //     'mundo',
+  //     'que',
+  //     'tal',
+  //     'dasdsad',
+  //     'dscdsadcda',
+  //     'dsadasdasd',
+  //     'fdacdsfas',
+  //     'fvdsavds',
+  //     'fdsfdsfdafa',
+  //     'fdsfasfdf',
+  //     'fdsavafa',
+  //     'dsafsadas',
+  //     'fsadfdfasdfafds',
+  //     'dvcsadfas',
+  //     'vvfdfvff',
+  //     'vfvfvfv',
+  //     'vfvfvfvf',
+  //     'vfvfvfvfvf',
+  //     'hola',
+  //     'mundo',
+  //     'que',
+  //     'tal',
+  //     'dasdsad',
+  //     'dscdsadcda',
+  //     'dsadasdasd',
+  //     'fdacdsfas',
+  //     'fvdsavds',
+  //     'fdsfdsfdafa',
+  //     'fdsfasfdf',
+  //     'fdsavafa',
+  //     'dsafsadas',
+  //     'fsadfdfasdfafds',
+  //     'dvcsadfas',
+  //     'vvfdfvff',
+  //     'vfvfvfv',
+  //     'vfvfvfvf',
+  //     'vfvfvfvfvf',
+  //     'hola',
+  //     'mundo',
+  //     'que',
+  //     'tal',
+  //     'dasdsad',
+  //     'dscdsadcda',
+  //     'dsadasdasd',
+  //     'fdacdsfas',
+  //     'fvdsavds',
+  //     'fdsfdsfdafa',
+  //     'fdsfasfdf',
+  //     'fdsavafa',
+  //     'dsafsadas',
+  //     'fsadfdfasdfafds',
+  //     'dvcsadfas',
+  //     'vvfdfvff',
+  //     'vfvfvfv',
+  //     'vfvfvfvf',
+  //     'vfvfvfvfvf'
+  //   ],
+  //   []
+  // );
+  // Lista de búsqueda
 
   const handleKeyDown = useCallback(
     (e: any) => {
@@ -142,12 +145,12 @@ const SearchInput: React.FC = (): JSX.Element => {
         const newIndex =
           (selectedItem === null
             ? 0
-            : selectedItem + direction + searchs.length) % searchs.length;
+            : selectedItem + direction + allSearchs.length) % allSearchs.length;
         setSelectedItem(newIndex);
-        setSearch(searchs[newIndex]);
+        setSearch(allSearchs[newIndex]);
       }
     },
-    [selectedItem, searchs]
+    [selectedItem, allSearchs]
   );
 
   useEffect(() => {
@@ -174,7 +177,7 @@ const SearchInput: React.FC = (): JSX.Element => {
         <input
           className={styles.searchInput}
           type='text'
-          placeholder='Search product'
+          placeholder='Search'
           value={search}
           onChange={handleInputChange}
           onClick={handleSetSearchList}
@@ -184,7 +187,7 @@ const SearchInput: React.FC = (): JSX.Element => {
           className={styles.searchList}
         >
           <ul className={styles.searchs}>
-            {searchs.map((item, index) => (
+            {allSearchs?.map((item: string, index: number) => (
               <li
                 key={index}
                 style={

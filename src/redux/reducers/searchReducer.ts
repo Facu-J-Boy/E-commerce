@@ -2,11 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getSearch } from '../actions/getSearch';
 
 interface searchState {
-  allsearchs: string[] | [];
+  allSearchs: string[] | [];
 }
 
 const initialState: searchState = {
-  allsearchs: []
+  allSearchs: []
 };
 
 const searchSlice = createSlice({
@@ -15,7 +15,7 @@ const searchSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getSearch, (state, action) => {
-      state.allsearchs = action.payload ? action.payload.search : [];
+      state.allSearchs = action.payload ? action.payload.search : [];
     });
   }
 });
