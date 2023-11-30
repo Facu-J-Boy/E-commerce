@@ -1,9 +1,11 @@
 import { createAction } from '@reduxjs/toolkit';
 import { product } from '../../interfaces/product';
+import { addToSearch } from './addToSearch';
 
 export const searchProducts = createAction(
   'searchProducts',
   (param: string, products: product[] | []) => {
+    addToSearch(param);
     const searchProduct = param.toLowerCase();
     const filteredProducts = products.filter((product) =>
       product.title.toLowerCase().includes(searchProduct)

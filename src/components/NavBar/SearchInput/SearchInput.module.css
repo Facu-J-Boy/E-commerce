@@ -1,3 +1,8 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+
 .searchInput {
   width: 500px;
   height: 30px;
@@ -13,7 +18,7 @@
   z-index: 1;
   border: solid 1px rgb(206, 204, 204);
   background-color: #fff;
-  margin-left: 10px;
+  margin: 35px 0px 0px 10px;
   width: 500px;
   max-height: 300px;
   overflow-y: auto;
@@ -63,6 +68,10 @@
   margin-right: 10px;
 }
 
+.searchs li:hover {
+  background-color: rgb(206, 204, 204);
+}
+
 .searchs li button:hover {
   color: #0000ff;
 }
@@ -75,5 +84,6 @@
 
   .searchList {
     width: 200px;
+    margin-top: 45px;
   }
 }
