@@ -15,7 +15,7 @@ const searchSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getSearch, (state, action) => {
-      state.allSearchs = action.payload ? action.payload.search : [];
+      state.allSearchs = action.payload && action.payload.search;
     });
   }
 });
