@@ -64,22 +64,24 @@ const SearchInput: React.FC = (): JSX.Element => {
           onClick={handleSetSearchList}
         />
       </form>
-      <div
-        style={{ display: !searchList ? 'none' : 'flex' }}
-        className={styles.searchList}
-      >
-        <ul className={styles.searchs}>
-          {allSearchs?.map((item: string, index: number) => (
-            <li key={index} onClick={() => handleClick(item)}>
-              <div>
-                <GrHistory style={{ margin: '0px 10px' }} />
-                {item}
-              </div>
-              <button>x</button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {!allSearchs.length ? null : (
+        <div
+          style={{ display: !searchList ? 'none' : 'flex' }}
+          className={styles.searchList}
+        >
+          <ul className={styles.searchs}>
+            {allSearchs.map((item: string, index: number) => (
+              <li key={index} onClick={() => handleClick(item)}>
+                <div>
+                  <GrHistory style={{ margin: '0px 10px' }} />
+                  {item}
+                </div>
+                <button>x</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
