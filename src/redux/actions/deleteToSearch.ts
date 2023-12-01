@@ -1,24 +1,11 @@
 export const deleteToSearch = (param: string) => {
-  // Obtén las búsquedas actuales desde el localStorage
-  const searchString = localStorage.getItem('search') || '[]';
+  let myArray = localStorage.getItem('search');
 
-  // Intenta parsear las búsquedas desde JSON
-  let search: string[] = [];
+  let searchArray: string[] = myArray ? JSON.parse(myArray) : [];
 
-  try {
-    search = JSON.parse(searchString);
-  } catch (error) {
-    console.error('Error al parsear las búsquedas:', error);
-  }
+  // Filtrar el array para excluir el elemento a eliminar
+  searchArray = searchArray.filter((item) => item !== param);
 
-  // Asegúrate de que search sea un array
-  if (!Array.isArray(search)) {
-    search = [];
-
-    // Filtra las búsquedas para eliminar el elemento con el param deseado
-    const updatedSearch = search.filter((element) => element !== param);
-
-    // Guarda las búsquedas actualizado en el localStorage
-    localStorage.setItem('search', JSON.stringify(updatedSearch));
-  }
+  // Actualizar el localStorage con el nuevo array
+  localStorage.setItem('search', JSON.stringify(searchArray));
 };

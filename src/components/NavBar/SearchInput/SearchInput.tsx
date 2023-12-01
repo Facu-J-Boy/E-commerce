@@ -6,6 +6,7 @@ import { searchProducts } from '../../../redux/actions/searchProducts';
 import { AppDispatch } from '../../../redux/store';
 import { GrHistory } from 'react-icons/gr';
 import styles from './SearchInput.module.css';
+import { deleteToSearch } from '../../../redux/actions/deleteToSearch';
 
 const SearchInput: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -89,6 +90,16 @@ const SearchInput: React.FC = (): JSX.Element => {
     setSearch(item);
   };
 
+  const handleDeleteSearch = (
+    ev: React.MouseEvent<HTMLButtonElement>,
+    param: string
+  ) => {
+    ev.stopPropagation(); // Evitar la propagación del evento de click
+    deleteToSearch(param);
+    dispatch(getSearch());
+    return false; // Evitar la propagación del evento de click
+  };
+
   return (
     <div className={styles.inputContainer}>
       <form onSubmit={searchProduct}>
@@ -123,7 +134,9 @@ const SearchInput: React.FC = (): JSX.Element => {
                   <GrHistory style={{ margin: '0px 10px' }} />
                   {item}
                 </div>
-                <button>x</button>
+                <button onClick={(ev) => handleDeleteSearch(ev, item)}>
+                  x
+                </button>
               </li>
             ))}
           </ul>

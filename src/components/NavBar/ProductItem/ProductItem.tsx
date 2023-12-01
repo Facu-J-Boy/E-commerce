@@ -21,10 +21,10 @@ const ProductItem: React.FC<product> = ({
   const handleDeleteToTheCart = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
-    event.stopPropagation(); // Evitar la propagación del evento de clic
+    event.stopPropagation(); // Evitar la propagación del evento de click
     deleteToTheCart(id);
     dispatch(getCart());
-    return false; // Evitar la propagación del evento de clic
+    return false; // Evitar la propagación del evento de click
   };
 
   const handleNavigate = () => {
