@@ -5,7 +5,7 @@ export const getSearch = createAction('getSearch', () => {
   const searchParse: string[] | [] = searchs ? JSON.parse(searchs) : [];
   return {
     payload: {
-      search: searchParse
+      search: searchParse.reverse()
     }
   };
 });
