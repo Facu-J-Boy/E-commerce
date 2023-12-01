@@ -12,6 +12,7 @@ const SearchInput: React.FC = (): JSX.Element => {
 
   const [search, setSearch] = useState('');
   const [searchList, setSearchList] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<number | null>(null);
 
   const { allProducts } = useSelector((state: any) => state.products);
   const { allSearchs } = useSelector((state: any) => state.searchs);
@@ -48,6 +49,42 @@ const SearchInput: React.FC = (): JSX.Element => {
     !searchList && setSearchList(true);
   };
 
+  const handleKeyDown = useCallback(
+    (e: any) => {
+      // Si se presiona la flecha hacia abajo (código de tecla 40) o hacia arriba (código de tecla 38)
+      if (e.keyCode === 40 || e.keyCode === 38) {
+        e.preventDefault(); // Evita el desplazamiento por defecto del navegador
+
+        // Calcula el nuevo índice basado en la dirección de la flecha
+        const direction = e.keyCode === 40 ? 1 : -1;
+        const newIndex =
+          (selectedItem === null
+            ? 0
+            : selectedItem + direction + allSearchs.length) % allSearchs.length;
+        setSelectedItem(newIndex);
+        setSearch(allSearchs[newIndex]);
+      }
+    },
+    [selectedItem, allSearchs]
+  );
+
+  useEffect(() => {
+    !searchList && setSelectedItem(null);
+
+    selectedItem != null && setSearchList(true);
+    // Agrega un event listener para el evento keydown al montar el componente
+    document.addEventListener('keydown', handleKeyDown);
+
+    // Limpia el event listener al desmontar el componente
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedItem, handleKeyDown, searchList]); // Vuelve a agregar el event listener si el ítem seleccionado cambia
+
+  const handleMouseEnter = (index: number) => {
+    setSelectedItem(index);
+  };
+
   const handleClick = (item: string) => {
     setSearch(item);
   };
@@ -70,8 +107,18 @@ const SearchInput: React.FC = (): JSX.Element => {
           className={styles.searchList}
         >
           <ul className={styles.searchs}>
-            {allSearchs.map((item: string, index: number) => (
-              <li key={index} onClick={() => handleClick(item)}>
+            {allSearchs?.map((item: string, index: number) => (
+              <li
+                key={index}
+                style={
+                  index === selectedItem
+                    ? { backgroundColor: 'rgb(206, 204, 204)' }
+                    : undefined
+                }
+                onMouseEnter={() => handleMouseEnter(index)}
+                // Agregando el manejador onMouseEnter
+                onClick={() => handleClick(item)}
+              >
                 <div>
                   <GrHistory style={{ margin: '0px 10px' }} />
                   {item}
