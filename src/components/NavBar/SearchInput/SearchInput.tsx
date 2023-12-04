@@ -18,6 +18,18 @@ const SearchInput: React.FC = (): JSX.Element => {
   const { allProducts } = useSelector((state: any) => state.products);
   const { allSearchs } = useSelector((state: any) => state.searchs);
 
+  const [searchsFiltered, setSearchsFiltered] = useState(allSearchs);
+
+  useEffect(() => {
+    setSearchsFiltered(
+      allSearchs.filter((e: string) =>
+        search.toLowerCase() === e.toLowerCase()
+          ? null
+          : e.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search, allSearchs]);
+
   const handleInputChange = (ev: any) => {
     setSearch(ev.target.value);
   };
@@ -112,13 +124,13 @@ const SearchInput: React.FC = (): JSX.Element => {
           onClick={handleSetSearchList}
         />
       </form>
-      {!allSearchs.length ? null : (
+      {!searchsFiltered.length ? null : (
         <div
           style={{ display: !searchList ? 'none' : 'flex' }}
           className={styles.searchList}
         >
           <ul className={styles.searchs}>
-            {allSearchs?.map((item: string, index: number) => (
+            {searchsFiltered?.map((item: string, index: number) => (
               <li
                 key={index}
                 style={
