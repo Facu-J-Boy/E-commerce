@@ -64,18 +64,15 @@ const SearchInput: React.FC = (): JSX.Element => {
 
   const handleKeyDown = useCallback(
     (e: any) => {
-      // Si se presiona la flecha hacia abajo (código de tecla 40) o hacia arriba (código de tecla 38)
       if (e.keyCode === 40 || e.keyCode === 38) {
-        e.preventDefault(); // Evita el desplazamiento por defecto del navegador
-
-        // Calcula el nuevo índice basado en la dirección de la flecha
+        // Lógica para la flecha hacia abajo o hacia arriba
+        e.preventDefault();
         const direction = e.keyCode === 40 ? 1 : -1;
         const newIndex =
           (selectedItem === null
             ? 0
             : selectedItem + direction + allSearchs.length) % allSearchs.length;
         setSelectedItem(newIndex);
-        setSearch(allSearchs[newIndex]);
       }
     },
     [selectedItem, allSearchs]
