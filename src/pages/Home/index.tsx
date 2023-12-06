@@ -15,7 +15,7 @@ import { getSearch } from '../../redux/actions/getSearch';
 const Home: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { products, productsLoading } = useSelector(
+  const { products, allProducts, productsLoading, productsError } = useSelector(
     (state: any) => state.products
   );
 
@@ -42,15 +42,18 @@ const Home: React.FC = (): JSX.Element => {
       <ProductsGrid
         products={products}
         productsLoading={productsLoading}
-        error=''
+        productsError={productsError}
       />
-      {!historyProducts.length ? null : (
+
+      {!historyProducts.length || !allProducts.length ? null : (
         <h1 className={styles.title}>History</h1>
       )}
-      <CarrouselProducts
-        products={historyProducts}
-        loading={historyProductsLoading}
-      />
+      {!allProducts.length ? null : (
+        <CarrouselProducts
+          products={historyProducts}
+          loading={historyProductsLoading}
+        />
+      )}
     </div>
   );
 };

@@ -4,18 +4,23 @@ import { product } from '../../interfaces/product';
 import { searchProducts } from '../actions/searchProducts';
 import { clearProductsList } from '../actions/clearProductsList';
 
+export interface error {
+  type: 'search' | 'fetch';
+  text: string;
+}
+
 export interface productsState {
   products: product[] | [];
   allProducts?: product[] | [];
-  productsLoading: boolean;
-  error: null | string | undefined;
+  productsLoading?: boolean;
+  productsError?: error | null | undefined;
 }
 
 const initialState: productsState = {
   products: [],
   allProducts: [], //En allProducts se almacenan todos los productos que se utilizarán para ser filtrados en las busquedas
   productsLoading: false,
-  error: null
+  productsError: null
 };
 
 const productsSlice = createSlice({
@@ -26,20 +31,28 @@ const productsSlice = createSlice({
     builder
       .addCase(getAllProducts.pending, (state) => {
         state.productsLoading = true;
-        state.error = null;
+        state.productsError = null;
       })
       .addCase(getAllProducts.fulfilled, (state, action) => {
         state.productsLoading = false;
-        state.products = action.payload;
-        state.allProducts = action.payload;
+
+        // Desestructurar el objeto action.payload
+        const { products, productsError } = action.payload.payload;
+
+        state.products = products;
+        state.allProducts = products;
+        state.productsError = productsError;
       })
       .addCase(getAllProducts.rejected, (state, action) => {
         state.productsLoading = false;
-        state.error = action.error.message;
+        state.productsError = {
+          type: 'fetch',
+          text: 'An error has occurred, please try again'
+        };
       })
       .addCase(searchProducts, (state, action) => {
         state.products = action.payload;
-        state.error = action.error;
+        state.productsError = action.error;
       })
       .addCase(clearProductsList, (state, action) => {
         state.products = action.payload;

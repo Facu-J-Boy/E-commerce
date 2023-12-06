@@ -81,7 +81,7 @@ const NavBar: React.FC = (): JSX.Element => {
               navigate('/login');
             }}
           >
-            Login
+            Log In
           </button>
         ) : (
           <div className={styles.profileImg}>
