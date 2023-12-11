@@ -12,7 +12,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import NavBar from './components/NavBar/NavBar';
 import AdminDashboard from './pages/AdminDashboard';
-import Footter from './components/Footter/Fotter';
+import Footter from './components/Footter/Footter';
 
 function App() {
   return (
