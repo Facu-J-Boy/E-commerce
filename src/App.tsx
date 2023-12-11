@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import NavBar from './components/NavBar/NavBar';
 import AdminDashboard from './pages/AdminDashboard';
+import Footter from './components/Footter/Fotter';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         {/* Redirige a la ruta de error cuando no se encuentra una ruta */}
         <Route path='404' element={<Navigate to='/404' />} />
       </Routes>
+      <Footter />
     </Router>
   );
 }
