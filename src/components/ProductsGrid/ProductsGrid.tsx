@@ -4,7 +4,7 @@ import styles from './ProductsGrid.module.css';
 import { product } from '../../interfaces/product';
 import ProductsCard from '../ProductCard/ProductsCard';
 import Skeleton from '../Skeleton/Skeleton';
-import { MdErrorOutline } from 'react-icons/md';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const ProductsGrid: React.FC<productsState> = ({
   products,
@@ -15,17 +15,8 @@ const ProductsGrid: React.FC<productsState> = ({
 
   return (
     <>
-      {productsError?.type === 'search' ? (
-        <div className={styles.searchError}>
-          <p>{productsError.text}</p>
-        </div>
-      ) : productsError?.type === 'fetch' ? (
-        <div className={styles.errorMessage}>
-          <div className={styles.icon}>
-            <MdErrorOutline />
-          </div>
-          <h1>{productsError.text}</h1>
-        </div>
+      {productsError ? (
+        <ErrorMessage type={productsError.type} message={productsError.text} />
       ) : null}
       <div className={styles.container}>
         {productsLoading ? (

@@ -10,7 +10,7 @@ import { getAllCategories } from '../../redux/actions/getAllCategories';
 import Categories from '../../components/Categories/Categories';
 import { auth } from '../../Firebase';
 import { useNavigate } from 'react-router-dom';
-import { MdErrorOutline } from 'react-icons/md';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 const AdminDashboard: React.FC = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState('home');
@@ -106,17 +106,11 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                   }`}
                   role='tabpanel'
                 >
-                  {productsError?.type === 'search' ? (
-                    <div className={styles.searchError}>
-                      <p>{productsError.text}</p>
-                    </div>
-                  ) : productsError?.type === 'fetch' ? (
-                    <div className={styles.errorMessage}>
-                      <div className={styles.icon}>
-                        <MdErrorOutline />
-                      </div>
-                      <h1>{productsError.text}</h1>
-                    </div>
+                  {productsError ? (
+                    <ErrorMessage
+                      type={productsError.type}
+                      message={productsError.text}
+                    />
                   ) : null}
                   {productsLoading ? (
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -124,7 +118,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                     </div>
                   ) : (
                     <>
-                      {products.map((p: product) => (
+                      {products?.map((p: product) => (
                         <DashboardProducts
                           key={p.id}
                           id={p.id}
@@ -148,7 +142,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                     </div>
                   ) : (
                     <>
-                      {categories.map(
+                      {categories?.map(
                         (c: string, index: React.Key | null | undefined) => (
                           <Categories key={index} categorie={c} />
                         )

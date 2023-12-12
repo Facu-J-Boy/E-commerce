@@ -1,0 +1,39 @@
+.searchError {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  color: #333;
+}
+
+.errorMessage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  color: #333;
+}
+
+.icon {
+  display: flex;
+  font-size: 80px;
+}
+
+.errorMessage h1 {
+  margin-left: 10px;
+  font-size: 80px;
+}
+
+@media screen and (max-width: 768px) {
+  .searchError {
+    font-size: 20px;
+  }
+
+  .icon {
+    font-size: 50px;
+  }
+
+  .errorMessage h1 {
+    font-size: 40px;
+  }
+}
