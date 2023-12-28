@@ -40,7 +40,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
     (state: any) => state.products
   );
 
-  const { categories, categoriesLoading } = useSelector(
+  const { categories, categoriesLoading, categoriesError } = useSelector(
     (state: any) => state.categories
   );
 
@@ -136,6 +136,12 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                   }`}
                   role='tabpanel'
                 >
+                  {categoriesError ? (
+                    <ErrorMessage
+                      type={categoriesError.type}
+                      message={categoriesError.text}
+                    />
+                  ) : null}
                   {categoriesLoading ? (
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                       <Loader />

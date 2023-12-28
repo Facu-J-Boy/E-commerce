@@ -1,7 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { product } from '../../interfaces/product';
 import { addToSearch } from './addToSearch';
-import { error } from '../reducers/productsReducer';
+import { error } from '../../interfaces/error';
 
 export const searchProducts = createAction(
   'searchProducts',

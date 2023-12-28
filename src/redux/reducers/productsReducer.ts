@@ -3,11 +3,7 @@ import { getAllProducts } from '../actions/getAllproducts';
 import { product } from '../../interfaces/product';
 import { searchProducts } from '../actions/searchProducts';
 import { clearProductsList } from '../actions/clearProductsList';
-
-export interface error {
-  type: 'search' | 'fetch';
-  text: string;
-}
+import { error } from '../../interfaces/error';
 
 export interface productsState {
   products: product[] | [];

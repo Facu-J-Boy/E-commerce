@@ -1,16 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getAllCategories } from '../actions/getAllCategories';
+import { error } from '../../interfaces/error';
 
-interface categoriesState {
-  categories: string[] | [];
-  categoriesLoading: boolean;
-  error: null | string | undefined;
+export interface categoriesState {
+  categories?: string[] | [];
+  categoriesLoading?: boolean;
+  categoriesError?: error | null | undefined;
 }
 
 const initialState: categoriesState = {
   categories: [],
   categoriesLoading: false,
-  error: null
+  categoriesError: null
 };
 
 const categoriesSlice = createSlice({
@@ -24,11 +25,19 @@ const categoriesSlice = createSlice({
       })
       .addCase(getAllCategories.fulfilled, (state, action) => {
         state.categoriesLoading = false;
-        state.categories = action.payload;
+
+        // Desestructurar el objeto action.payload
+        const { categories, categoriesError } = action.payload.payload;
+
+        state.categories = categories;
+        state.categoriesError = categoriesError;
       })
       .addCase(getAllCategories.rejected, (state, action) => {
         state.categoriesLoading = false;
-        state.error = action.error.message;
+        state.categoriesError = {
+          type: 'fetch',
+          text: 'An error has occurred, please try again'
+        };
       });
   }
 });
