@@ -3,6 +3,7 @@ import { ProductCardProps } from '../ProductCard/ProductsCard';
 import styles from './DashboardProducts.module.css';
 import { BiSolidPencil } from 'react-icons/bi';
 import { BsFillTrashFill } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 const DashboardProducts: React.FC<ProductCardProps> = ({
   id,
@@ -10,8 +11,14 @@ const DashboardProducts: React.FC<ProductCardProps> = ({
   title,
   price
 }): JSX.Element => {
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate(`/product/${id}`);
+  };
+
   return (
-    <div className={styles.content}>
+    <div className={styles.content} onClick={handleRedirect}>
       <div className={styles.imageContainer}>
         <img src={image} alt={title} />
       </div>
