@@ -25,10 +25,13 @@ const AdminDashboard: React.FC = (): JSX.Element => {
         setLogin(true);
       } else {
         setLogin(false);
-        navigate('*');
       }
     });
-  }, [navigate]);
+  }, []);
+
+  useEffect(() => {
+    !login && navigate('*'); // Si el usuario no está logueado lo redirige a otra pagina
+  }, [login, navigate]);
 
   const handleTabClick = (tabId: string) => {
     setActiveTab(tabId);
@@ -82,20 +85,6 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                     aria-selected={activeTab === 'profile'}
                   >
                     Categories
-                  </button>
-                </li>
-                <li className={styles.navItem}>
-                  <button
-                    className={`${styles.navLink} ${
-                      activeTab === 'contact' && styles.active
-                    }`}
-                    onClick={() => handleTabClick('contact')}
-                    type='button'
-                    role='tab'
-                    aria-controls='contact-tab-pane'
-                    aria-selected={activeTab === 'contact'}
-                  >
-                    Contact
                   </button>
                 </li>
               </ul>
@@ -155,14 +144,6 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                       )}
                     </>
                   )}
-                </div>
-                <div
-                  className={`${styles.tabPane} ${
-                    activeTab === 'contact' && styles.active
-                  }`}
-                  role='tabpanel'
-                >
-                  Contact Content
                 </div>
               </div>
             </div>

@@ -1,11 +1,11 @@
 .footterContainer {
-  color: #ffffff;
-  background-color: #333;
-  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
-  bottom: 0;
+  color: #ffffff;
+  background-color: #333;
+  height: 70px;
+  margin-top: 50px;
 }
 
 .iconZone {
