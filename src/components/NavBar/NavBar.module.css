@@ -48,9 +48,17 @@
   cursor: pointer;
 }
 
+@keyframes listAnimation {
+  0% {
+    transform: translateX(40px);
+  }
+}
+
 .list_container {
   position: absolute;
   left: -50px;
+  animation-name: listAnimation;
+  animation-duration: 200ms;
 }
 
 .list {
