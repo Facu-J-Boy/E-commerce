@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import NavBar from './components/NavBar/NavBar';
 import AdminDashboard from './pages/AdminDashboard';
+import Edit from './pages/Edit';
 import Footter from './components/Footter/Footter';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/signUp' element={<SignUp />} />
         <Route path='/admin' element={<AdminDashboard />} />
+        <Route path='/edit/:id' element={<Edit />} />
         {/* Ruta de error */}
         <Route path='*' element={<NotFound />} />
         {/* Redirige a la ruta de error cuando no se encuentra una ruta */}

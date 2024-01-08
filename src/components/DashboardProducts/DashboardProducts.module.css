@@ -23,11 +23,13 @@
 }
 
 .content h2 {
-  margin: 0px 10px;
+  margin: 0px 30px;
 }
 
 .icon {
   margin: 0px 10px;
+  border: none;
+  cursor: pointer;
 }
 
 .icon:hover {
