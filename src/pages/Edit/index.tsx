@@ -5,6 +5,7 @@ import { getSingleProduct } from '../../redux/actions/getSingleProduct';
 import { clearProductState } from '../../redux/actions/clearProductState';
 import { useParams } from 'react-router-dom';
 import styles from './Edit.module.css';
+import { FiEdit } from 'react-icons/fi';
 
 interface Product {
   // Define los tipos para el producto
@@ -36,21 +37,13 @@ const Edit: React.FC = (): JSX.Element => {
   const [showImage, setShowImage] = useState<string>('');
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-
-  const adjustTextareaHeight = (id: string) => {
-    const textarea = document.getElementById(id);
-    if (textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = `${textarea.scrollHeight}px`;
-    }
-  };
+  const [price, setPrice] = useState<number | string>('');
 
   useEffect(() => {
     if (product) {
       setTitle(product.title);
       setDescription(product.description);
-      adjustTextareaHeight('title');
-      adjustTextareaHeight('description');
+      setPrice(product.price);
     }
   }, [product]);
 
@@ -71,21 +64,26 @@ const Edit: React.FC = (): JSX.Element => {
     setFileToBase(selectedFile);
   };
 
-  const updateTextareaHeight = (textarea: HTMLTextAreaElement) => {
-    textarea.style.height = 'auto';
-    textarea.style.height = `${textarea.scrollHeight}px`;
-  };
-
   const handleTitleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(event.target.value);
-    updateTextareaHeight(event.target);
+  };
+
+  const handlePriceChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = ev.target.value;
+
+    // Validar que el valor ingresado es un número o está vacío
+    if (/^\d*\.?\d*$/.test(inputValue)) {
+      setPrice(inputValue);
+    } else {
+      // Puedes manejar la lógica de error aquí, como mostrar un mensaje al usuario.
+      console.error('Ingrese un valor numérico válido.');
+    }
   };
 
   const handleDescriptionChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setDescription(event.target.value);
-    updateTextareaHeight(event.target);
   };
 
   return (
@@ -99,32 +97,45 @@ const Edit: React.FC = (): JSX.Element => {
               src={!showImage ? product.image : showImage}
               alt={product.title}
             />
+            <div className={styles.editImage}>
+              <button>
+                <FiEdit size={25} />
+              </button>
+              <input
+                type='file'
+                onChange={(ev) => {
+                  handleFileChange(ev);
+                }}
+              />
+            </div>
           </div>
-          <input
-            type='file'
-            onChange={(ev) => {
-              handleFileChange(ev);
-            }}
-          />
+
           <div className={styles.info}>
             <textarea
-              id='title'
-              style={{ height: 'auto' }}
               className={styles.title}
               value={title}
               onChange={(ev) => {
                 handleTitleChange(ev);
               }}
             />
-            <input type='number' value={product.price} />
+            <div className={styles.price}>
+              $
+              <input
+                type='text'
+                value={price}
+                onChange={(ev) => {
+                  handlePriceChange(ev);
+                }}
+              />
+            </div>
             <textarea
-              id='description'
               className={styles.description}
               value={description}
               onChange={(ev) => {
                 handleDescriptionChange(ev);
               }}
             />
+            <button className={styles.editProduct}>Edit product</button>
           </div>
         </div>
       )}
