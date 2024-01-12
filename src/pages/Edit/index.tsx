@@ -135,7 +135,9 @@ const Edit: React.FC = (): JSX.Element => {
                 handleDescriptionChange(ev);
               }}
             />
-            <button className={styles.editProduct}>Edit product</button>
+            <div className={styles.editProduct}>
+              <button>Edit product</button>
+            </div>
           </div>
         </div>
       )}
