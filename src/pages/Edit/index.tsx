@@ -6,6 +6,7 @@ import { clearProductState } from '../../redux/actions/clearProductState';
 import { useParams } from 'react-router-dom';
 import styles from './Edit.module.css';
 import { FiEdit } from 'react-icons/fi';
+import SkeletonDetail from '../../components/SkeletonDetail/SkeletonDetail';
 
 interface Product {
   // Define los tipos para el producto
@@ -89,7 +90,7 @@ const Edit: React.FC = (): JSX.Element => {
   return (
     <>
       {productLoading ? (
-        <p>loading...</p>
+        <SkeletonDetail />
       ) : (
         <div className={styles.edit}>
           <div className={styles.image}>
