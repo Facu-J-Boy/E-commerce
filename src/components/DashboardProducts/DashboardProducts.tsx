@@ -34,18 +34,18 @@ const DashboardProducts: React.FC<ProductCardProps> = ({
         <div className={styles.imageContainer}>
           <img src={image} alt={title} />
         </div>
-        <h3>{title}</h3>
-        <h2>{`$${price}`}</h2>
+        <div className={styles.info}>
+          <h3>{title}</h3>
+          <h2>{`$${price}`}</h2>
+        </div>
       </div>
       <div style={{ display: 'flex' }}>
-        <div>
-          <button className={styles.icon} onClick={editRedirect}>
-            <BiSolidPencil size={25} style={{ margin: '0px 10px' }} />
-          </button>
-        </div>
-        <div className={styles.icon}>
+        <button className={styles.icon} onClick={editRedirect}>
+          <BiSolidPencil size={25} style={{ margin: '0px 10px' }} />
+        </button>
+        <button className={styles.icon}>
           <BsFillTrashFill size={25} style={{ margin: '0px 10px' }} />
-        </div>
+        </button>
       </div>
     </div>
   );
