@@ -7,6 +7,8 @@ import cartReducer from './reducers/cartReducer';
 import productsByCategorySlice from './reducers/productsByCategoryReducer';
 import historyReducer from './reducers/historyReducer';
 import searchReducer from './reducers/searchReducer';
+import buyReducer from './reducers/buyReducer';
+
 const store = configureStore({
   reducer: {
     products: productsReducer,
@@ -16,7 +18,8 @@ const store = configureStore({
     cartProducts: cartReducer,
     searchs: searchReducer,
     productsByCategory: productsByCategorySlice,
-    historyProducts: historyReducer
+    historyProducts: historyReducer,
+    buy: buyReducer
   }
 });
 
