@@ -9,6 +9,7 @@ import { getCart } from '../../../redux/actions/getCart';
 import { product } from '../../../interfaces/product';
 import { addToCart } from '../../../redux/actions/addToCart';
 import { deleteToTheCart } from '../../../redux/actions/deleteToTheCart';
+import { Buy } from '../../../redux/actions/buy';
 
 export interface ProductCardProps {
   id: number;
@@ -59,6 +60,11 @@ const Product: React.FC<ProductCardProps> = ({ id, image, title, price }) => {
     setInCart(cartProducts.some((p: product) => p.id === productId)); // Comprueba si el producto ya se encuentra en el carrito mediante su id
   }, [cartProducts, productId]);
 
+  const redirectToBuy = () => {
+    dispatch(Buy([product]));
+    navigate('/buy');
+  };
+
   return (
     <div className={styles.product} onClick={handleRedirect}>
       <div className={styles.imageContainer}>
@@ -72,7 +78,15 @@ const Product: React.FC<ProductCardProps> = ({ id, image, title, price }) => {
       </div>
       <h1>{`$${price}`}</h1>
       <span>{title}</span>
-      <button className={styles.button}>Buy Now</button>
+      <button
+        className={styles.button}
+        onClick={(event) => {
+          event.stopPropagation();
+          redirectToBuy();
+        }}
+      >
+        Buy Now
+      </button>
     </div>
   );
 };

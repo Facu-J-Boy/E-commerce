@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProductItem from '../ProductItem/ProductItem';
 import { product } from '../../../interfaces/product';
 import styles from './Cart.module.css';
 import { GrCart } from 'react-icons/gr';
+import { AppDispatch } from '../../../redux/store';
+import { useNavigate } from 'react-router-dom';
+import { Buy } from '../../../redux/actions/buy';
 
 const Cart: React.FC = (): JSX.Element => {
   const { cartProducts, total } = useSelector(
@@ -16,6 +19,10 @@ const Cart: React.FC = (): JSX.Element => {
     setProductsList(!productList);
   }, [productList]);
 
+  const dispatch = useDispatch<AppDispatch>();
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (productList === true) {
       document.body.addEventListener('click', toggleProducts);
@@ -24,6 +31,12 @@ const Cart: React.FC = (): JSX.Element => {
       document.body.removeEventListener('click', toggleProducts);
     };
   }, [productList, toggleProducts]);
+
+  const redirectToBuy = () => {
+    dispatch(Buy(cartProducts));
+    navigate('/buy');
+  };
+
   return (
     <div className={styles.cart}>
       <GrCart size={30} onClick={toggleProducts} />
@@ -49,7 +62,7 @@ const Cart: React.FC = (): JSX.Element => {
                   <h2>Total:</h2>
                   <h3>{`$${total}`}</h3>
                 </div>
-                <button>Buy</button>
+                <button onClick={redirectToBuy}>Buy</button>
               </div>
               {cartProducts.map((p: product) => (
                 <ol>
