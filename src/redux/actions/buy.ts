@@ -3,6 +3,8 @@ import { product } from '../../interfaces/product';
 
 export const Buy = createAction('Buy', (products: product[]) => {
   return {
-    payload: products
+    payload: {
+      products: products
+    }
   };
 });

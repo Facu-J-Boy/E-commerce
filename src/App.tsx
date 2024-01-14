@@ -14,6 +14,7 @@ import NavBar from './components/NavBar/NavBar';
 import AdminDashboard from './pages/AdminDashboard';
 import Edit from './pages/Edit';
 import Footter from './components/Footter/Footter';
+import Buy from './pages/Buy';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/signUp' element={<SignUp />} />
         <Route path='/admin' element={<AdminDashboard />} />
         <Route path='/edit/:id' element={<Edit />} />
+        <Route path='/buy' element={<Buy />} />
         {/* Ruta de error */}
         <Route path='*' element={<NotFound />} />
         {/* Redirige a la ruta de error cuando no se encuentra una ruta */}

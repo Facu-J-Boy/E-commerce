@@ -88,6 +88,7 @@
   bottom: 10px;
   animation-name: buttonAnimation;
   animation-duration: 500ms;
+  cursor: pointer;
 }
 
 .product:hover .button {

@@ -16,7 +16,7 @@ const buySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(Buy, (state, action) => {
-      state.productsToBuy = action.payload;
+      state.productsToBuy = action.payload.products;
     });
   }
 });
