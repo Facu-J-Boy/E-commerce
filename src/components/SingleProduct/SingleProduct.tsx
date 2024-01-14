@@ -9,6 +9,8 @@ import { addToCart } from '../../redux/actions/addToCart';
 import { getCart } from '../../redux/actions/getCart';
 import { deleteToTheCart } from '../../redux/actions/deleteToTheCart';
 import { BsFillCartXFill } from 'react-icons/bs';
+import { Buy } from '../../redux/actions/buy';
+import { useNavigate } from 'react-router-dom';
 
 const SingleProduct: React.FC<product> = ({
   id,
@@ -42,6 +44,8 @@ const SingleProduct: React.FC<product> = ({
 
   const dispatch = useDispatch<AppDispatch>();
 
+  const navigate = useNavigate();
+
   const handleAddToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
     addToCart(product);
@@ -67,6 +71,11 @@ const SingleProduct: React.FC<product> = ({
   useEffect(() => {
     setInCart(cartProducts.some((p: product) => p.id === productId)); // Comprueba si el producto ya se encuentra en el carrito mediante su id
   }, [cartProducts, productId]);
+
+  const redirectToBuy = () => {
+    dispatch(Buy([product]));
+    navigate('/buy');
+  };
 
   return (
     <div className={styles.detailContainer}>
@@ -109,6 +118,7 @@ const SingleProduct: React.FC<product> = ({
           </button>
           <button
             style={{ backgroundColor: '#333', color: 'white', border: 'none' }}
+            onClick={redirectToBuy}
           >
             Buy Now
           </button>
