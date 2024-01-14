@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { product } from '../../interfaces/product';
 import styles from './SingleProduct.module.css';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
-import { GrCart } from 'react-icons/gr';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { addToCart } from '../../redux/actions/addToCart';
 import { getCart } from '../../redux/actions/getCart';
 import { deleteToTheCart } from '../../redux/actions/deleteToTheCart';
-import { BsFillCartXFill } from 'react-icons/bs';
 import { Buy } from '../../redux/actions/buy';
 import { useNavigate } from 'react-router-dom';
 
@@ -110,11 +108,6 @@ const SingleProduct: React.FC<product> = ({
             onClick={!inCart ? handleAddToCart : handleDeleteToTheCart}
           >
             {!inCart ? 'Add to cart' : 'Remove from cart'}
-            {!inCart ? (
-              <GrCart style={{ margin: '0px 5px' }} size={25} />
-            ) : (
-              <BsFillCartXFill style={{ margin: '0px 5px' }} size={25} />
-            )}
           </button>
           <button
             style={{ backgroundColor: '#333', color: 'white', border: 'none' }}
