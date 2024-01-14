@@ -4,11 +4,6 @@
   }
 }
 
-/* .product_list_container {
-  animation-name: productsListAnimation;
-  animation-duration: 200ms;
-} */
-
 .cart {
   display: flex;
   margin: 0px 30px;

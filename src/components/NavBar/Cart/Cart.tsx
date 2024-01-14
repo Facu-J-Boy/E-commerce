@@ -62,7 +62,9 @@ const Cart: React.FC = (): JSX.Element => {
                   <h2>Total:</h2>
                   <h3>{`$${total}`}</h3>
                 </div>
-                <button onClick={redirectToBuy}>Buy</button>
+                <button style={{ cursor: 'pointer' }} onClick={redirectToBuy}>
+                  Buy
+                </button>
               </div>
               {cartProducts.map((p: product) => (
                 <ol>
