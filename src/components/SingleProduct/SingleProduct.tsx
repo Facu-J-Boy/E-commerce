@@ -7,7 +7,6 @@ import { AppDispatch } from '../../redux/store';
 import { addToCart } from '../../redux/actions/addToCart';
 import { getCart } from '../../redux/actions/getCart';
 import { deleteToTheCart } from '../../redux/actions/deleteToTheCart';
-import { Buy } from '../../redux/actions/buy';
 import { useNavigate } from 'react-router-dom';
 
 const SingleProduct: React.FC<product> = ({
@@ -71,8 +70,8 @@ const SingleProduct: React.FC<product> = ({
   }, [cartProducts, productId]);
 
   const redirectToBuy = () => {
-    dispatch(Buy([product]));
-    navigate('/buy');
+    // dispatch(Buy('single'));
+    navigate(`/buy/${id}`);
   };
 
   return (

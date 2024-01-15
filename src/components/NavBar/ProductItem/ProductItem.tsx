@@ -6,7 +6,7 @@ import { deleteToTheCart } from '../../../redux/actions/deleteToTheCart';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import { getCart } from '../../../redux/actions/getCart';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ProductItem: React.FC<product> = ({
   id,
@@ -27,6 +27,8 @@ const ProductItem: React.FC<product> = ({
     return false; // Evitar la propagación del evento de click
   };
 
+  const location = useLocation();
+
   const handleNavigate = () => {
     navigate(`/product/${id}`);
   };
@@ -40,9 +42,11 @@ const ProductItem: React.FC<product> = ({
         <h5>{title}</h5>
         <h4>{`$${price}`}</h4>
       </div>
-      <button onClick={handleDeleteToTheCart}>
-        <BsFillCartXFill size={25} />
-      </button>
+      {!location.pathname.includes('/buy') && (
+        <button onClick={handleDeleteToTheCart}>
+          <BsFillCartXFill size={25} />
+        </button>
+      )}
     </div>
   );
 };

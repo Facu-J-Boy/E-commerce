@@ -27,7 +27,7 @@ function App() {
         <Route path='/signUp' element={<SignUp />} />
         <Route path='/admin' element={<AdminDashboard />} />
         <Route path='/edit/:id' element={<Edit />} />
-        <Route path='/buy' element={<Buy />} />
+        <Route path='/buy/:id' element={<Buy />} />
         {/* Ruta de error */}
         <Route path='*' element={<NotFound />} />
         {/* Redirige a la ruta de error cuando no se encuentra una ruta */}

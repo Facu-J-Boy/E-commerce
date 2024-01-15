@@ -9,7 +9,6 @@ import { getCart } from '../../../redux/actions/getCart';
 import { product } from '../../../interfaces/product';
 import { addToCart } from '../../../redux/actions/addToCart';
 import { deleteToTheCart } from '../../../redux/actions/deleteToTheCart';
-import { Buy } from '../../../redux/actions/buy';
 
 export interface ProductCardProps {
   id: number;
@@ -61,8 +60,7 @@ const Product: React.FC<ProductCardProps> = ({ id, image, title, price }) => {
   }, [cartProducts, productId]);
 
   const redirectToBuy = () => {
-    dispatch(Buy([product]));
-    navigate('/buy');
+    navigate(`/buy/${id}`);
   };
 
   return (

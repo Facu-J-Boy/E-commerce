@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ProductItem from '../ProductItem/ProductItem';
 import { product } from '../../../interfaces/product';
 import styles from './Cart.module.css';
 import { GrCart } from 'react-icons/gr';
-import { AppDispatch } from '../../../redux/store';
+// import { AppDispatch } from '../../../redux/store';
 import { useNavigate } from 'react-router-dom';
-import { Buy } from '../../../redux/actions/buy';
+// import { Buy } from '../../../redux/actions/buy';
 
 const Cart: React.FC = (): JSX.Element => {
   const { cartProducts, total } = useSelector(
@@ -19,7 +19,7 @@ const Cart: React.FC = (): JSX.Element => {
     setProductsList(!productList);
   }, [productList]);
 
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
 
   const navigate = useNavigate();
 
@@ -33,8 +33,8 @@ const Cart: React.FC = (): JSX.Element => {
   }, [productList, toggleProducts]);
 
   const redirectToBuy = () => {
-    dispatch(Buy(cartProducts));
-    navigate('/buy');
+    // dispatch(Buy(cartProducts));
+    navigate('/buy/cart');
   };
 
   return (
