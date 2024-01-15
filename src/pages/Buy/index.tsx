@@ -8,6 +8,7 @@ import ProductItem from '../../components/NavBar/ProductItem/ProductItem';
 import { product } from '../../interfaces/product';
 import { clearProductState } from '../../redux/actions/clearProductState';
 import { FaArrowLeftLong } from 'react-icons/fa6';
+import SkeletonBuy from '../../components/SkeletonBuy/SkeletonBuy';
 
 const Buy: React.FC = (): JSX.Element => {
   const { id } = useParams();
@@ -44,13 +45,13 @@ const Buy: React.FC = (): JSX.Element => {
   return (
     <>
       {productLoading ? (
-        <p>loading...</p>
+        <SkeletonBuy />
       ) : (
         <div className={styles.container}>
           <div className={styles.leftZone}>
             <div className={styles.title}>
-              <h1>Shopping Cart</h1>
-              <h1>{`${items.length} items`}</h1>
+              <h2>Shopping Cart</h2>
+              <h2>{`${items.length} items`}</h2>
             </div>
             <ul className={styles.productList}>
               {items.map((element: any) => (

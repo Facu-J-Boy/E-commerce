@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: row;
-  border: solid red;
+  /* border: solid red; */
   height: 600px;
   margin: 0px 100px;
   color: #333;
@@ -35,7 +35,7 @@
   max-height: 400px;
   overflow-y: auto;
   padding-right: 50px;
-  border: solid red;
+  /* border: solid red; */
 }
 
 /* Estilos generales de la barra de desplazamiento */
