@@ -2,11 +2,40 @@
   display: flex;
   flex-direction: row;
   border: solid red;
+  height: 600px;
+  margin: 0px 100px;
+  color: #333;
+}
+
+.leftZone {
+  flex-direction: column;
+  width: 70%;
+  padding: 20px 100px;
+}
+
+.leftZone button {
+  display: flex;
+  justify-content: space-between;
+  color: #131c46;
+  background: none;
+  border: none;
+  font-size: medium;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border-bottom: solid 1px #333;
 }
 
 .productList {
-  max-height: 500px;
+  max-height: 400px;
   overflow-y: auto;
+  padding-right: 50px;
+  border: solid red;
 }
 
 /* Estilos generales de la barra de desplazamiento */
@@ -29,8 +58,53 @@
   scrollbar-color: #888 #f1f1f1;
 }
 
+.rightZone {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 50px;
+  width: 30%;
+  background-color: #f5f5f1;
+  /* border: solid red; */
+}
+
+.rightZone button {
+  color: #fff;
+  background-color: #131c46;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  padding: 20px;
+  cursor: pointer;
+}
+
 .form {
   display: flex;
-  width: 150px;
-  border: soldi red;
+  flex-direction: column;
+  border-top: solid 1px #888;
+  border-bottom: solid 1px #888;
+  padding: 20px 0px;
+}
+
+.form input {
+  background-color: none;
+  height: 40px;
+  border-radius: 5px;
+  border: solid 1px #888;
+}
+
+.form button {
+  margin: 20px 0px;
+  padding: 10px;
+  width: 100px;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #333;
+  border: none;
+  cursor: pointer;
+}
+
+.total {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
