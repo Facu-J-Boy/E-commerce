@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Buy.module.css';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { getSingleProduct } from '../../redux/actions/getSingleProduct';
@@ -11,6 +11,7 @@ import { FaArrowLeftLong } from 'react-icons/fa6';
 import SkeletonBuy from '../../components/SkeletonBuy/SkeletonBuy';
 
 const Buy: React.FC = (): JSX.Element => {
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const dispatch = useDispatch<AppDispatch>();
@@ -42,6 +43,10 @@ const Buy: React.FC = (): JSX.Element => {
     };
   }, [dispatch, id, cartProducts]);
 
+  const handleRedirect = () => {
+    navigate('/');
+  };
+
   return (
     <>
       {productLoading ? (
@@ -65,7 +70,7 @@ const Buy: React.FC = (): JSX.Element => {
                 </ol>
               ))}
             </ul>
-            <button>
+            <button onClick={handleRedirect}>
               <FaArrowLeftLong style={{ marginRight: '10px' }} />
               Continue Shopping
             </button>
@@ -73,10 +78,14 @@ const Buy: React.FC = (): JSX.Element => {
           <div className={styles.rightZone}>
             <h4>Order Summary</h4>
             <div className={styles.form}>
-              <h4>SHIPPING</h4>
-              <input type='text' />
-              <h4>PROMO CODE</h4>
-              <input type='text' />
+              <div>
+                <h4>SHIPPING</h4>
+                <input type='text' />
+              </div>
+              <div>
+                <h4>PROMO CODE</h4>
+                <input type='text' />
+              </div>
               <button>APPLY</button>
             </div>
             <div className={styles.total}>

@@ -8,6 +8,9 @@ import logo from './e-commerce.png';
 import userImage from './user.jpg';
 import SearchInput from './SearchInput/SearchInput';
 import Cart from './Cart/Cart';
+import { AppDispatch } from '../../redux/store';
+import { useDispatch } from 'react-redux';
+import { getCart } from '../../redux/actions/getCart';
 
 const NavBar: React.FC = (): JSX.Element => {
   const [list, setList] = useState(false);
@@ -15,6 +18,8 @@ const NavBar: React.FC = (): JSX.Element => {
     photoURL: '',
     displayName: ''
   });
+
+  const dispatch = useDispatch<AppDispatch>();
 
   const navigate = useNavigate();
 
@@ -26,6 +31,10 @@ const NavBar: React.FC = (): JSX.Element => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, [dispatch]);
 
   const toggleList = useCallback(() => {
     setList(!list);
