@@ -49,6 +49,14 @@ const Edit: React.FC = (): JSX.Element => {
   const [category, setCategory] = useState<string>('');
 
   useEffect(() => {
+    document.title = `Edit: ${product.title ? product.title : ''}`; // Cambia el titulo de la web
+
+    return () => {
+      document.title = 'E-commerce'; // Al desmontar el componente el titulo vuelve a la normalidad
+    };
+  }, [product]);
+
+  useEffect(() => {
     if (product) {
       setTitle(product.title);
       setDescription(product.description);
