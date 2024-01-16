@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import styles from './Edit.module.css';
 import { FiEdit } from 'react-icons/fi';
 import SkeletonDetail from '../../components/SkeletonDetail/SkeletonDetail';
+import { getAllCategories } from '../../redux/actions/getAllCategories';
 
 interface Product {
   // Define los tipos para el producto
@@ -15,6 +16,7 @@ interface Product {
   description: string;
   image: string;
   price: number;
+  category: string;
   // Otros campos si los hay
 }
 
@@ -25,6 +27,7 @@ const Edit: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getSingleProduct(id));
+    dispatch(getAllCategories());
     return () => {
       dispatch(clearProductState());
     };
@@ -35,16 +38,22 @@ const Edit: React.FC = (): JSX.Element => {
       state.product
   );
 
+  const { categories, categoriesLoading } = useSelector(
+    (state: any) => state.categories
+  );
+
   const [showImage, setShowImage] = useState<string>('');
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [price, setPrice] = useState<number | string>('');
+  const [category, setCategory] = useState<string>('');
 
   useEffect(() => {
     if (product) {
       setTitle(product.title);
       setDescription(product.description);
       setPrice(product.price);
+      setCategory(product.category);
     }
   }, [product]);
 
@@ -87,9 +96,14 @@ const Edit: React.FC = (): JSX.Element => {
     setDescription(event.target.value);
   };
 
+  // Manejar cambios en la selección
+  const handleSelectChange = (event: any) => {
+    setCategory(event.target.value);
+  };
+
   return (
     <>
-      {productLoading ? (
+      {productLoading && categoriesLoading ? (
         <SkeletonDetail />
       ) : (
         <div className={styles.edit}>
@@ -128,6 +142,17 @@ const Edit: React.FC = (): JSX.Element => {
                   handlePriceChange(ev);
                 }}
               />
+            </div>
+            <div className={styles.category}>
+              <h4>Category: </h4>
+              <select
+                value={category}
+                onChange={(ev) => {
+                  handleSelectChange(ev);
+                }}
+              >
+                {categories?.map((e: string) => <option value={e}>{e}</option>)}
+              </select>
             </div>
             <textarea
               className={styles.description}
