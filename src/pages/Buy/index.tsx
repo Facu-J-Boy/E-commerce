@@ -26,7 +26,14 @@ const Buy: React.FC = (): JSX.Element => {
 
   const [items, setItems] = useState<product[]>([]);
 
-  console.log('items: ', items);
+  useEffect(() => {
+    document.title = `Buy ${items.length} ${
+      items.length === 1 ? 'item' : 'items'
+    }`;
+    return () => {
+      document.title = 'E-commerce'; // Al desmontar el componente el titulo vuelve a la normalidad
+    };
+  }, [items.length]);
 
   useEffect(() => {
     id !== 'cart' && setItems([product]);
@@ -56,7 +63,9 @@ const Buy: React.FC = (): JSX.Element => {
           <div className={styles.leftZone}>
             <div className={styles.title}>
               <h2>Shopping Cart</h2>
-              <h2>{`${items.length} items`}</h2>
+              <h2>{`${items.length} ${
+                items.length === 1 ? 'item' : 'items'
+              }`}</h2>
             </div>
             <ul className={styles.productList}>
               {items.map((element: any) => (
