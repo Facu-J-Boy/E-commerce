@@ -104,8 +104,17 @@
   }
 
   .login_button {
-    margin-left: 20px;
+    margin-left: 0px;
+    margin-right: 5px;
     height: 40px;
     width: 70px;
+    font-size: small;
   }
 }
+
+/* @media screen and (max-width: 388px) {
+  .login_button {
+    width: 100px;
+    margin-left: 0px;
+  }
+} */

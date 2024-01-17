@@ -4,9 +4,7 @@ import ProductItem from '../ProductItem/ProductItem';
 import { product } from '../../../interfaces/product';
 import styles from './Cart.module.css';
 import { GrCart } from 'react-icons/gr';
-// import { AppDispatch } from '../../../redux/store';
 import { useNavigate } from 'react-router-dom';
-// import { Buy } from '../../../redux/actions/buy';
 
 const Cart: React.FC = (): JSX.Element => {
   const { cartProducts, total } = useSelector(
@@ -18,8 +16,6 @@ const Cart: React.FC = (): JSX.Element => {
   const toggleProducts = useCallback(() => {
     setProductsList(!productList);
   }, [productList]);
-
-  // const dispatch = useDispatch<AppDispatch>();
 
   const navigate = useNavigate();
 
@@ -33,7 +29,6 @@ const Cart: React.FC = (): JSX.Element => {
   }, [productList, toggleProducts]);
 
   const redirectToBuy = () => {
-    // dispatch(Buy(cartProducts));
     navigate('/buy/cart');
   };
 
@@ -69,6 +64,7 @@ const Cart: React.FC = (): JSX.Element => {
               {cartProducts.map((p: product) => (
                 <ol>
                   <ProductItem
+                    key={p.id}
                     id={p.id}
                     title={p.title}
                     price={p.price}
