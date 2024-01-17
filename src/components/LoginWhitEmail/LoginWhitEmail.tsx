@@ -48,10 +48,8 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
 
         onAuthStateChanged(auth, (user) => {
           if (user) {
-            console.log('Usuario autenticado:', user);
             setLoading(false);
           } else {
-            console.log('Usuario no autenticado');
             setLoading(false);
           }
         });

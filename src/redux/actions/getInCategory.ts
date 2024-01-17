@@ -18,7 +18,7 @@ export const getInCategory = createAsyncThunk(
         id ? p.id !== parseInt(id, 10) : null
       );
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 );

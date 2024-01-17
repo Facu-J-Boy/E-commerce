@@ -65,8 +65,6 @@ const Edit: React.FC = (): JSX.Element => {
     }
   }, [product]);
 
-  console.log('title: ', title);
-
   const setFileToBase = (file: File | undefined) => {
     if (file) {
       const reader = new FileReader();

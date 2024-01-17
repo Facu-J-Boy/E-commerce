@@ -10,7 +10,7 @@ export const getSingleProduct = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 );
