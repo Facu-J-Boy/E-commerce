@@ -101,7 +101,8 @@
 
 @media screen and (max-width: 768px) {
   .product {
-    width: 35vw;
+    width: 40vw;
     height: 350px;
+    margin: 5px;
   }
 }
