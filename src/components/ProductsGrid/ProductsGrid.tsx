@@ -15,9 +15,9 @@ const ProductsGrid: React.FC<productsState> = ({
 
   return (
     <>
-      {productsError ? (
+      {productsError && (
         <ErrorMessage type={productsError.type} message={productsError.text} />
-      ) : null}
+      )}
       <div className={styles.container}>
         {productsLoading ? (
           <>
