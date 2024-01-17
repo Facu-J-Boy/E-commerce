@@ -14,3 +14,10 @@
     background-position: 200% 0;
   }
 }
+
+@media screen and (max-width: 1115px) {
+  .skeleton {
+    width: 100%;
+    margin: 0px;
+  }
+}

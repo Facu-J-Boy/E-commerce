@@ -1,7 +1,6 @@
 .container {
   display: flex;
   flex-direction: row;
-  height: 600px;
   margin: 0px 100px;
   color: #333;
   box-shadow: 0 16px 18px rgba(0, 0, 0, 0.2);
@@ -116,7 +115,6 @@
     flex-direction: column-reverse;
     width: 90vw;
     padding: 0px 10px;
-    height: 100vh;
     font-size: smaller;
   }
 

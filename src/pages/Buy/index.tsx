@@ -69,8 +69,9 @@ const Buy: React.FC = (): JSX.Element => {
             </div>
             <ul className={styles.productList}>
               {items.map((element: any) => (
-                <ol>
+                <ol key={element.id}>
                   <ProductItem
+                    key={element.id}
                     id={element.id}
                     title={element.title}
                     price={element.price}
