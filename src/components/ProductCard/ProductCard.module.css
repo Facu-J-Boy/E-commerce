@@ -109,4 +109,8 @@
   .product h1 {
     font-size: x-large;
   }
+
+  .product span {
+    font-size: small;
+  }
 }
