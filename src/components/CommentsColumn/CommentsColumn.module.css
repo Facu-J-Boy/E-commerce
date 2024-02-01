@@ -19,7 +19,7 @@
 
 @media screen and (max-width: 768px) {
   .commentsContainer {
-    margin: 0px;
+    margin: 20px;
   }
 
   .container {
