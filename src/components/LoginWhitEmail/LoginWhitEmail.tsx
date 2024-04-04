@@ -2,20 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   getAuth,
-  getRedirectResult,
   onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signInWithRedirect
+  signInWithEmailAndPassword
 } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './LoginWithEmail.module.css';
 import { FormData } from '../../interfaces/formData';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { auth, provider } from '../../Firebase';
+import { auth } from '../../Firebase';
 import logo from './google-logo.png';
 import Loadingscreen from '../LoadingScreen/Loadingscreen';
+// import { useLocation } from 'react-router-dom';
+// import { useDispatch } from 'react-redux';
+// import { getSession } from '../../redux/actions/getSession';
+// import { AppDispatch } from '../../redux/store';
+// import { googleLogIn } from '../../redux/actions/googleLogIn';
 
 const LoginWhitEmail: React.FC = (): JSX.Element => {
+  // const dispatch = useDispatch<AppDispatch>();
+
   const [loading, setLoading] = useState<boolean>(true);
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -26,6 +31,23 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
 
   const navigate = useNavigate();
 
+  // const [userData, setUserData] = useState<any>(null);
+  // const location = useLocation();
+
+  // console.log('user: ', userData);
+
+  // useEffect(() => {
+  //   const params = new URLSearchParams(location.search);
+  //   const userDataParam = params.get('userData');
+  //   if (userDataParam) {
+  //     setUserData(JSON.parse(decodeURIComponent(userDataParam)));
+  //   }
+  // }, [location.search]);
+
+  // useEffect(() => {
+  //   userData && dispatch(getSession(userData._id));
+  // }, [userData, dispatch]);
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       user && navigate('/');
@@ -33,7 +55,7 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
   }, [navigate]);
 
   useEffect(() => {
-    document.title = 'Login'; // Cambia el titulo de la web por el titulo del producto
+    document.title = 'Login'; // Cambia el titulo de la web
 
     return () => {
       document.title = 'E-commerce'; // Al desmontar el componente el titulo vuelve a la normalidad
@@ -81,23 +103,8 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
     }
   };
 
-  const handleSignInWithGoogle = async () => {
-    try {
-      // Inicia la carga
-      setLoading(true);
-
-      // Inicia sesión con Google utilizando la redirección
-      await signInWithRedirect(auth, provider);
-
-      // Obtiene el resultado de la redirección
-      await getRedirectResult(auth);
-
-      // Finaliza la carga
-      setLoading(false);
-    } catch (error) {
-      setLoading(false); // Maneja el error y finaliza la carga
-      console.error('Error: ', error);
-    }
+  const googleLogin = () => {
+    window.open(`${process.env.REACT_APP_SERVER_URL}/user/auth`, '_self');
   };
 
   return (
@@ -205,10 +212,7 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
               }}
             >
               <div>
-                <button
-                  className={styles.LogInGoogle}
-                  onClick={handleSignInWithGoogle}
-                >
+                <button className={styles.LogInGoogle} onClick={googleLogin}>
                   <img
                     style={{ width: '30px', height: '30px' }}
                     src={logo}

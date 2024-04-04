@@ -1,38 +1,55 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './NavBar.module.css';
-import { auth } from '../../Firebase';
-import { user } from '../../interfaces/user';
-import { getAuth, signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import logo from './e-commerce.png';
 import userImage from './user.jpg';
 import SearchInput from './SearchInput/SearchInput';
 import Cart from './Cart/Cart';
 import { AppDispatch } from '../../redux/store';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCart } from '../../redux/actions/getCart';
+import { getAllcategory } from '../../redux/actions/getAllCategory';
+import { getSession } from '../../redux/actions/getSession';
+import { userId } from '../../redux/actions/userId';
+import { logOut } from '../../redux/actions/logOut';
 
 const NavBar: React.FC = (): JSX.Element => {
   const [list, setList] = useState(false);
-  const [user, setUser] = useState<user>({
-    photoURL: '',
-    displayName: ''
-  });
+
+  const { user } = useSelector((state: any) => state.user);
+  console.log('user: ', user);
+  console.log('userId', userId.get());
+  const [userData, setUserData] = useState<any>(null);
+
+  const location = useLocation();
 
   const dispatch = useDispatch<AppDispatch>();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser({ photoURL: user.photoURL, displayName: user.displayName });
-      }
-    });
-  }, []);
+    const id = userId.get();
+    id && dispatch(getSession(id));
+  }, [dispatch]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const userDataParam = params.get('userData');
+    if (userDataParam) {
+      setUserData(JSON.parse(decodeURIComponent(userDataParam)));
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    if (userData) {
+      dispatch(getSession(userData._id));
+      userId.set(userData._id);
+    }
+  }, [userData, dispatch]);
 
   useEffect(() => {
     dispatch(getCart());
+    dispatch(getAllcategory);
   }, [dispatch]);
 
   const toggleList = useCallback(() => {
@@ -48,15 +65,9 @@ const NavBar: React.FC = (): JSX.Element => {
     };
   }, [list, toggleList]); // Cuando la lista es visible podemos cerrarla haciendo click en cualquier lugar
 
-  const logOut = async () => {
-    try {
-      const auth = getAuth();
-      await signOut(auth).then(() => {
-        setUser({ photoURL: '', displayName: '' });
-      });
-    } catch (error) {
-      console.error('Error of close session:', error);
-    }
+  const handleLogOut = () => {
+    userId.set('');
+    dispatch(logOut());
   };
 
   return (
@@ -82,7 +93,7 @@ const NavBar: React.FC = (): JSX.Element => {
           <SearchInput />
           <Cart />
         </div>
-        {user.displayName === '' && user.photoURL === '' ? (
+        {Object.keys(user).length === 0 ? (
           <button
             className={styles.login_button}
             onClick={() => {
@@ -94,8 +105,8 @@ const NavBar: React.FC = (): JSX.Element => {
         ) : (
           <div className={styles.profileImg}>
             <img
-              src={!user.photoURL ? userImage : user.photoURL}
-              alt={!user.displayName ? 'undefined' : user.displayName}
+              src={!user.photo ? userImage : user.photo}
+              alt={!user.name ? 'undefined' : user.name}
               onClick={toggleList}
             />
             {list && (
@@ -108,7 +119,7 @@ const NavBar: React.FC = (): JSX.Element => {
                   >
                     Dashboard
                   </ol>
-                  <ol onClick={logOut}>Exit</ol>
+                  <ol onClick={handleLogOut}>Exit</ol>
                 </ul>
               </div>
             )}
