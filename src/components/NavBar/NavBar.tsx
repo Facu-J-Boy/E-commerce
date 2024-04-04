@@ -17,7 +17,6 @@ const NavBar: React.FC = (): JSX.Element => {
   const [list, setList] = useState(false);
 
   const { user } = useSelector((state: any) => state.user);
-  console.log('user: ', user);
   console.log('userId', userId.get());
   const [userData, setUserData] = useState<any>(null);
 
@@ -49,7 +48,7 @@ const NavBar: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getCart());
-    dispatch(getAllcategory);
+    dispatch(getAllcategory());
   }, [dispatch]);
 
   const toggleList = useCallback(() => {

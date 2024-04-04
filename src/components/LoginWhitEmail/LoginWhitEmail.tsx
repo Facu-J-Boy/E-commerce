@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  getAuth,
-  onAuthStateChanged,
-  signInWithEmailAndPassword
-} from 'firebase/auth';
+import // getAuth,
+// onAuthStateChanged
+// signInWithEmailAndPassword
+'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './LoginWithEmail.module.css';
 import { FormData } from '../../interfaces/formData';
@@ -12,16 +11,14 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { auth } from '../../Firebase';
 import logo from './google-logo.png';
 import Loadingscreen from '../LoadingScreen/Loadingscreen';
-// import { useLocation } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
-// import { getSession } from '../../redux/actions/getSession';
-// import { AppDispatch } from '../../redux/store';
-// import { googleLogIn } from '../../redux/actions/googleLogIn';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { logIn } from '../../redux/actions/logIn';
 
 const LoginWhitEmail: React.FC = (): JSX.Element => {
-  // const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const { userLoading } = useSelector((state: any) => state.user);
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -30,23 +27,6 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
   };
 
   const navigate = useNavigate();
-
-  // const [userData, setUserData] = useState<any>(null);
-  // const location = useLocation();
-
-  // console.log('user: ', userData);
-
-  // useEffect(() => {
-  //   const params = new URLSearchParams(location.search);
-  //   const userDataParam = params.get('userData');
-  //   if (userDataParam) {
-  //     setUserData(JSON.parse(decodeURIComponent(userDataParam)));
-  //   }
-  // }, [location.search]);
-
-  // useEffect(() => {
-  //   userData && dispatch(getSession(userData._id));
-  // }, [userData, dispatch]);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -62,45 +42,15 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
     };
   }, []);
 
-  useEffect(() => {
-    const checkUserLogin = async () => {
-      try {
-        // Simula un retraso para demostrar el estado de carga
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            setLoading(false);
-          } else {
-            setLoading(false);
-          }
-        });
-      } catch (error) {
-        console.error('Error al verificar el estado de autenticación:', error);
-        setLoading(false);
-      }
-    };
-
-    checkUserLogin();
-  }, []);
-
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<FormData>();
 
-  const onSubmit = async (data: any) => {
-    setLoading(true); // Comienza  a ejecutarse la funcion
+  const onSubmit = async (data: FormData) => {
     const { email, password } = data;
-    try {
-      const auth = getAuth();
-      await signInWithEmailAndPassword(auth, email, password);
-      setLoading(false); // Si el usuario se logueó correctamente termina el loading
-    } catch (error) {
-      setLoading(false); // Si hay un error también
-      console.error('Error: ', error);
-    }
+    dispatch(logIn({ email, password }));
   };
 
   const googleLogin = () => {
@@ -109,7 +59,7 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
 
   return (
     <>
-      {loading ? (
+      {userLoading ? (
         <Loadingscreen />
       ) : (
         <div className={styles.formContainer}>

@@ -1,0 +1,31 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios, { AxiosRequestConfig } from 'axios';
+import { FormData } from '../../interfaces/formData';
+import { userId } from './userId';
+
+const axiosRequestConfig: AxiosRequestConfig = {
+  baseURL: 'http://localhost:3001', // URL base para todas las solicitudes
+  headers: {
+    Authorization: `Bearer ${process.env.REACT_APP_TOKEN}`
+  }
+};
+
+const axiosInstance = axios.create(axiosRequestConfig);
+
+export const logIn = createAsyncThunk('logIn', async (formData: FormData) => {
+  const data = {
+    email: formData.email,
+    password: formData.password
+  };
+  console.log('date: ', data);
+  try {
+    const response = await axiosInstance.post(
+      'http://localhost:3001/user/login',
+      data
+    );
+    response && userId.set(response.data._id);
+    window.open('http://localhost:3000', '_self');
+  } catch (error: any) {
+    throw error.response.data.error;
+  }
+});
