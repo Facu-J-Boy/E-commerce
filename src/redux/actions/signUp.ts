@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios, { AxiosRequestConfig } from 'axios';
 import { FormData } from '../../interfaces/formData';
+import axios, { AxiosRequestConfig } from 'axios';
 import { userId } from './userId';
 
 const axiosRequestConfig: AxiosRequestConfig = {
@@ -12,14 +12,13 @@ const axiosRequestConfig: AxiosRequestConfig = {
 
 const axiosInstance = axios.create(axiosRequestConfig);
 
-export const logIn = createAsyncThunk('logIn', async (formData: FormData) => {
+export const signUp = createAsyncThunk('signUp', async (formData: FormData) => {
   const data = {
     email: formData.email,
     password: formData.password
   };
-  console.log('date: ', data);
   try {
-    const response = await axiosInstance.post('/user/login', data);
+    const response = await axiosInstance.post('/user/signup', data);
     response && userId.set(response.data._id);
     window.open('http://localhost:3000', '_self');
   } catch (error: any) {
