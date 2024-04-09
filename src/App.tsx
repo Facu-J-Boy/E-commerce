@@ -15,10 +15,14 @@ import AdminDashboard from './pages/AdminDashboard';
 import Edit from './pages/Edit';
 import Footter from './components/Footter/Footter';
 import Buy from './pages/Buy';
+import { useSelector } from 'react-redux';
+import Notification from './components/Notification/Notification';
 
 function App() {
+  const { text } = useSelector((state: any) => state.notification);
   return (
     <Router>
+      {text && <Notification text={text} />}
       <NavBar /> {/* Renderiza la NavBar en todas las rutas */}
       <Routes>
         <Route path='/' element={<Home />} />

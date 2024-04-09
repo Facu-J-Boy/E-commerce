@@ -8,14 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { signUp } from '../../redux/actions/signUp';
 import LoaderMini from '../LoaderMini/LoaderMini';
-import Notification from '../Notification/Notification';
 
 const SignUpWithEmail: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const { userLoading, userError } = useSelector((state: any) => state.user);
+  const { userLoading } = useSelector((state: any) => state.user);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -34,7 +33,6 @@ const SignUpWithEmail: React.FC = (): JSX.Element => {
 
   return (
     <>
-      {userError && <Notification text={userError} />}
       <div className={styles.formContainer}>
         <div className={styles.form}>
           <div className={styles.logo}>

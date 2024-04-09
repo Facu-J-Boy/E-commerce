@@ -14,12 +14,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { logIn } from '../../redux/actions/logIn';
 import LoaderMini from '../LoaderMini/LoaderMini';
-import Notification from '../Notification/Notification';
 
 const LoginWhitEmail: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { userLoading, userError } = useSelector((state: any) => state.user);
+  const { userLoading } = useSelector((state: any) => state.user);
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -60,7 +59,6 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
 
   return (
     <>
-      {userError && <Notification text={userError} />}
       <div className={styles.formContainer}>
         <div className={styles.form}>
           <div className={styles.logo}>

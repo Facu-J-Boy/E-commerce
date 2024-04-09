@@ -3,14 +3,14 @@ import styles from './Notification.module.css';
 import { VscError } from 'react-icons/vsc';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
-import { clearUserError } from '../../redux/reducers/userReducer';
+import { clearNotification } from '../../redux/reducers/notificationReducer';
 
 const Notification: React.FC<{ text: string }> = ({ text }): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(clearUserError());
+      dispatch(clearNotification());
     }, 2000);
   });
 

@@ -8,23 +8,17 @@ import { signUp } from '../actions/signUp';
 export interface userState {
   user: user | {};
   userLoading: boolean;
-  userError: null | string | undefined;
 }
 
 const initialState: userState = {
   user: {},
-  userLoading: false,
-  userError: null
+  userLoading: false
 };
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    clearUserError: (state) => {
-      state.userError = null;
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getSession.pending, (state) => {
@@ -35,7 +29,6 @@ const userSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(logIn.pending, (state) => {
-        state.userError = null;
         state.userLoading = true;
       })
       .addCase(logIn.fulfilled, (state) => {
@@ -43,10 +36,8 @@ const userSlice = createSlice({
       })
       .addCase(logIn.rejected, (state, action) => {
         state.userLoading = false;
-        state.userError = action.error.message;
       })
       .addCase(signUp.pending, (state) => {
-        state.userError = null;
         state.userLoading = true;
       })
       .addCase(signUp.fulfilled, (state) => {
@@ -54,14 +45,11 @@ const userSlice = createSlice({
       })
       .addCase(signUp.rejected, (state, action) => {
         state.userLoading = false;
-        state.userError = action.error.message;
       })
       .addCase(logOut, (state, action) => {
         state.user = action.payload;
       });
   }
 });
-
-export const { clearUserError } = userSlice.actions;
 
 export default userSlice.reducer;
