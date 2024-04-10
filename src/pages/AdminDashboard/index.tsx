@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './AdminDashboard.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
-import { getAllProducts } from '../../redux/actions/getAllproducts';
+// import { getAllProducts } from '../../redux/actions/getAllproducts';
 import { product } from '../../interfaces/product';
 import DashboardProducts from '../../components/DashboardProducts/DashboardProducts';
 import Loader from '../../components/Loader/Loader';
@@ -48,7 +48,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
   );
 
   useEffect(() => {
-    dispatch(getAllProducts());
+    // dispatch(getAllProducts());
     dispatch(getAllCategories());
   }, [dispatch]);
 

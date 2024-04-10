@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSearch } from '../../../redux/actions/getSearch';
-import { getAllProducts } from '../../../redux/actions/getAllproducts';
+// import { getAllProducts } from '../../../redux/actions/getAllproducts';
 import { searchProducts } from '../../../redux/actions/searchProducts';
 import { AppDispatch } from '../../../redux/store';
 import { GrHistory } from 'react-icons/gr';
@@ -38,7 +38,7 @@ const SearchInput: React.FC = (): JSX.Element => {
     ev.preventDefault();
     searchList && setSearchList(false); // Si la lista de busqueda está abierta desaparece al ejecutar la busqueda
     if (!search) {
-      dispatch(getAllProducts()); // Si no hay parametro de busqueda se setea el estado global de los productos a su totalidad
+      // dispatch(getAllProducts()); // Si no hay parametro de busqueda se setea el estado global de los productos a su totalidad
     } else {
       dispatch(searchProducts(search, allProducts)); // Caso contrario ejecutamos la acción de busqueda
       dispatch(getSearch());
