@@ -1,13 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { axiosInstance } from '../../Config/axios';
 
 export const getSession = createAsyncThunk(
   'getSession',
   async (id: string | undefined) => {
     try {
-      const response = await axios.get(
-        `http://localhost:3001/user/session/${id}`
-      );
+      const response = await axiosInstance.get(`/user/session/${id}`);
       console.log('session: ', response.data);
       return response.data;
     } catch (error) {

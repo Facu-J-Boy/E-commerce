@@ -1,16 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { FormData } from '../../interfaces/formData';
-import axios, { AxiosRequestConfig } from 'axios';
+import { axiosInstance } from '../../Config/axios';
 import { userId } from './userId';
-
-const axiosRequestConfig: AxiosRequestConfig = {
-  baseURL: 'http://localhost:3001', // URL base para todas las solicitudes
-  headers: {
-    Authorization: `Bearer ${process.env.REACT_APP_TOKEN}`
-  }
-};
-
-const axiosInstance = axios.create(axiosRequestConfig);
 
 export const signUp = createAsyncThunk('signUp', async (formData: FormData) => {
   const data = {

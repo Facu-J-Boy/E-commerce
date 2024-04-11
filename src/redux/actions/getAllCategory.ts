@@ -1,15 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-const config = {
-  headers: {
-    Authorization: `Bearer ${process.env.REACT_APP_TOKEN}`
-  }
-};
+import { axiosInstance } from '../../Config/axios';
 
 export const getAllcategory = createAsyncThunk('getAllcategory', async () => {
   try {
-    const response = await axios.get('http://localhost:3001/category', config);
+    const response = await axiosInstance.get('/category');
     console.log('category: ', response.data);
   } catch (error) {
     console.error(error);
