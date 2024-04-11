@@ -32,51 +32,53 @@ const ProductsGrid: React.FC = (): JSX.Element => {
 
   return (
     <>
-      <div className={styles.pages}>
-        <button
-          style={
-            currentPage === pages[0]
-              ? {
-                  visibility: 'hidden'
-                }
-              : {}
-          }
-          onClick={() => {
-            clickPage(page - 1);
-          }}
-        >
-          <MdNavigateBefore />
-        </button>
-        {pages?.map((page: number) => (
+      {currentPage && (
+        <div className={styles.pages}>
           <button
             style={
-              currentPage === page
-                ? { backgroundColor: '#333', color: '#fff' }
+              currentPage === pages[0]
+                ? {
+                    visibility: 'hidden'
+                  }
                 : {}
             }
             onClick={() => {
-              clickPage(page);
+              clickPage(page - 1);
             }}
-            key={page}
           >
-            {page}
+            <MdNavigateBefore />
           </button>
-        ))}
-        <button
-          style={
-            currentPage === pages[pages.length - 1]
-              ? {
-                  visibility: 'hidden'
-                }
-              : {}
-          }
-          onClick={() => {
-            clickPage(page + 1);
-          }}
-        >
-          <MdNavigateNext />
-        </button>
-      </div>
+          {pages?.map((page: number) => (
+            <button
+              style={
+                currentPage === page
+                  ? { backgroundColor: '#333', color: '#fff' }
+                  : {}
+              }
+              onClick={() => {
+                clickPage(page);
+              }}
+              key={page}
+            >
+              {page}
+            </button>
+          ))}
+          <button
+            style={
+              currentPage === pages[pages.length - 1]
+                ? {
+                    visibility: 'hidden'
+                  }
+                : {}
+            }
+            onClick={() => {
+              clickPage(page + 1);
+            }}
+          >
+            <MdNavigateNext />
+          </button>
+        </div>
+      )}
       {productsError && (
         <ErrorMessage type={productsError.type} message={productsError.text} />
       )}

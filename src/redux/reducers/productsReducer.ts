@@ -8,16 +8,16 @@ import { error } from '../../interfaces/error';
 export interface productsState {
   products: product[] | [];
   // allProducts?: product[] | [];
-  currentPage?: number;
-  totalPages?: number;
+  currentPage?: number | null;
+  totalPages?: number | null;
   productsLoading?: boolean;
   productsError?: error | null | undefined;
 }
 
 const initialState: productsState = {
   products: [],
-  currentPage: 1,
-  totalPages: 0,
+  currentPage: null,
+  totalPages: null,
   // allProducts: [], //En allProducts se almacenan todos los productos que se utilizarán para ser filtrados en las busquedas
   productsLoading: false,
   productsError: null
