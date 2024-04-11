@@ -113,7 +113,7 @@ const SignUpWithEmail: React.FC = (): JSX.Element => {
               disabled={userLoading}
               type='submit'
             >
-              {!userLoading ? 'Sign Up' : <LoaderMini />}
+              {!userLoading ? 'Sign Up' : <LoaderMini color={'#fff'} />}
             </button>
           </form>
         </div>

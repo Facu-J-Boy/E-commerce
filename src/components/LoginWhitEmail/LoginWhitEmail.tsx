@@ -135,7 +135,7 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
             </label>
             <br />
             <button className={styles.submit} type='submit'>
-              {!userLoading ? 'Log In' : <LoaderMini />}
+              {!userLoading ? 'Log In' : <LoaderMini color={'#fff'} />}
             </button>
           </form>
           <div className={styles.signUp}>

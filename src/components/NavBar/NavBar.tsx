@@ -12,11 +12,12 @@ import { getAllcategory } from '../../redux/actions/getAllCategory';
 import { getSession } from '../../redux/actions/getSession';
 import { userId } from '../../redux/actions/userId';
 import { logOut } from '../../redux/actions/logOut';
+import LoaderMini from '../LoaderMini/LoaderMini';
 
 const NavBar: React.FC = (): JSX.Element => {
   const [list, setList] = useState(false);
 
-  const { user } = useSelector((state: any) => state.user);
+  const { user, userLoading } = useSelector((state: any) => state.user);
   console.log('userId', userId.get());
   const [userData, setUserData] = useState<any>(null);
 
@@ -99,7 +100,7 @@ const NavBar: React.FC = (): JSX.Element => {
               navigate('/login');
             }}
           >
-            Log In
+            {!userLoading ? 'Log In' : <LoaderMini color={'#333'} />}
           </button>
         ) : (
           <div className={styles.profileImg}>
