@@ -6,7 +6,6 @@ import { AppDispatch } from '../../redux/store';
 import { clearProductState } from '../../redux/actions/clearProductState';
 import SingleProduct from '../../components/SingleProduct/SingleProduct';
 import SkeletonDetail from '../../components/SkeletonDetail/SkeletonDetail';
-import { getComments } from '../../redux/actions/getComments';
 import CommentsColumn from '../../components/CommentsColumn/CommentsColumn';
 import styles from './Detail.module.css';
 // import { getInCategory } from '../../redux/actions/getInCategory';
@@ -18,10 +17,6 @@ const ProductDetail: React.FC = (): JSX.Element => {
 
   const { product, productLoading } = useSelector(
     (state: any) => state.product
-  );
-
-  const { comments, commentsLoading } = useSelector(
-    (state: any) => state.comments
   );
 
   // const { productsByCategory, productsByCategoryLoading } = useSelector(
@@ -48,7 +43,6 @@ const ProductDetail: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getSingleProduct(id));
-    dispatch(getComments(id));
     return () => {
       dispatch(clearProductState());
     };
@@ -77,11 +71,7 @@ const ProductDetail: React.FC = (): JSX.Element => {
           />
         </>
       )}
-      <CommentsColumn
-        comments={comments}
-        commentsLoading={commentsLoading}
-        error={undefined}
-      />
+      <CommentsColumn />
       {/* <h1>Similar products</h1>
       <CarrouselProducts
         products={productsByCategory}

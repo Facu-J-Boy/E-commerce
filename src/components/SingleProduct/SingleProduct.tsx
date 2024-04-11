@@ -18,6 +18,7 @@ const SingleProduct: React.FC<product> = ({
   description
 }): JSX.Element => {
   const { totalCount } = useSelector((state: any) => state.comments);
+
   let totalRating = 0;
 
   if (rating && typeof rating === 'number') {
@@ -91,7 +92,7 @@ const SingleProduct: React.FC<product> = ({
           <div style={{ marginRight: 10 }}>{stars}</div>
           <h4>
             {rating
-              ? `${rating} (${totalCount} reviews)`
+              ? `${rating} ${totalCount && `(${totalCount} reviews)`}`
               : 'Rating is not available'}
           </h4>
         </div>

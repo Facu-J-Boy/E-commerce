@@ -3,14 +3,18 @@ import { comment } from '../../interfaces/comments';
 import { getComments } from '../actions/getComments';
 
 export interface commentsState {
-  comments: comment[] | [];
-  totalCount?: number | null;
+  comments: comment[];
+  currentPage?: number | null | undefined;
+  totalPages?: number | null | undefined;
+  totalCount?: number | null | undefined;
   commentsLoading: boolean;
   error: null | string | undefined;
 }
 
 const initialState: commentsState = {
   comments: [],
+  currentPage: null,
+  totalPages: null,
   totalCount: null,
   commentsLoading: false,
   error: null
@@ -27,7 +31,10 @@ const commentsSlice = createSlice({
       })
       .addCase(getComments.fulfilled, (state, action) => {
         state.commentsLoading = false;
-        state.comments = action.payload.reviews;
+        const newComments = action.payload.reviews;
+        state.comments.push(...newComments);
+        state.currentPage = action.payload.currentPage;
+        state.totalPages = action.payload.totalPages;
         state.totalCount = action.payload.totalCount;
       })
       .addCase(getComments.rejected, (state, action) => {

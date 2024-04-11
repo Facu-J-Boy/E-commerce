@@ -3,9 +3,12 @@ import { axiosInstance } from '../../Config/axios';
 
 export const getComments = createAsyncThunk(
   'getComments',
-  async (id: string | undefined) => {
+  async (data: { id: string | undefined; page: number | null | undefined }) => {
+    const params = { page: data.page };
     try {
-      const response = await axiosInstance.get(`/review/${id}`);
+      const response = await axiosInstance.get(`/review/${data.id}`, {
+        params
+      });
       return response.data;
     } catch (error) {
       console.error(error);
