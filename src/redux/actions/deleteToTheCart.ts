@@ -1,4 +1,4 @@
-export const deleteToTheCart = (id: number) => {
+export const deleteToTheCart = (_id: string) => {
   // Obtén el carrito actual desde el localStorage
   const cartString = localStorage.getItem('cart') || '[]';
 
@@ -17,7 +17,7 @@ export const deleteToTheCart = (id: number) => {
   }
 
   // Filtra el carrito para eliminar el producto con el ID deseado
-  const updatedCart = cart.filter((product) => product.id !== id);
+  const updatedCart = cart.filter((product) => product._id !== _id);
 
   // Guarda el carrito actualizado en el localStorage
   localStorage.setItem('cart', JSON.stringify(updatedCart));

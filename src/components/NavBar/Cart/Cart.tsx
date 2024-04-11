@@ -62,10 +62,10 @@ const Cart: React.FC = (): JSX.Element => {
                 </button>
               </div>
               {cartProducts.map((p: product) => (
-                <ol key={p.id}>
+                <ol key={p._id}>
                   <ProductItem
-                    // key={p.id}
-                    id={p.id}
+                    // key={p._id}
+                    _id={p._id}
                     title={p.title}
                     price={p.price}
                     image={p.image}

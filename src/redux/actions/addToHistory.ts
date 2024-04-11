@@ -23,7 +23,7 @@ export const addToHistory = (newProduct: product) => {
 
   if (isNonEmptyProduct) {
     // Eliminar el producto existente si está presente
-    history = history.filter((item) => item.id !== newProduct.id);
+    history = history.filter((item) => item.id !== newProduct._id);
 
     // Agregar el nuevo producto al historial al final
     const updatedHistory = [...history, newProduct];

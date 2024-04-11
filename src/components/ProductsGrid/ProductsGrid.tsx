@@ -93,8 +93,8 @@ const ProductsGrid: React.FC = (): JSX.Element => {
           <>
             {products?.map((p: product) => (
               <ProductsCard
-                key={p.id}
-                id={p.id}
+                key={p._id}
+                _id={p._id}
                 image={p.image}
                 title={p.title}
                 price={p.price}

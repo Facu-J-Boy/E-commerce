@@ -71,8 +71,8 @@ const Buy: React.FC = (): JSX.Element => {
               {items.map((element: any) => (
                 <ol key={element.id}>
                   <ProductItem
-                    key={element.id}
-                    id={element.id}
+                    key={element._id}
+                    _id={element._id}
                     title={element.title}
                     price={element.price}
                     image={element.image}

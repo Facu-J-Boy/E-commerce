@@ -5,7 +5,7 @@ import singleProductReducer from './reducers/singleProductReducer';
 import categoriesReducer from './reducers/categoriesReducer';
 import commentsSlice from './reducers/commentsReducer';
 import cartReducer from './reducers/cartReducer';
-import productsByCategorySlice from './reducers/productsByCategoryReducer';
+// import productsByCategorySlice from './reducers/productsByCategoryReducer';
 import historyReducer from './reducers/historyReducer';
 import searchReducer from './reducers/searchReducer';
 import notificationReducer from './reducers/notificationReducer';
@@ -19,7 +19,7 @@ const store = configureStore({
     comments: commentsSlice,
     cartProducts: cartReducer,
     searchs: searchReducer,
-    productsByCategory: productsByCategorySlice,
+    // productsByCategory: productsByCategorySlice,
     historyProducts: historyReducer,
     notification: notificationReducer
   }

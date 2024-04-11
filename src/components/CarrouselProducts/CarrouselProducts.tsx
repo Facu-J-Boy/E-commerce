@@ -59,8 +59,8 @@ const CarrouselProducts: React.FC<props> = ({
             >
               {products.map((p: product) => (
                 <Product
-                  key={p.id}
-                  id={p.id}
+                  key={p._id}
+                  _id={p._id}
                   image={p.image}
                   title={p.title}
                   price={p.price}

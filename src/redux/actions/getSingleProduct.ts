@@ -1,13 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { axiosInstance } from '../../Config/axios';
 
 export const getSingleProduct = createAsyncThunk(
   'getSingleProduct',
   async (id: string | undefined) => {
     try {
-      const response = await axios.get(
-        `https://fakestoreapi.com/products/${id}`
-      );
+      const response = await axiosInstance.get(`/product/${id}`);
       return response.data;
     } catch (error) {
       console.error(error);

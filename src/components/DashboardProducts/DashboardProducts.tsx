@@ -1,12 +1,12 @@
 import React from 'react';
-import { ProductCardProps } from '../ProductCard/ProductsCard';
 import styles from './DashboardProducts.module.css';
 import { BiSolidPencil } from 'react-icons/bi';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
+import { product } from '../../interfaces/product';
 
-const DashboardProducts: React.FC<ProductCardProps> = ({
-  id,
+const DashboardProducts: React.FC<product> = ({
+  _id,
   image,
   title,
   price
@@ -14,11 +14,11 @@ const DashboardProducts: React.FC<ProductCardProps> = ({
   const navigate = useNavigate();
 
   const handleRedirect = () => {
-    navigate(`/product/${id}`);
+    navigate(`/product/${_id}`);
   };
 
   const editRedirect = () => {
-    navigate(`/edit/${id}`);
+    navigate(`/edit/${_id}`);
   };
 
   return (

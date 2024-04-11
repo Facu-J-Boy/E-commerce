@@ -10,21 +10,9 @@ import { product } from '../../interfaces/product';
 import { addToCart } from '../../redux/actions/addToCart';
 import { deleteToTheCart } from '../../redux/actions/deleteToTheCart';
 
-export interface ProductCardProps {
-  id: number;
-  image: string;
-  title: string;
-  price: number;
-}
-
-const ProductsCard: React.FC<ProductCardProps> = ({
-  id,
-  image,
-  title,
-  price
-}) => {
+const ProductsCard: React.FC<product> = ({ _id, image, title, price }) => {
   const product = {
-    id: id,
+    _id: _id,
     image: image,
     title: title,
     price: price
@@ -35,7 +23,7 @@ const ProductsCard: React.FC<ProductCardProps> = ({
   const navigate = useNavigate();
 
   const handleRedirect = () => {
-    navigate(`/product/${id}`);
+    navigate(`/product/${_id}`);
   };
 
   const handleAddToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -49,7 +37,7 @@ const ProductsCard: React.FC<ProductCardProps> = ({
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
-    deleteToTheCart(product.id);
+    deleteToTheCart(product._id);
     dispatch(getCart());
     return false; // Evitar la propagación del evento de clic
   };
@@ -58,10 +46,10 @@ const ProductsCard: React.FC<ProductCardProps> = ({
 
   const { cartProducts } = useSelector((state: any) => state.cartProducts);
 
-  const productId = id;
+  const productId = _id;
 
   useEffect(() => {
-    setInCart(cartProducts.some((p: product) => p.id === productId)); // Comprueba si el producto ya se encuentra en el carrito mediante su id
+    setInCart(cartProducts.some((p: product) => p._id === productId)); // Comprueba si el producto ya se encuentra en el carrito mediante su id
   }, [cartProducts, productId]);
 
   const redirectToBuy = () => {

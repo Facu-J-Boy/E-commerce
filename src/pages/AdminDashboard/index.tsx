@@ -107,10 +107,10 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                     </div>
                   ) : (
                     <>
-                      {products?.map((p: product) => (
+                      {products?.map((p: product, index: number) => (
                         <DashboardProducts
-                          key={p.id}
-                          id={p.id}
+                          key={index}
+                          _id={p._id}
                           image={p.image}
                           title={p.title}
                           price={p.price}

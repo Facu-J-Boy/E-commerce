@@ -9,7 +9,7 @@ import { getCart } from '../../../redux/actions/getCart';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const ProductItem: React.FC<product> = ({
-  id,
+  _id,
   image,
   title,
   price
@@ -22,7 +22,7 @@ const ProductItem: React.FC<product> = ({
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation(); // Evitar la propagación del evento de click
-    deleteToTheCart(id);
+    deleteToTheCart(_id);
     dispatch(getCart());
     return false; // Evitar la propagación del evento de click
   };
@@ -30,7 +30,7 @@ const ProductItem: React.FC<product> = ({
   const location = useLocation();
 
   const handleNavigate = () => {
-    navigate(`/product/${id}`);
+    navigate(`/product/${_id}`);
   };
 
   return (
