@@ -1,16 +1,27 @@
 import React from 'react';
 import styles from './Comments.module.css';
+import { comment } from '../../interfaces/comments';
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
-interface comments {
-  email: string;
-  body: string;
-}
+const Comments: React.FC<comment> = ({ text, rating }): JSX.Element => {
+  let totalRating = 0;
 
-const Comments: React.FC<comments> = ({ email, body }): JSX.Element => {
+  if (rating && typeof rating === 'number') {
+    totalRating = Math.floor(rating);
+  }
+
+  const stars = Array.from({ length: 5 }, (_, index) =>
+    index < totalRating ? (
+      <AiFillStar key={index} size={20} style={{ color: '#131c46' }} />
+    ) : (
+      <AiOutlineStar key={index} size={20} style={{ color: '#131c46' }} />
+    )
+  );
+
   return (
     <div className={styles.comment}>
-      <h4>{email}</h4>
-      <p>{body}</p>
+      <div style={{ marginRight: 10 }}>{stars}</div>
+      <p>{text}</p>
     </div>
   );
 };

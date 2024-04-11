@@ -17,10 +17,11 @@ const SingleProduct: React.FC<product> = ({
   rating,
   description
 }): JSX.Element => {
+  const { totalCount } = useSelector((state: any) => state.comments);
   let totalRating = 0;
 
-  if (rating && typeof rating.rate === 'number') {
-    totalRating = Math.floor(rating.rate);
+  if (rating && typeof rating === 'number') {
+    totalRating = Math.floor(rating);
   }
 
   // Generar un array de estrellas marcadas y desmarcadas
@@ -90,7 +91,7 @@ const SingleProduct: React.FC<product> = ({
           <div style={{ marginRight: 10 }}>{stars}</div>
           <h4>
             {rating
-              ? `${rating.rate} (${rating.count} reviews)`
+              ? `${rating} (${totalCount} reviews)`
               : 'Rating is not available'}
           </h4>
         </div>

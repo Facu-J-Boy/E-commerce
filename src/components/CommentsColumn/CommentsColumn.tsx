@@ -23,8 +23,8 @@ const CommentsColumn: React.FC<commentsState> = ({
         </div>
       ) : (
         <div className={styles.commentsContainer}>
-          {comments.map((e) => (
-            <Comments key={e.id} email={e.email} body={e.body} />
+          {comments?.map((e) => (
+            <Comments key={e._id} rating={e.rating} text={e.text} />
           ))}
         </div>
       )}
