@@ -7,6 +7,7 @@ import { AppDispatch } from '../../redux/store';
 import { getComments } from '../../redux/actions/getComments';
 import { useParams } from 'react-router-dom';
 import { comment } from '../../interfaces/comments';
+import Commentinput from './CommentInput/Commentinput';
 
 const CommentsColumn: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -30,6 +31,7 @@ const CommentsColumn: React.FC = (): JSX.Element => {
     <div className={styles.container}>
       <hr />
       <h2 className={styles.title}>Comments</h2>
+      {comments && <Commentinput productId={id} />}
 
       <div className={styles.commentsContainer}>
         {comments?.map((e: comment) => (
