@@ -9,6 +9,7 @@
   padding: 8px;
   transition: border-color 0.3s ease; /* Transición suave al cambiar el color del borde */
   font-size: 20px;
+  width: 80vw;
 }
 
 .text_input:focus {
