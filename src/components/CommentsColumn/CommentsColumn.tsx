@@ -13,8 +13,14 @@ import { clearComments } from '../../redux/reducers/commentsReducer';
 const CommentsColumn: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { comments, currentPage, totalPages, commentsLoading, totalCount } =
-    useSelector((state: any) => state.comments);
+  const {
+    comments,
+    currentPage,
+    totalPages,
+    commentsLoading,
+    totalCount,
+    message
+  } = useSelector((state: any) => state.comments);
 
   const { id } = useParams();
 
@@ -37,6 +43,7 @@ const CommentsColumn: React.FC = (): JSX.Element => {
       {!commentsLoading && <Commentinput productId={id} />}
 
       <div className={styles.commentsContainer}>
+        {message && <p className={styles.message}>{message}</p>}
         {comments?.map((e: comment) => (
           <Comments key={e._id} rating={e.rating} text={e.text} />
         ))}

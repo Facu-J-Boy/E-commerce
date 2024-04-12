@@ -18,6 +18,15 @@
   max-height: 500px;
 }
 
+.message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 25px;
+  font-weight: bold;
+}
+
 /* Estilos generales de la barra de desplazamiento */
 .commentsContainer::-webkit-scrollbar {
   width: 3px; /* ancho de la barra de desplazamiento */

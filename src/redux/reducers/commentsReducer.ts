@@ -9,6 +9,7 @@ export interface commentsState {
   totalCount?: number | null | undefined;
   commentsLoading: boolean;
   error: null | string | undefined;
+  message: string;
 }
 
 const initialState: commentsState = {
@@ -17,7 +18,8 @@ const initialState: commentsState = {
   totalPages: null,
   totalCount: null,
   commentsLoading: false,
-  error: null
+  error: null,
+  message: ''
 };
 
 const commentsSlice = createSlice({
@@ -26,6 +28,7 @@ const commentsSlice = createSlice({
   reducers: {
     clearComments: (state) => {
       state.comments = [];
+      state.message = '';
     }
   },
   extraReducers: (builder) => {
@@ -40,6 +43,7 @@ const commentsSlice = createSlice({
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.totalCount = action.payload.totalCount;
+        state.message = action.payload.message;
       })
       .addCase(getComments.rejected, (state, action) => {
         state.commentsLoading = false;
