@@ -8,13 +8,13 @@ import { getComments } from '../../redux/actions/getComments';
 import { useParams } from 'react-router-dom';
 import { comment } from '../../interfaces/comments';
 import Commentinput from './CommentInput/Commentinput';
+import { clearComments } from '../../redux/reducers/commentsReducer';
 
 const CommentsColumn: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { comments, currentPage, totalPages, commentsLoading } = useSelector(
-    (state: any) => state.comments
-  );
+  const { comments, currentPage, totalPages, commentsLoading, totalCount } =
+    useSelector((state: any) => state.comments);
 
   const { id } = useParams();
 
@@ -22,6 +22,9 @@ const CommentsColumn: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getComments({ id, page }));
+    return () => {
+      dispatch(clearComments());
+    };
   }, [dispatch, id, page]);
 
   const handleShowMore = async (number: number) => {
@@ -31,7 +34,7 @@ const CommentsColumn: React.FC = (): JSX.Element => {
     <div className={styles.container}>
       <hr />
       <h2 className={styles.title}>Comments</h2>
-      {comments.length === 0 ? null : <Commentinput productId={id} />}
+      {!commentsLoading && <Commentinput productId={id} />}
 
       <div className={styles.commentsContainer}>
         {comments?.map((e: comment) => (
@@ -47,17 +50,20 @@ const CommentsColumn: React.FC = (): JSX.Element => {
             <Loader />
           </div>
         )}
-        {!commentsLoading && (
-          <button
-            className={styles.show_more_button}
-            style={currentPage === totalPages ? { visibility: 'hidden' } : {}}
-            onClick={() => {
-              handleShowMore(page + 1);
-            }}
-          >
-            Show more
-          </button>
-        )}
+
+        <button
+          className={styles.show_more_button}
+          style={
+            currentPage === totalPages || commentsLoading || totalCount === 0
+              ? { visibility: 'hidden' }
+              : {}
+          }
+          onClick={() => {
+            handleShowMore(page + 1);
+          }}
+        >
+          Show more
+        </button>
       </div>
     </div>
   );

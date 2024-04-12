@@ -17,7 +17,9 @@ const SingleProduct: React.FC<product> = ({
   rating,
   description
 }): JSX.Element => {
-  const { totalCount } = useSelector((state: any) => state.comments);
+  const { totalCount, commentsLoading } = useSelector(
+    (state: any) => state.comments
+  );
 
   let totalRating = 0;
 
@@ -92,7 +94,7 @@ const SingleProduct: React.FC<product> = ({
           <div style={{ marginRight: 10 }}>{stars}</div>
           <h4>
             {rating
-              ? `${rating} ${totalCount && `(${totalCount} reviews)`}`
+              ? `${rating} ${!commentsLoading && `(${totalCount} reviews)`}`
               : 'Rating is not available'}
           </h4>
         </div>
