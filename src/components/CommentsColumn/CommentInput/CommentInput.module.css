@@ -16,19 +16,6 @@
   border-color: #ccc; /* Cambia el color del borde al enfocar */
 }
 
-.animatedElement {
-  transition: opacity 0.5s ease; /* Transición suave de opacidad */
-}
-
-.visible {
-  opacity: 1; /* Hace que el elemento sea visible */
-}
-
-.hidden {
-  opacity: 0; /* Hace que el elemento sea invisible */
-  visibility: hidden; /* Oculta el elemento pero mantiene su espacio */
-}
-
 .submit_button {
   background: none;
   color: #333;

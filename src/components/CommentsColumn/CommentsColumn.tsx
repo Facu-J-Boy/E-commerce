@@ -31,7 +31,7 @@ const CommentsColumn: React.FC = (): JSX.Element => {
     <div className={styles.container}>
       <hr />
       <h2 className={styles.title}>Comments</h2>
-      {comments && <Commentinput productId={id} />}
+      {comments.length === 0 ? null : <Commentinput productId={id} />}
 
       <div className={styles.commentsContainer}>
         {comments?.map((e: comment) => (
