@@ -11,8 +11,8 @@ import LoaderMini from '../../LoaderMini/LoaderMini';
 const Commentinput: React.FC<{ productId: string | undefined }> = ({
   productId
 }): JSX.Element => {
-  const [rating, setRating] = useState(1);
-  const [text, setText] = useState('');
+  const [rating, setRating] = useState<number>(1);
+  const [text, setText] = useState<string>('');
   const user = userId.get();
 
   const dispatch = useDispatch<AppDispatch>();
@@ -30,6 +30,8 @@ const Commentinput: React.FC<{ productId: string | undefined }> = ({
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(postComment({ productId, userId: user, text, rating }));
+    setRating(1);
+    setText('');
   };
 
   return (
@@ -39,21 +41,21 @@ const Commentinput: React.FC<{ productId: string | undefined }> = ({
           <LoaderMini color='#fff' />
         </div>
       )}
-      <div className={styles.review_form}>
-        {[1, 2, 3, 4, 5].map((value) => (
-          <span
-            key={value}
-            onClick={() => handleStarClick(value)}
-            style={{ cursor: 'pointer' }}
-          >
-            {value <= rating ? (
-              <AiFillStar size={20} style={{ color: '#131c46' }} />
-            ) : (
-              <AiOutlineStar size={20} style={{ color: '#131c46' }} />
-            )}
-          </span>
-        ))}
-        <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit}>
+        <div className={styles.review_form}>
+          {[1, 2, 3, 4, 5].map((value) => (
+            <span
+              key={value}
+              onClick={() => handleStarClick(value)}
+              style={{ cursor: 'pointer' }}
+            >
+              {value <= rating ? (
+                <AiFillStar size={20} style={{ color: '#131c46' }} />
+              ) : (
+                <AiOutlineStar size={20} style={{ color: '#131c46' }} />
+              )}
+            </span>
+          ))}
           <div className={styles.input}>
             <input
               className={styles.text_input}
@@ -68,8 +70,8 @@ const Commentinput: React.FC<{ productId: string | undefined }> = ({
               <IoSend size={20} />
             </button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 };

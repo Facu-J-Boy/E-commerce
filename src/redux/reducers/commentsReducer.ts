@@ -13,7 +13,6 @@ export interface commentsState {
   commentsLoading: boolean;
   inputLoading: boolean;
   error: null | string | undefined;
-  message: string;
 }
 
 const initialState: commentsState = {
@@ -24,8 +23,7 @@ const initialState: commentsState = {
   totalCount: null,
   commentsLoading: false,
   inputLoading: false,
-  error: null,
-  message: ''
+  error: null
 };
 
 const commentsSlice = createSlice({
@@ -34,7 +32,6 @@ const commentsSlice = createSlice({
   reducers: {
     clearComments: (state) => {
       state.comments = [];
-      state.message = '';
     },
     deleting: (state, action: PayloadAction<string | undefined>) => {
       state.deletingComment = action.payload;
@@ -47,13 +44,10 @@ const commentsSlice = createSlice({
       })
       .addCase(getComments.fulfilled, (state, action) => {
         state.commentsLoading = false;
-        // const newComments = action.payload.reviews;
         state.comments.push(...action.payload.reviews);
-        console.log('comments: ', state.comments);
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.totalCount = action.payload.totalCount;
-        state.message = action.payload.message;
       })
       .addCase(getComments.rejected, (state, action) => {
         state.commentsLoading = false;
@@ -64,9 +58,18 @@ const commentsSlice = createSlice({
       })
       .addCase(postComment.fulfilled, (state, action) => {
         state.inputLoading = false;
-        console.log('action.payload: ', action);
-        const newComment = action.payload.newReview;
-        newComment && state.comments.unshift(newComment);
+        state.comments = action.payload.reviews
+          ? action.payload.reviews
+          : state.comments;
+        state.currentPage = action.payload.currentPage
+          ? action.payload.currentPage
+          : state.currentPage;
+        state.totalPages = action.payload.totalPages
+          ? action.payload.totalPages
+          : state.totalPages;
+        state.totalCount = action.payload.totalCount
+          ? action.payload.totalCount
+          : state.totalCount;
       })
       .addCase(postComment.rejected, (state, action) => {
         state.inputLoading = false;

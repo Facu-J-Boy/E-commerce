@@ -18,8 +18,8 @@ const CommentsColumn: React.FC = (): JSX.Element => {
     currentPage,
     totalPages,
     commentsLoading,
-    totalCount,
-    message
+    totalCount
+    // message
   } = useSelector((state: any) => state.comments);
 
   const { id } = useParams();
@@ -43,10 +43,11 @@ const CommentsColumn: React.FC = (): JSX.Element => {
     <div className={styles.container}>
       <hr />
       <h2 className={styles.title}>Comments</h2>
-      {comments.length !== 0 && <Commentinput productId={id} />}
-
+      <Commentinput productId={id} />
       <div className={styles.commentsContainer}>
-        {message && <p className={styles.message}>{message}</p>}
+        {!commentsLoading && comments.length === 0 ? (
+          <p className={styles.message}>There are no comments</p>
+        ) : null}
         {comments?.map((e: comment) => (
           <Comments
             key={e._id}
