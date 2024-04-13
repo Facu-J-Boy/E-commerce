@@ -1,10 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { comment } from '../../interfaces/comments';
 import { getComments } from '../actions/getComments';
 import { postComment } from '../actions/postComment';
+import { deleteComment } from '../actions/deleteComment';
 
 export interface commentsState {
   comments: comment[];
+  deletingComment: string | null | undefined;
   currentPage?: number | null | undefined;
   totalPages?: number | null | undefined;
   totalCount?: number | null | undefined;
@@ -16,6 +18,7 @@ export interface commentsState {
 
 const initialState: commentsState = {
   comments: [],
+  deletingComment: null,
   currentPage: null,
   totalPages: null,
   totalCount: null,
@@ -32,6 +35,9 @@ const commentsSlice = createSlice({
     clearComments: (state) => {
       state.comments = [];
       state.message = '';
+    },
+    deleting: (state, action: PayloadAction<string | undefined>) => {
+      state.deletingComment = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -64,10 +70,19 @@ const commentsSlice = createSlice({
       })
       .addCase(postComment.rejected, (state, action) => {
         state.inputLoading = false;
+      })
+      .addCase(deleteComment.fulfilled, (state, action) => {
+        state.comments = state.comments.filter(
+          (comment) => comment._id !== action.payload.review?._id
+        );
+        state.deletingComment = null;
+      })
+      .addCase(deleteComment.rejected, (state) => {
+        state.deletingComment = null;
       });
   }
 });
 
-export const { clearComments } = commentsSlice.actions;
+export const { clearComments, deleting } = commentsSlice.actions;
 
 export default commentsSlice.reducer;

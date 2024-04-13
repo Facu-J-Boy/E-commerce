@@ -48,7 +48,13 @@ const CommentsColumn: React.FC = (): JSX.Element => {
       <div className={styles.commentsContainer}>
         {message && <p className={styles.message}>{message}</p>}
         {comments?.map((e: comment) => (
-          <Comments key={e._id} rating={e.rating} text={e.text} />
+          <Comments
+            key={e._id}
+            _id={e._id}
+            rating={e.rating}
+            text={e.text}
+            user={e.user}
+          />
         ))}
         {commentsLoading && (
           <div

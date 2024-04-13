@@ -17,7 +17,7 @@ import LoaderMini from '../LoaderMini/LoaderMini';
 const NavBar: React.FC = (): JSX.Element => {
   const [list, setList] = useState(false);
 
-  const { user, userLoading } = useSelector((state: any) => state.user);
+  const { User, userLoading } = useSelector((state: any) => state.user);
   console.log('userId', userId.get());
   const [userData, setUserData] = useState<any>(null);
 
@@ -93,7 +93,7 @@ const NavBar: React.FC = (): JSX.Element => {
           <SearchInput />
           <Cart />
         </div>
-        {Object.keys(user).length === 0 ? (
+        {Object.keys(User).length === 0 ? (
           <button
             className={styles.login_button}
             onClick={() => {
@@ -105,8 +105,8 @@ const NavBar: React.FC = (): JSX.Element => {
         ) : (
           <div className={styles.profileImg}>
             <img
-              src={!user.photo ? userImage : user.photo}
-              alt={!user.name ? 'undefined' : user.name}
+              src={!User.photo ? userImage : User.photo}
+              alt={!User.name ? 'undefined' : User.name}
               onClick={toggleList}
             />
             {list && (

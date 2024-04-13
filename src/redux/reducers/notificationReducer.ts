@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { logIn } from '../actions/logIn';
 import { signUp } from '../actions/signUp';
 import { postComment } from '../actions/postComment';
+import { deleteComment } from '../actions/deleteComment';
 
 export interface notificationState {
   type: string | null;
@@ -43,10 +44,12 @@ const notificationSlice = createSlice({
         state.type = action.payload.notification.type;
         state.text = action.payload.notification.text;
       })
-      .addCase(postComment.rejected, (state, action) => {
+      .addCase(postComment.rejected, (action) => {
         console.log('notification rejected: ', action);
-        // state.type = action.error.notification.type;
-        // state.text = action.error.notification.text;
+      })
+      .addCase(deleteComment.fulfilled, (state, action) => {
+        state.type = action.payload.notification.type;
+        state.text = action.payload.notification.text;
       });
   }
 });

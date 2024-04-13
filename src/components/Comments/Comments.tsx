@@ -1,14 +1,43 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './Comments.module.css';
 import { comment } from '../../interfaces/comments';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { FaTrashCan } from 'react-icons/fa6';
+import { MdEdit } from 'react-icons/md';
+import DeleteComment from './DeleteComment/DeleteComment';
+import { useSelector } from 'react-redux';
+import LoaderMini from '../LoaderMini/LoaderMini';
 
-const Comments: React.FC<comment> = ({ text, rating }): JSX.Element => {
+const Comments: React.FC<comment> = ({
+  _id,
+  text,
+  rating,
+  user
+}): JSX.Element => {
+  const [deleteMessage, setDeleteMessage] = useState<boolean>(false);
+
+  const { deletingComment } = useSelector((state: any) => state.comments);
+
+  const toggleDelete = useCallback(() => {
+    setDeleteMessage(!deleteMessage);
+  }, [deleteMessage]);
+
+  useEffect(() => {
+    if (deleteMessage === true) {
+      document.body.addEventListener('click', toggleDelete);
+    }
+    return () => {
+      document.body.removeEventListener('click', toggleDelete);
+    };
+  }, [deleteMessage, toggleDelete]);
+
   let totalRating = 0;
 
   if (rating && typeof rating === 'number') {
     totalRating = Math.floor(rating);
   }
+
+  const { User } = useSelector((state: any) => state.user);
 
   const stars = Array.from({ length: 5 }, (_, index) =>
     index < totalRating ? (
@@ -19,10 +48,34 @@ const Comments: React.FC<comment> = ({ text, rating }): JSX.Element => {
   );
 
   return (
-    <div className={styles.comment}>
-      <div style={{ marginRight: 10 }}>{stars}</div>
-      <p>{text}</p>
-    </div>
+    <>
+      {deleteMessage && typeof _id === 'string' ? (
+        <DeleteComment id={_id} />
+      ) : null}
+      <div style={{ position: 'relative' }}>
+        {deletingComment === _id && (
+          <div className={styles.loading}>
+            <LoaderMini color='#fff' />
+          </div>
+        )}
+        <div className={styles.comment}>
+          <div className={styles.header}>
+            <div style={{ marginRight: 10 }}>{stars}</div>
+            {User._id === user && (
+              <div>
+                <button>
+                  <MdEdit size={20} />
+                </button>
+                <button onClick={toggleDelete}>
+                  <FaTrashCan size={20} />
+                </button>
+              </div>
+            )}
+          </div>
+          <p>{text}</p>
+        </div>
+      </div>
+    </>
   );
 };
 

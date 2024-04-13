@@ -6,12 +6,12 @@ import { logIn } from '../actions/logIn';
 import { signUp } from '../actions/signUp';
 
 export interface userState {
-  user: user | {};
+  User: user | {};
   userLoading: boolean;
 }
 
 const initialState: userState = {
-  user: {},
+  User: {},
   userLoading: false
 };
 
@@ -26,7 +26,7 @@ const userSlice = createSlice({
       })
       .addCase(getSession.fulfilled, (state, action) => {
         state.userLoading = false;
-        state.user = action.payload;
+        state.User = action.payload;
       })
       .addCase(logIn.pending, (state) => {
         state.userLoading = true;
@@ -47,7 +47,7 @@ const userSlice = createSlice({
         state.userLoading = false;
       })
       .addCase(logOut, (state, action) => {
-        state.user = action.payload;
+        state.User = action.payload;
       });
   }
 });
