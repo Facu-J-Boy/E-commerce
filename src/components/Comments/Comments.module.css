@@ -10,10 +10,10 @@
 }
 
 .comment {
-  border: solid 1px #ebe9e9;
-  padding: 10px 10px;
+  /* border: solid 1px #ebe9e9; */
+  padding: 10px;
   color: #333;
-  background-color: #ebe9e9;
+  /* background-color: #ebe9e9; */
 }
 
 .comment p {
@@ -27,6 +27,18 @@
 .header {
   display: flex;
   justify-content: space-between;
+}
+
+.rigth_side {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 20px;
+}
+
+.rigth_side p {
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 12px;
 }
 
 .header button {

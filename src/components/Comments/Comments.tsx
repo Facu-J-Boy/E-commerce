@@ -7,11 +7,13 @@ import { MdEdit } from 'react-icons/md';
 import DeleteComment from './DeleteComment/DeleteComment';
 import { useSelector } from 'react-redux';
 import LoaderMini from '../LoaderMini/LoaderMini';
+import { format } from 'date-fns';
 
 const Comments: React.FC<comment> = ({
   _id,
   text,
   rating,
+  date,
   user
 }): JSX.Element => {
   const [deleteMessage, setDeleteMessage] = useState<boolean>(false);
@@ -47,6 +49,8 @@ const Comments: React.FC<comment> = ({
     )
   );
 
+  const newDate: Date = new Date(date ?? '');
+
   return (
     <>
       {deleteMessage && typeof _id === 'string' ? (
@@ -61,16 +65,19 @@ const Comments: React.FC<comment> = ({
         <div className={styles.comment}>
           <div className={styles.header}>
             <div style={{ marginRight: 10 }}>{stars}</div>
-            {User._id === user && (
-              <div>
-                <button>
-                  <MdEdit size={20} />
-                </button>
-                <button onClick={toggleDelete}>
-                  <FaTrashCan size={20} />
-                </button>
-              </div>
-            )}
+            <div className={styles.rigth_side}>
+              {User._id === user && (
+                <div>
+                  <button>
+                    <MdEdit size={20} />
+                  </button>
+                  <button onClick={toggleDelete}>
+                    <FaTrashCan size={20} />
+                  </button>
+                </div>
+              )}
+              <p>{format(newDate, 'dd MMM. yyyy')}</p>
+            </div>
           </div>
           <p>{text}</p>
         </div>

@@ -53,6 +53,7 @@ const CommentsColumn: React.FC = (): JSX.Element => {
             _id={e._id}
             rating={e.rating}
             text={e.text}
+            date={e.date}
             user={e.user}
           />
         ))}
