@@ -19,10 +19,10 @@ import { useSelector } from 'react-redux';
 import Notification from './components/Notification/Notification';
 
 function App() {
-  const { text } = useSelector((state: any) => state.notification);
+  const { type, text } = useSelector((state: any) => state.notification);
   return (
     <Router>
-      {text && <Notification text={text} />}
+      {type && text ? <Notification type={type} text={text} /> : null}
       <NavBar /> {/* Renderiza la NavBar en todas las rutas */}
       <Routes>
         <Route path='/' element={<Home />} />

@@ -1,11 +1,17 @@
 import { useEffect } from 'react';
 import styles from './Notification.module.css';
-import { VscError } from 'react-icons/vsc';
+import { VscError, VscPass } from 'react-icons/vsc';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
-import { clearNotification } from '../../redux/reducers/notificationReducer';
+import {
+  clearNotification,
+  notificationState
+} from '../../redux/reducers/notificationReducer';
 
-const Notification: React.FC<{ text: string }> = ({ text }): JSX.Element => {
+const Notification: React.FC<notificationState> = ({
+  type,
+  text
+}): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -14,11 +20,13 @@ const Notification: React.FC<{ text: string }> = ({ text }): JSX.Element => {
     }, 2000);
   });
 
+  const notificationStyle = {
+    backgroundColor: type === 'success' ? 'green' : '#cf010b'
+  };
+
   return (
-    <div className={styles.notification}>
-      <>
-        <VscError size={'50px'} />
-      </>
+    <div className={styles.notification} style={notificationStyle}>
+      <>{type === 'success' ? <VscPass size={50} /> : <VscError size={50} />}</>
       <p>{text}</p>
     </div>
   );

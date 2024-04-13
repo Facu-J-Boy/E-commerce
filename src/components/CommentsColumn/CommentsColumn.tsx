@@ -28,10 +28,13 @@ const CommentsColumn: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getComments({ id, page }));
+  }, [dispatch, id, page]);
+
+  useEffect(() => {
     return () => {
       dispatch(clearComments());
     };
-  }, [dispatch, id, page]);
+  }, [dispatch]);
 
   const handleShowMore = async (number: number) => {
     setPage(number);
@@ -40,7 +43,7 @@ const CommentsColumn: React.FC = (): JSX.Element => {
     <div className={styles.container}>
       <hr />
       <h2 className={styles.title}>Comments</h2>
-      {!commentsLoading && <Commentinput productId={id} />}
+      {comments.length !== 0 && <Commentinput productId={id} />}
 
       <div className={styles.commentsContainer}>
         {message && <p className={styles.message}>{message}</p>}

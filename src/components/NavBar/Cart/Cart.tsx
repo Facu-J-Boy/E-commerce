@@ -64,7 +64,7 @@ const Cart: React.FC = (): JSX.Element => {
               {cartProducts.map((p: product) => (
                 <ol key={p._id}>
                   <ProductItem
-                    // key={p._id}
+                    key={p._id}
                     _id={p._id}
                     title={p.title}
                     price={p.price}

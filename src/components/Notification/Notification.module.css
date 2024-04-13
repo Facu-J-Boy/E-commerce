@@ -5,16 +5,15 @@
   align-items: center;
   margin-bottom: 10px;
   padding-left: 10px;
-  background-color: #cf010b;
   color: #fff;
   bottom: 0px;
   right: 0px;
   height: auto;
   width: 400px;
-  border-radius: 10px;
+  border-radius: 10px 0px 0px 10px;
   border: none;
-  animation-name: notification;
-  animation-duration: 200ms;
+  animation: notification 200ms;
+  z-index: 999;
 }
 
 .notification p {

@@ -43,10 +43,13 @@ const ProductDetail: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getSingleProduct(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
     return () => {
       dispatch(clearProductState());
     };
-  }, [dispatch, id]);
+  }, [dispatch]);
 
   // useEffect(() => {
   //   product && dispatch(getInCategory({ category: product.category, id: id }));
