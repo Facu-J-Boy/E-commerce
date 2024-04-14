@@ -6,7 +6,7 @@ import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 import SkeletonCarrousel from '../SkeletonCarrousel/SkeletonCarrousel';
 
 interface props {
-  products: product[];
+  products: product[] | [];
   loading: boolean;
 }
 
@@ -42,7 +42,7 @@ const CarrouselProducts: React.FC<props> = ({
       <br />
       {loading ? (
         <SkeletonCarrousel />
-      ) : !products.length ? null : (
+      ) : products.length === 0 ? null : (
         <div className={styles.container}>
           <div className={styles.buttons}>
             <button className={styles.carrouselButton} onClick={scrollLeft}>

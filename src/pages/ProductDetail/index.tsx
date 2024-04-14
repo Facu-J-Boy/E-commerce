@@ -8,8 +8,8 @@ import SingleProduct from '../../components/SingleProduct/SingleProduct';
 import SkeletonDetail from '../../components/SkeletonDetail/SkeletonDetail';
 import CommentsColumn from '../../components/CommentsColumn/CommentsColumn';
 import styles from './Detail.module.css';
-// import { getInCategory } from '../../redux/actions/getInCategory';
-// import CarrouselProducts from '../../components/CarrouselProducts/CarrouselProducts';
+import { getInCategory } from '../../redux/actions/getInCategory';
+import CarrouselProducts from '../../components/CarrouselProducts/CarrouselProducts';
 import { addToHistory } from '../../redux/actions/addToHistory';
 
 const ProductDetail: React.FC = (): JSX.Element => {
@@ -19,9 +19,9 @@ const ProductDetail: React.FC = (): JSX.Element => {
     (state: any) => state.product
   );
 
-  // const { productsByCategory, productsByCategoryLoading } = useSelector(
-  //   (state: any) => state.productsByCategory
-  // );
+  const { productsByCategory, productsByCategoryLoading } = useSelector(
+    (state: any) => state.productsByCategory
+  );
 
   const { id } = useParams();
 
@@ -51,9 +51,10 @@ const ProductDetail: React.FC = (): JSX.Element => {
     };
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   product && dispatch(getInCategory({ category: product.category, id: id }));
-  // }, [dispatch, product, id]);
+  useEffect(() => {
+    Object.keys(product).length !== 0 &&
+      dispatch(getInCategory(product.category?._id));
+  }, [dispatch, product]);
 
   return (
     <div className={styles.container}>
@@ -69,17 +70,16 @@ const ProductDetail: React.FC = (): JSX.Element => {
             _id={product._id}
             price={product.price}
             description={product.description}
-            category={''}
             rating={product.rating}
           />
         </>
       )}
       <CommentsColumn />
-      {/* <h1>Similar products</h1>
+      <h1 style={{ color: '#333', marginLeft: '10px' }}>Similar products</h1>
       <CarrouselProducts
         products={productsByCategory}
         loading={productsByCategoryLoading}
-      /> */}
+      />
     </div>
   );
 };

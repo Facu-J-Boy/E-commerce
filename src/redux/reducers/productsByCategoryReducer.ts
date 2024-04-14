@@ -26,7 +26,7 @@ const productsByCategorySlice = createSlice({
       })
       .addCase(getInCategory.fulfilled, (state, action) => {
         state.productsByCategoryLoading = false;
-        state.productsByCategory = action.payload;
+        state.productsByCategory = action.payload ? action.payload : [];
       })
       .addCase(getInCategory.rejected, (state, action) => {
         state.productsByCategoryLoading = false;
