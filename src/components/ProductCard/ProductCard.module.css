@@ -5,9 +5,8 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   overflow: hidden;
-  width: 200px;
+  width: 15vw;
   height: 400px;
-  margin: 15px;
   cursor: pointer;
   scroll-snap-align: start;
 }
@@ -99,11 +98,16 @@
   display: inline;
 }
 
+@media screen and (max-width: 900px) {
+  .product {
+    width: 25vw;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .product {
     width: 43vw;
     height: 350px;
-    margin: 5px;
   }
 
   .product h1 {

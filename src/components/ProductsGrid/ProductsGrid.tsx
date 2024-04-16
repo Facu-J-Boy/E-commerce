@@ -48,7 +48,7 @@ const ProductsGrid: React.FC = (): JSX.Element => {
                 ? {
                     visibility: 'hidden'
                   }
-                : {}
+                : { backgroundColor: '#333', color: '#fff' }
             }
             onClick={() => {
               clickPage(currentPage - 1);
@@ -77,7 +77,7 @@ const ProductsGrid: React.FC = (): JSX.Element => {
                 ? {
                     visibility: 'hidden'
                   }
-                : {}
+                : { backgroundColor: '#333', color: '#fff' }
             }
             onClick={() => {
               clickPage(currentPage + 1);
@@ -109,6 +109,53 @@ const ProductsGrid: React.FC = (): JSX.Element => {
           </>
         )}
       </div>
+      {currentPage && (
+        <div className={styles.pages}>
+          <button
+            style={
+              currentPage === pages[0] || !products.length
+                ? {
+                    visibility: 'hidden'
+                  }
+                : { backgroundColor: '#333', color: '#fff' }
+            }
+            onClick={() => {
+              clickPage(currentPage - 1);
+            }}
+          >
+            <MdNavigateBefore />
+          </button>
+          {pages?.map((page: number) => (
+            <button
+              style={
+                currentPage === page
+                  ? { backgroundColor: '#333', color: '#fff' }
+                  : {}
+              }
+              onClick={() => {
+                clickPage(page);
+              }}
+              key={page}
+            >
+              {page}
+            </button>
+          ))}
+          <button
+            style={
+              currentPage === pages[pages.length - 1] || !products.length
+                ? {
+                    visibility: 'hidden'
+                  }
+                : { backgroundColor: '#333', color: '#fff' }
+            }
+            onClick={() => {
+              clickPage(currentPage + 1);
+            }}
+          >
+            <MdNavigateNext />
+          </button>
+        </div>
+      )}
     </>
   );
 };
