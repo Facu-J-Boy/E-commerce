@@ -17,7 +17,6 @@ export const postComment = createAsyncThunk(
       );
       return response.data;
     } catch (error: any) {
-      console.error('error: ', error.response.data.notification);
       return error.response.data;
     }
   }

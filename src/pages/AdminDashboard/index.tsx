@@ -96,10 +96,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                   role='tabpanel'
                 >
                   {productsError ? (
-                    <ErrorMessage
-                      type={productsError.type}
-                      message={productsError.text}
-                    />
+                    <ErrorMessage message={productsError.text} />
                   ) : null}
                   {productsLoading ? (
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -126,10 +123,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                   role='tabpanel'
                 >
                   {categoriesError ? (
-                    <ErrorMessage
-                      type={categoriesError.type}
-                      message={categoriesError.text}
-                    />
+                    <ErrorMessage message={categoriesError.text} />
                   ) : null}
                   {categoriesLoading ? (
                     <div style={{ display: 'flex', justifyContent: 'center' }}>

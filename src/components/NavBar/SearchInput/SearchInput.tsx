@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSearch } from '../../../redux/actions/getSearch';
 // import { getAllProducts } from '../../../redux/actions/getAllproducts';
-import { searchProducts } from '../../../redux/actions/searchProducts';
+// import { searchProducts } from '../../../redux/actions/searchProducts';
 import { AppDispatch } from '../../../redux/store';
 import { GrHistory } from 'react-icons/gr';
 import styles from './SearchInput.module.css';
 import { deleteToSearch } from '../../../redux/actions/deleteToSearch';
+import { changeTitle } from '../../../redux/reducers/productsReducer';
 
 const SearchInput: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,7 +16,7 @@ const SearchInput: React.FC = (): JSX.Element => {
   const [searchList, setSearchList] = useState(false);
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
 
-  const { allProducts } = useSelector((state: any) => state.products);
+  // const { allProducts } = useSelector((state: any) => state.products);
   const { allSearchs } = useSelector((state: any) => state.searchs);
 
   const [searchsFiltered, setSearchsFiltered] = useState(allSearchs);
@@ -36,13 +37,14 @@ const SearchInput: React.FC = (): JSX.Element => {
 
   const searchProduct = (ev: any) => {
     ev.preventDefault();
-    searchList && setSearchList(false); // Si la lista de busqueda está abierta desaparece al ejecutar la busqueda
-    if (!search) {
-      // dispatch(getAllProducts()); // Si no hay parametro de busqueda se setea el estado global de los productos a su totalidad
-    } else {
-      dispatch(searchProducts(search, allProducts)); // Caso contrario ejecutamos la acción de busqueda
-      dispatch(getSearch());
-    }
+    // searchList && setSearchList(false); // Si la lista de busqueda está abierta desaparece al ejecutar la busqueda
+    // if (!search) {
+    //   // dispatch(getAllProducts()); // Si no hay parametro de busqueda se setea el estado global de los productos a su totalidad
+    // } else {
+    dispatch(changeTitle(search));
+    // dispatch(searchProducts(search, allProducts)); // Caso contrario ejecutamos la acción de busqueda
+    // dispatch(getSearch());
+    // }
   };
 
   const deleteSearchList = useCallback(() => {

@@ -1,49 +1,65 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { getAllProducts } from '../actions/getAllproducts';
 import { product } from '../../interfaces/product';
-import { searchProducts } from '../actions/searchProducts';
-import { clearProductsList } from '../actions/clearProductsList';
 import { error } from '../../interfaces/error';
 
 export interface productsState {
+  title: string;
   products: product[] | [];
-  // allProducts?: product[] | [];
   currentPage?: number | null;
   totalPages?: number | null;
   productsLoading?: boolean;
+  message: string;
   productsError?: error | null | undefined;
 }
 
 const initialState: productsState = {
+  title: '',
   products: [],
   currentPage: null,
   totalPages: null,
-  // allProducts: [], //En allProducts se almacenan todos los productos que se utilizarán para ser filtrados en las busquedas
   productsLoading: false,
+  message: '',
   productsError: null
 };
 
 const productsSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {},
+  reducers: {
+    changeTitle: (state, action: PayloadAction<string>) => {
+      state.title = action.payload;
+      state.currentPage = 1;
+    },
+    changePage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllProducts.pending, (state) => {
         state.productsLoading = true;
+        state.message = '';
         state.productsError = null;
       })
       .addCase(getAllProducts.fulfilled, (state, action) => {
         state.productsLoading = false;
 
         // Desestructurar el objeto action.payload
-        const { products, currentPage, totalPages, productsError } =
-          action.payload.payload;
+        const {
+          title,
+          products,
+          currentPage,
+          totalPages,
+          message,
+          productsError
+        } = action.payload.payload;
 
+        state.title = title;
         state.products = products;
         state.currentPage = currentPage;
         state.totalPages = totalPages;
-        // state.allProducts = products;
+        state.message = message;
         state.productsError = productsError;
       })
       .addCase(getAllProducts.rejected, (state, action) => {
@@ -52,15 +68,10 @@ const productsSlice = createSlice({
           type: 'fetch',
           text: 'An error has occurred, please try again'
         };
-      })
-      .addCase(searchProducts, (state, action) => {
-        state.products = action.payload;
-        state.productsError = action.error;
-      })
-      .addCase(clearProductsList, (state, action) => {
-        state.products = action.payload;
       });
   }
 });
+
+export const { changeTitle, changePage } = productsSlice.actions;
 
 export default productsSlice.reducer;

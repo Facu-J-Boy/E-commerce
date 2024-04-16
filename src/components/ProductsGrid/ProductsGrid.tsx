@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './ProductsGrid.module.css';
 import { product } from '../../interfaces/product';
 import ProductsCard from '../ProductCard/ProductsCard';
@@ -9,25 +9,33 @@ import { AppDispatch } from '../../redux/store';
 import { getAllProducts } from '../../redux/actions/getAllproducts';
 import { MdNavigateBefore } from 'react-icons/md';
 import { MdNavigateNext } from 'react-icons/md';
+import { changePage } from '../../redux/reducers/productsReducer';
 
 const ProductsGrid: React.FC = (): JSX.Element => {
   const pendingProduct = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const { products, productsLoading, totalPages, currentPage, productsError } =
-    useSelector((state: any) => state.products);
+  const {
+    title,
+    products,
+    productsLoading,
+    totalPages,
+    currentPage,
+    message
+    // productsError
+  } = useSelector((state: any) => state.products);
 
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
 
   useEffect(() => {
-    dispatch(getAllProducts({ page, title: '' }));
-  }, [dispatch, page]);
+    dispatch(getAllProducts({ page: currentPage, title }));
+  }, [dispatch, currentPage, title]);
 
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   const clickPage = (number: number) => {
-    setPage(number);
+    dispatch(changePage(number));
   };
 
   return (
@@ -36,14 +44,14 @@ const ProductsGrid: React.FC = (): JSX.Element => {
         <div className={styles.pages}>
           <button
             style={
-              currentPage === pages[0]
+              currentPage === pages[0] || !products.length
                 ? {
                     visibility: 'hidden'
                   }
                 : {}
             }
             onClick={() => {
-              clickPage(page - 1);
+              clickPage(currentPage - 1);
             }}
           >
             <MdNavigateBefore />
@@ -65,23 +73,21 @@ const ProductsGrid: React.FC = (): JSX.Element => {
           ))}
           <button
             style={
-              currentPage === pages[pages.length - 1]
+              currentPage === pages[pages.length - 1] || !products.length
                 ? {
                     visibility: 'hidden'
                   }
                 : {}
             }
             onClick={() => {
-              clickPage(page + 1);
+              clickPage(currentPage + 1);
             }}
           >
             <MdNavigateNext />
           </button>
         </div>
       )}
-      {productsError && (
-        <ErrorMessage type={productsError.type} message={productsError.text} />
-      )}
+      {message && <ErrorMessage message={message} />}
       <div className={styles.container}>
         {productsLoading ? (
           <>
