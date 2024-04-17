@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getCart } from '../actions/getCart';
 import { addToCart } from '../actions/addToCart';
+import { deleteToTheCart } from '../actions/deleteToTheCart';
 
 interface product {
   id: string;
@@ -12,6 +13,7 @@ interface product {
 interface cartState {
   cartLoading: boolean;
   adding: boolean;
+  deleting: boolean;
   cartProducts: product[] | [];
   total: string;
   message: string;
@@ -20,6 +22,7 @@ interface cartState {
 const initialState: cartState = {
   cartLoading: false,
   adding: false,
+  deleting: false,
   cartProducts: [],
   total: '0',
   message: ''
@@ -37,7 +40,7 @@ const cartSlice = createSlice({
       })
       .addCase(getCart.fulfilled, (state, action) => {
         state.cartLoading = false;
-        state.cartProducts = action.payload && action.payload.products;
+        state.cartProducts = action.payload ? action.payload.products : [];
         state.total = action.payload && action.payload.total;
         state.message = action.payload && action.payload.message;
       })
@@ -48,13 +51,25 @@ const cartSlice = createSlice({
         state.adding = true;
       })
       .addCase(addToCart.fulfilled, (state, action) => {
+        state.adding = false;
         state.cartProducts = action.payload.products;
         state.total = action.payload.total;
         state.message = action.payload.message;
-        state.adding = false;
       })
       .addCase(addToCart.rejected, (state) => {
         state.adding = false;
+      })
+      .addCase(deleteToTheCart.pending, (state) => {
+        state.deleting = true;
+      })
+      .addCase(deleteToTheCart.fulfilled, (state, action) => {
+        state.deleting = false;
+        state.cartProducts = action.payload.products;
+        state.total = action.payload.total;
+        state.message = action.payload.message;
+      })
+      .addCase(deleteToTheCart.rejected, (state) => {
+        state.deleting = false;
       });
   }
 });

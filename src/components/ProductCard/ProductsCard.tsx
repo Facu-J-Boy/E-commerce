@@ -11,13 +11,6 @@ import { addToCart } from '../../redux/actions/addToCart';
 import { deleteToTheCart } from '../../redux/actions/deleteToTheCart';
 
 const ProductsCard: React.FC<product> = ({ _id, image, title, price }) => {
-  const product = {
-    _id: _id,
-    image: image,
-    title: title,
-    price: price
-  };
-
   const dispatch = useDispatch<AppDispatch>();
 
   const navigate = useNavigate();
@@ -52,7 +45,7 @@ const ProductsCard: React.FC<product> = ({ _id, image, title, price }) => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
-    deleteToTheCart(product._id);
+    dispatch(deleteToTheCart({ userId: User._id, productId: _id }));
     // dispatch(getCart());
     return false; // Evitar la propagación del evento de clic
   };

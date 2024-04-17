@@ -47,13 +47,6 @@ const SingleProduct: React.FC<product> = ({
     )
   );
 
-  const product = {
-    _id: _id,
-    image: image,
-    title: title,
-    price: price
-  };
-
   const dispatch = useDispatch<AppDispatch>();
 
   const navigate = useNavigate();
@@ -72,7 +65,7 @@ const SingleProduct: React.FC<product> = ({
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
-    deleteToTheCart(product._id);
+    dispatch(deleteToTheCart({ userId: User._id, productId: _id }));
     // dispatch(getCart());
     return false; // Evitar la propagación del evento de clic
   };

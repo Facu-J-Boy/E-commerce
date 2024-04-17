@@ -1,24 +1,16 @@
-export const deleteToTheCart = (_id: string) => {
-  // Obtén el carrito actual desde el localStorage
-  const cartString = localStorage.getItem('cart') || '[]';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { axiosInstance } from '../../Config/axios';
 
-  // Intenta parsear el carrito desde JSON
-  let cart = [];
-
-  try {
-    cart = JSON.parse(cartString);
-  } catch (error) {
-    console.error('Error al parsear el carrito:', error);
+export const deleteToTheCart = createAsyncThunk(
+  'deleteToTheCart',
+  async (data: { userId: string; productId: string }) => {
+    try {
+      const response = await axiosInstance.delete(
+        `/cart/remove/${data.userId}/${data.productId}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
   }
-
-  // Asegúrate de que cart sea un array
-  if (!Array.isArray(cart)) {
-    cart = [];
-  }
-
-  // Filtra el carrito para eliminar el producto con el ID deseado
-  const updatedCart = cart.filter((product) => product._id !== _id);
-
-  // Guarda el carrito actualizado en el localStorage
-  localStorage.setItem('cart', JSON.stringify(updatedCart));
-};
+);
