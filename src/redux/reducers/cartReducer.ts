@@ -9,13 +9,17 @@ interface product {
 }
 
 interface cartState {
+  cartLoading: boolean;
   cartProducts: product[] | [];
   total: string;
+  message: string;
 }
 
 const initialState: cartState = {
+  cartLoading: false,
   cartProducts: [],
-  total: '0'
+  total: '0',
+  message: ''
 };
 
 const cartSlice = createSlice({
@@ -23,10 +27,20 @@ const cartSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getCart, (state, action) => {
-      state.cartProducts = action.payload ? action.payload.products : [];
-      state.total = action.payload ? action.payload.total : '0';
-    });
+    builder
+      .addCase(getCart.pending, (state) => {
+        state.cartLoading = true;
+        state.message = '';
+      })
+      .addCase(getCart.fulfilled, (state, action) => {
+        state.cartLoading = false;
+        state.cartProducts = action.payload.products;
+        state.total = action.payload.total;
+        state.message = action.payload.message;
+      })
+      .addCase(getCart.rejected, (state) => {
+        state.cartLoading = false;
+      });
   }
 });
 

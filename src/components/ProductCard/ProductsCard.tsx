@@ -3,9 +3,12 @@ import styles from './ProductCard.module.css';
 import { useNavigate } from 'react-router-dom';
 import { GrCart } from 'react-icons/gr';
 import { BsFillCartXFill } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
-import { getCart } from '../../redux/actions/getCart';
+import {
+  // useDispatch,
+  useSelector
+} from 'react-redux';
+// import { AppDispatch } from '../../redux/store';
+// import { getCart } from '../../redux/actions/getCart';
 import { product } from '../../interfaces/product';
 import { addToCart } from '../../redux/actions/addToCart';
 import { deleteToTheCart } from '../../redux/actions/deleteToTheCart';
@@ -18,7 +21,7 @@ const ProductsCard: React.FC<product> = ({ _id, image, title, price }) => {
     price: price
   };
 
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
 
   const navigate = useNavigate();
 
@@ -29,7 +32,7 @@ const ProductsCard: React.FC<product> = ({ _id, image, title, price }) => {
   const handleAddToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
     addToCart(product);
-    dispatch(getCart());
+    // dispatch(getCart());
     return false; // Evitar la propagación del evento de clic
   };
 
@@ -38,7 +41,7 @@ const ProductsCard: React.FC<product> = ({ _id, image, title, price }) => {
   ) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
     deleteToTheCart(product._id);
-    dispatch(getCart());
+    // dispatch(getCart());
     return false; // Evitar la propagación del evento de clic
   };
 

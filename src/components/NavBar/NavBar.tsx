@@ -8,7 +8,7 @@ import Cart from './Cart/Cart';
 import { AppDispatch } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCart } from '../../redux/actions/getCart';
-import { getAllcategory } from '../../redux/actions/getAllCategory';
+// import { getAllcategory } from '../../redux/actions/getAllCategory';
 import { getSession } from '../../redux/actions/getSession';
 import { userId } from '../../redux/actions/userId';
 import { logOut } from '../../redux/actions/logOut';
@@ -48,9 +48,9 @@ const NavBar: React.FC = (): JSX.Element => {
   }, [userData, dispatch]);
 
   useEffect(() => {
-    dispatch(getCart());
-    dispatch(getAllcategory());
-  }, [dispatch]);
+    dispatch(getCart(User._id));
+    // dispatch(getAllcategory());
+  }, [dispatch, User]);
 
   const toggleList = useCallback(() => {
     setList(!list);

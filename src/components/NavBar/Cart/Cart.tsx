@@ -7,7 +7,7 @@ import { GrCart } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
 
 const Cart: React.FC = (): JSX.Element => {
-  const { cartProducts, total } = useSelector(
+  const { cartProducts, total, message } = useSelector(
     (state: any) => state.cartProducts
   );
 
@@ -37,7 +37,7 @@ const Cart: React.FC = (): JSX.Element => {
       <GrCart size={30} onClick={toggleProducts} />
       {productList && (
         <div className={styles.product_list_container}>
-          {!cartProducts.length ? (
+          {message ? (
             <ul className={styles.products}>
               <h4
                 style={{
@@ -47,7 +47,7 @@ const Cart: React.FC = (): JSX.Element => {
                   alignItems: 'center'
                 }}
               >
-                Your cart is empty
+                {message}
               </h4>
             </ul>
           ) : (

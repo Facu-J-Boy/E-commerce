@@ -1,25 +1,11 @@
-import { createAction } from '@reduxjs/toolkit';
-import { product } from '../../interfaces/product';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { axiosInstance } from '../../Config/axios';
 
-export const getCart = createAction('getCart', () => {
-  const cartString = localStorage.getItem('cart');
-  const cart = cartString ? JSON.parse(cartString) : null;
-
-  const total =
-    cart && cart.length
-      ? cart.reduce((a: number, b: product) => a + b.price, 0)
-      : 0;
-
-  const formattedTotal = new Intl.NumberFormat('es-ES', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-    useGrouping: true
-  }).format(total);
-
-  return {
-    payload: {
-      products: cart ? cart.reverse() : [],
-      total: formattedTotal
-    }
-  };
+export const getCart = createAsyncThunk('getCart', async (userId: string) => {
+  try {
+    const response = await axiosInstance.get(`/cart/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
 });
