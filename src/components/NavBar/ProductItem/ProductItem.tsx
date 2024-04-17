@@ -24,7 +24,6 @@ const ProductItem: React.FC<product> = ({
   ) => {
     event.stopPropagation(); // Evitar la propagación del evento de click
     dispatch(deleteToTheCart({ userId: User._id, productId: _id }));
-    // dispatch(getCart());
     return false; // Evitar la propagación del evento de click
   };
 

@@ -5,7 +5,6 @@ import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { addToCart } from '../../redux/actions/addToCart';
-// import { getCart } from '../../redux/actions/getCart';
 import { deleteToTheCart } from '../../redux/actions/deleteToTheCart';
 import { useNavigate } from 'react-router-dom';
 import LoaderMini from '../LoaderMini/LoaderMini';
@@ -57,7 +56,6 @@ const SingleProduct: React.FC<product> = ({
     event.stopPropagation(); // Evitar la propagación del evento de clic
     setDisableButton(true);
     dispatch(addToCart({ userId: User._id, productId: _id }));
-    // dispatch(getCart());
     return false; // Evitar la propagación del evento de clic
   };
 
@@ -66,7 +64,6 @@ const SingleProduct: React.FC<product> = ({
   ) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
     dispatch(deleteToTheCart({ userId: User._id, productId: _id }));
-    // dispatch(getCart());
     return false; // Evitar la propagación del evento de clic
   };
 
@@ -79,7 +76,6 @@ const SingleProduct: React.FC<product> = ({
   }, [cartProducts, productId]);
 
   const redirectToBuy = () => {
-    // dispatch(Buy('single'));
     navigate(`/buy/${_id}`);
   };
 

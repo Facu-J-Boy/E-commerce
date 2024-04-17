@@ -5,7 +5,6 @@ import { GrCart } from 'react-icons/gr';
 import { BsFillCartXFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
-// import { getCart } from '../../../redux/actions/getCart';
 import { product } from '../../../interfaces/product';
 import { addToCart } from '../../../redux/actions/addToCart';
 import { deleteToTheCart } from '../../../redux/actions/deleteToTheCart';
@@ -42,7 +41,6 @@ const Product: React.FC<ProductCardProps> = ({ _id, image, title, price }) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
     setDisableButton(true);
     dispatch(addToCart({ userId: User._id, productId: _id }));
-    // dispatch(getCart());
     return false; // Evitar la propagación del evento de clic
   };
 
@@ -51,7 +49,6 @@ const Product: React.FC<ProductCardProps> = ({ _id, image, title, price }) => {
   ) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
     dispatch(deleteToTheCart({ userId: User._id, productId: _id }));
-    // dispatch(getCart());
     return false; // Evitar la propagación del evento de clic
   };
 
