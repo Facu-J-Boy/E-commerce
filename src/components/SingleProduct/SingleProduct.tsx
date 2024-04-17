@@ -2,15 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { product } from '../../interfaces/product';
 import styles from './SingleProduct.module.css';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
-import {
-  // useDispatch,
-  useSelector
-} from 'react-redux';
-// import { AppDispatch } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
 import { addToCart } from '../../redux/actions/addToCart';
 // import { getCart } from '../../redux/actions/getCart';
 import { deleteToTheCart } from '../../redux/actions/deleteToTheCart';
 import { useNavigate } from 'react-router-dom';
+import LoaderMini from '../LoaderMini/LoaderMini';
 
 const SingleProduct: React.FC<product> = ({
   _id,
@@ -23,6 +21,16 @@ const SingleProduct: React.FC<product> = ({
   const { totalCount, commentsLoading } = useSelector(
     (state: any) => state.comments
   );
+
+  const { cartProducts, adding } = useSelector(
+    (state: any) => state.cartProducts
+  );
+
+  const { User } = useSelector((state: any) => state.user);
+
+  useEffect(() => {
+    !adding && setDisableButton(adding);
+  }, [adding]);
 
   let totalRating = 0;
 
@@ -46,13 +54,16 @@ const SingleProduct: React.FC<product> = ({
     price: price
   };
 
-  // const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
 
   const navigate = useNavigate();
 
+  const [disableButton, setDisableButton] = useState(false);
+
   const handleAddToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
-    addToCart(product);
+    setDisableButton(true);
+    dispatch(addToCart({ userId: User._id, productId: _id }));
     // dispatch(getCart());
     return false; // Evitar la propagación del evento de clic
   };
@@ -67,8 +78,6 @@ const SingleProduct: React.FC<product> = ({
   };
 
   const [inCart, setInCart] = useState(false);
-
-  const { cartProducts } = useSelector((state: any) => state.cartProducts);
 
   const productId = _id;
 
@@ -111,8 +120,10 @@ const SingleProduct: React.FC<product> = ({
               alignItems: 'center',
               justifyContent: 'spaceBetween'
             }}
+            disabled={disableButton}
             onClick={!inCart ? handleAddToCart : handleDeleteToTheCart}
           >
+            {adding && <LoaderMini color='#333' />}
             {!inCart ? 'Add to cart' : 'Remove from cart'}
           </button>
           <button

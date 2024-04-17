@@ -48,7 +48,7 @@ const NavBar: React.FC = (): JSX.Element => {
   }, [userData, dispatch]);
 
   useEffect(() => {
-    dispatch(getCart(User._id));
+    User && dispatch(getCart(User._id));
     // dispatch(getAllcategory());
   }, [dispatch, User]);
 

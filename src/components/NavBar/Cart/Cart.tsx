@@ -77,7 +77,7 @@ const Cart: React.FC = (): JSX.Element => {
         </div>
       )}
       <span>
-        {cartProducts.length >= 10
+        {cartProducts.length && cartProducts.length >= 10
           ? '9+'
           : !cartProducts.length
           ? null
