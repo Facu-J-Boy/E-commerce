@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllCategories } from '../actions/getAllCategories';
 import { error } from '../../interfaces/error';
+import { getAllcategory } from '../actions/getAllCategory';
+import { category } from '../../interfaces/category';
 
 export interface categoriesState {
-  categories?: string[] | [];
+  categories?: category[] | [];
   categoriesLoading?: boolean;
   categoriesError?: error | null | undefined;
 }
@@ -20,24 +21,15 @@ const categoriesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllCategories.pending, (state) => {
+      .addCase(getAllcategory.pending, (state) => {
         state.categoriesLoading = true;
       })
-      .addCase(getAllCategories.fulfilled, (state, action) => {
+      .addCase(getAllcategory.fulfilled, (state, action) => {
         state.categoriesLoading = false;
-
-        // Desestructurar el objeto action.payload
-        const { categories, categoriesError } = action.payload.payload;
-
-        state.categories = categories;
-        state.categoriesError = categoriesError;
+        state.categories = action.payload;
       })
-      .addCase(getAllCategories.rejected, (state, action) => {
+      .addCase(getAllcategory.rejected, (state, action) => {
         state.categoriesLoading = false;
-        state.categoriesError = {
-          type: 'fetch',
-          text: 'An error has occurred, please try again'
-        };
       });
   }
 });

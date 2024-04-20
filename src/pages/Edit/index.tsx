@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import styles from './Edit.module.css';
 import { FiEdit } from 'react-icons/fi';
 import SkeletonDetail from '../../components/SkeletonDetail/SkeletonDetail';
-import { getAllCategories } from '../../redux/actions/getAllCategories';
+import { getAllcategory } from '../../redux/actions/getAllCategory';
 
 interface Product {
   // Define los tipos para el producto
@@ -27,7 +27,7 @@ const Edit: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getSingleProduct(id));
-    dispatch(getAllCategories());
+    dispatch(getAllcategory());
     return () => {
       dispatch(clearProductState());
     };

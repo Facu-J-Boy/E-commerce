@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import ProductsGrid from '../../components/ProductsGrid/ProductsGrid';
-import { getAllCategories } from '../../redux/actions/getAllCategories';
 import Carousel from '../../components/Carousel/Carousel';
 import { clearProductsList } from '../../redux/actions/clearProductsList';
 // import CarrouselProducts from '../../components/CarrouselProducts/CarrouselProducts';
@@ -18,7 +17,6 @@ const Home: React.FC = (): JSX.Element => {
   // );
 
   useEffect(() => {
-    dispatch(getAllCategories());
     dispatch(getHistory());
     dispatch(getSearch());
     return () => {

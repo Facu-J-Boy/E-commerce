@@ -5,7 +5,6 @@ import { AppDispatch } from '../../redux/store';
 import { product } from '../../interfaces/product';
 import DashboardProducts from '../../components/DashboardProducts/DashboardProducts';
 import Loader from '../../components/Loader/Loader';
-import { getAllCategories } from '../../redux/actions/getAllCategories';
 import Categories from '../../components/Categories/Categories';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
@@ -13,6 +12,8 @@ import { getAllProducts } from '../../redux/actions/getAllproducts';
 import Loadingscreen from '../../components/LoadingScreen/Loadingscreen';
 import { userId } from '../../redux/actions/userId';
 import Pages from '../../components/ProductsGrid/Pages/Pages';
+import { getAllcategory } from '../../redux/actions/getAllCategory';
+import { category } from '../../interfaces/category';
 
 const AdminDashboard: React.FC = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState('home');
@@ -47,7 +48,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
   }, [dispatch, currentPage, title]);
 
   useEffect(() => {
-    dispatch(getAllCategories());
+    dispatch(getAllcategory());
   }, [dispatch]);
 
   return (
@@ -135,11 +136,9 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                   </div>
                 ) : (
                   <>
-                    {categories?.map(
-                      (c: string, index: React.Key | null | undefined) => (
-                        <Categories key={index} categorie={c} />
-                      )
-                    )}
+                    {categories?.map((c: category) => (
+                      <Categories key={c._id} name={c.name} />
+                    ))}
                   </>
                 )}
               </div>
