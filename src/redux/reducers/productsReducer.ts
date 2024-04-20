@@ -33,6 +33,9 @@ const productsSlice = createSlice({
     },
     changePage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
+    },
+    clearProducts: (state) => {
+      state.products = [];
     }
   },
   extraReducers: (builder) => {
@@ -72,6 +75,6 @@ const productsSlice = createSlice({
   }
 });
 
-export const { changeTitle, changePage } = productsSlice.actions;
+export const { changeTitle, changePage, clearProducts } = productsSlice.actions;
 
 export default productsSlice.reducer;

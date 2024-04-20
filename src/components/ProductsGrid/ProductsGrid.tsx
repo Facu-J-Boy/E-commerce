@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { getAllProducts } from '../../redux/actions/getAllproducts';
 import Pages from './Pages/Pages';
+import { clearProducts } from '../../redux/reducers/productsReducer';
 
 const ProductsGrid: React.FC = (): JSX.Element => {
   const pendingProduct = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -20,6 +21,12 @@ const ProductsGrid: React.FC = (): JSX.Element => {
   useEffect(() => {
     dispatch(getAllProducts({ page: currentPage, title }));
   }, [dispatch, currentPage, title]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearProducts());
+    };
+  }, [dispatch]);
 
   return (
     <>

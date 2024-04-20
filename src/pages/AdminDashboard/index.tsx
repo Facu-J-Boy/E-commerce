@@ -14,6 +14,7 @@ import { userId } from '../../redux/actions/userId';
 import Pages from '../../components/ProductsGrid/Pages/Pages';
 import { getAllcategory } from '../../redux/actions/getAllCategory';
 import { category } from '../../interfaces/category';
+import { clearProducts } from '../../redux/reducers/productsReducer';
 
 const AdminDashboard: React.FC = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState('home');
@@ -49,6 +50,12 @@ const AdminDashboard: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getAllcategory());
+  }, [dispatch]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearProducts());
+    };
   }, [dispatch]);
 
   return (
