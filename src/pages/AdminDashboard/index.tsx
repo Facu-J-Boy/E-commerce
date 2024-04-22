@@ -58,6 +58,10 @@ const AdminDashboard: React.FC = (): JSX.Element => {
     };
   }, [dispatch]);
 
+  const createRedirect = () => {
+    navigate('/create');
+  };
+
   return (
     <>
       {userLoading ? (
@@ -102,6 +106,12 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                 }`}
                 role='tabpanel'
               >
+                <button
+                  className={styles.create_button}
+                  onClick={createRedirect}
+                >
+                  Create product
+                </button>
                 {currentPage && <Pages />}
                 {message && <ErrorMessage message={message} />}
                 {productsLoading ? (
@@ -113,7 +123,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                       height: '550px'
                     }}
                   >
-                    <Loader />
+                    <Loader color='#333' />
                   </div>
                 ) : (
                   products?.map((p: product, index: number) => (
@@ -139,7 +149,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                 ) : null}
                 {categoriesLoading ? (
                   <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Loader />
+                    <Loader color='#333' />
                   </div>
                 ) : (
                   <>

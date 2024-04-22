@@ -3,6 +3,7 @@ import { logIn } from '../actions/logIn';
 import { signUp } from '../actions/signUp';
 import { postComment } from '../actions/postComment';
 import { deleteComment } from '../actions/deleteComment';
+import { createProduct } from '../actions/createProduct';
 
 export interface notificationState {
   type: string | null;
@@ -50,6 +51,10 @@ const notificationSlice = createSlice({
       .addCase(deleteComment.fulfilled, (state, action) => {
         state.type = action.payload.notification.type;
         state.text = action.payload.notification.text;
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.type = action.payload.type;
+        state.text = action.payload.text;
       });
   }
 });

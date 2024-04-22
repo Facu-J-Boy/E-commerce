@@ -69,6 +69,15 @@
   border-radius: 4px;
 }
 
+.create_button {
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  padding: 15px;
+  cursor: pointer;
+}
+
 .active.tabPane {
   display: block;
 }

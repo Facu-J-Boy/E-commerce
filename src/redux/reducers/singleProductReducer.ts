@@ -2,16 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 import { product } from '../../interfaces/product';
 import { getSingleProduct } from '../actions/getSingleProduct';
 import { clearProductState } from '../actions/clearProductState';
+import { createProduct } from '../actions/createProduct';
 
 interface productState {
   product: product | {};
   productLoading: boolean;
+  creating: boolean;
   error: null | string | undefined;
 }
 
 const initialState: productState = {
   product: {},
   productLoading: false,
+  creating: false,
   error: null
 };
 
@@ -32,6 +35,15 @@ const singleProductSlice = createSlice({
       .addCase(getSingleProduct.rejected, (state, action) => {
         state.productLoading = false;
         state.error = action.error.message;
+      })
+      .addCase(createProduct.pending, (state) => {
+        state.creating = true;
+      })
+      .addCase(createProduct.fulfilled, (state) => {
+        state.creating = false;
+      })
+      .addCase(createProduct.rejected, (state) => {
+        state.creating = false;
       })
       .addCase(clearProductState, (state, action) => {
         state.product = action.payload;

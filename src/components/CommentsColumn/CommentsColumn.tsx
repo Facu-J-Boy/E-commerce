@@ -65,7 +65,7 @@ const CommentsColumn: React.FC = (): JSX.Element => {
               justifyContent: 'center'
             }}
           >
-            <Loader />
+            <Loader color='#333' />
           </div>
         )}
 

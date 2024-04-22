@@ -12,11 +12,12 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import NavBar from './components/NavBar/NavBar';
 import AdminDashboard from './pages/AdminDashboard';
-import Edit from './pages/Edit';
+// import Edit from './pages/Edit';
 import Footter from './components/Footter/Footter';
 import Buy from './pages/Buy';
 import { useSelector } from 'react-redux';
 import Notification from './components/Notification/Notification';
+import ProductForm from './components/ProductForm/ProductForm';
 
 function App() {
   const { type, text } = useSelector((state: any) => state.notification);
@@ -30,7 +31,8 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/signUp' element={<SignUp />} />
         <Route path='/admin' element={<AdminDashboard />} />
-        <Route path='/edit/:id' element={<Edit />} />
+        <Route path='/edit/:id' element={<ProductForm type='edit' />} />
+        <Route path='/create' element={<ProductForm type='create' />} />
         <Route path='/buy/:id' element={<Buy />} />
         {/* Ruta de error */}
         <Route path='*' element={<NotFound />} />

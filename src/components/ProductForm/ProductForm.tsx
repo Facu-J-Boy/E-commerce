@@ -4,57 +4,58 @@ import { AppDispatch } from '../../redux/store';
 import { getSingleProduct } from '../../redux/actions/getSingleProduct';
 import { clearProductState } from '../../redux/actions/clearProductState';
 import { useParams } from 'react-router-dom';
-import styles from './Edit.module.css';
+import styles from './ProductForm.module.css';
 import { FiEdit } from 'react-icons/fi';
 import SkeletonDetail from '../../components/SkeletonDetail/SkeletonDetail';
 import { getAllcategory } from '../../redux/actions/getAllCategory';
+import { category } from '../../interfaces/category';
+import imgDefault from './Product default.svg';
+import { createProduct } from '../../redux/actions/createProduct';
+import Loader from '../Loader/Loader';
 
-interface Product {
-  // Define los tipos para el producto
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  price: number;
-  category: string;
-  // Otros campos si los hay
-}
-
-const Edit: React.FC = (): JSX.Element => {
+const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
+  type
+}): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { id } = useParams<{ id: string }>(); // Asegúrate de que id sea de tipo string
 
+  //   console.log('type: ', type);
+
   useEffect(() => {
-    dispatch(getSingleProduct(id));
+    type === 'edit' && dispatch(getSingleProduct(id));
     dispatch(getAllcategory());
     return () => {
       dispatch(clearProductState());
     };
-  }, [dispatch, id]);
+  }, [dispatch, id, type]);
 
-  const { product, productLoading } = useSelector(
-    (state: { product: { product: Product; productLoading: boolean } }) =>
-      state.product
+  const { product, productLoading, creating } = useSelector(
+    (state: any) => state.product
   );
 
   const { categories, categoriesLoading } = useSelector(
     (state: any) => state.categories
   );
 
-  const [showImage, setShowImage] = useState<string>('');
+  const [showImage, setShowImage] = useState<string>(imgDefault);
+  const [image, setImage] = useState<File | undefined>();
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const [price, setPrice] = useState<number | string>('');
+  const [price, setPrice] = useState<string>('');
+  const [priceError, setPriceError] = useState<boolean>(false);
   const [category, setCategory] = useState<string>('');
 
   useEffect(() => {
-    document.title = `Edit: ${product.title ? product.title : ''}`; // Cambia el titulo de la web
+    document.title =
+      type === 'edit'
+        ? `Edit: ${product.title ? product.title : ''}`
+        : 'Create product'; // Cambia el titulo de la web
 
     return () => {
       document.title = 'E-commerce'; // Al desmontar el componente el titulo vuelve a la normalidad
     };
-  }, [product]);
+  }, [product, type]);
 
   useEffect(() => {
     if (product) {
@@ -78,6 +79,7 @@ const Edit: React.FC = (): JSX.Element => {
   const handleFileChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = ev.target.files?.[0];
     setFileToBase(selectedFile);
+    setImage(ev.target.files?.[0]);
   };
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -88,11 +90,12 @@ const Edit: React.FC = (): JSX.Element => {
     const inputValue = ev.target.value;
 
     // Validar que el valor ingresado es un número o está vacío
+    setPrice(inputValue);
     if (/^\d*\.?\d*$/.test(inputValue)) {
-      setPrice(inputValue);
+      setPriceError(false);
     } else {
       // Puedes manejar la lógica de error aquí, como mostrar un mensaje al usuario.
-      console.error('Ingrese un valor numérico válido.');
+      setPriceError(true);
     }
   };
 
@@ -107,8 +110,26 @@ const Edit: React.FC = (): JSX.Element => {
     setCategory(event.target.value);
   };
 
+  const handleButton = () => {
+    type === 'create' &&
+      dispatch(
+        createProduct({
+          image,
+          title,
+          price,
+          description,
+          categoryId: category
+        })
+      );
+  };
+
   return (
     <>
+      {creating && (
+        <div className={styles.loading}>
+          <Loader color='#fff' />
+        </div>
+      )}
       {productLoading && categoriesLoading ? (
         <SkeletonDetail />
       ) : (
@@ -135,6 +156,7 @@ const Edit: React.FC = (): JSX.Element => {
             <textarea
               className={styles.title}
               value={title}
+              placeholder='Title'
               onChange={(ev) => {
                 handleTitleChange(ev);
               }}
@@ -144,10 +166,16 @@ const Edit: React.FC = (): JSX.Element => {
               <input
                 type='text'
                 value={price}
+                placeholder='0.00'
                 onChange={(ev) => {
                   handlePriceChange(ev);
                 }}
               />
+              {priceError && (
+                <p style={{ color: 'red', fontSize: '20px' }}>
+                  Enter a valid numerical value
+                </p>
+              )}
             </div>
             <div className={styles.category}>
               <h4>Category: </h4>
@@ -157,18 +185,25 @@ const Edit: React.FC = (): JSX.Element => {
                   handleSelectChange(ev);
                 }}
               >
-                {categories?.map((e: string) => <option value={e}>{e}</option>)}
+                {categories?.map((e: category) => (
+                  <option key={e._id} value={e._id}>
+                    {e.name}
+                  </option>
+                ))}
               </select>
             </div>
             <textarea
               className={styles.description}
               value={description}
+              placeholder='Description'
               onChange={(ev) => {
                 handleDescriptionChange(ev);
               }}
             />
             <div className={styles.editProduct}>
-              <button>Edit product</button>
+              <button onClick={handleButton}>
+                {type === 'edit' ? 'Edit product' : 'Create'}
+              </button>
             </div>
           </div>
         </div>
@@ -177,4 +212,4 @@ const Edit: React.FC = (): JSX.Element => {
   );
 };
 
-export default Edit;
+export default ProductForm;
