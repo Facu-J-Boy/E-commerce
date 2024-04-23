@@ -4,6 +4,9 @@ import { BiSolidPencil } from 'react-icons/bi';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { product } from '../../interfaces/product';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { deleteProduct } from '../../redux/actions/deleteProduct';
 
 const DashboardProducts: React.FC<product> = ({
   _id,
@@ -13,12 +16,18 @@ const DashboardProducts: React.FC<product> = ({
 }): JSX.Element => {
   const navigate = useNavigate();
 
+  const dispatch = useDispatch<AppDispatch>();
+
   const handleRedirect = () => {
     navigate(`/product/${_id}`);
   };
 
   const editRedirect = () => {
     navigate(`/edit/${_id}`);
+  };
+
+  const handleDeleting = (id: string) => {
+    dispatch(deleteProduct(id));
   };
 
   return (
@@ -43,7 +52,12 @@ const DashboardProducts: React.FC<product> = ({
         <button className={styles.icon} onClick={editRedirect}>
           <BiSolidPencil size={25} style={{ margin: '0px 10px' }} />
         </button>
-        <button className={styles.icon}>
+        <button
+          className={styles.icon}
+          onClick={() => {
+            handleDeleting(_id);
+          }}
+        >
           <BsFillTrashFill size={25} style={{ margin: '0px 10px' }} />
         </button>
       </div>

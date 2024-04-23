@@ -23,7 +23,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
 
   const { User, userLoading } = useSelector((state: any) => state.user);
 
-  const { title, products, productsLoading, currentPage, message } =
+  const { title, products, productsLoading, currentPage, deleting, message } =
     useSelector((state: any) => state.products);
 
   const { categories, categoriesLoading, categoriesError } = useSelector(
@@ -64,6 +64,11 @@ const AdminDashboard: React.FC = (): JSX.Element => {
 
   return (
     <>
+      {deleting && (
+        <div className={styles.deleting}>
+          <Loader color='#fff' />
+        </div>
+      )}
       {userLoading ? (
         <Loadingscreen />
       ) : (
