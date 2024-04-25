@@ -12,6 +12,15 @@ import { category } from '../../interfaces/category';
 import imgDefault from './Product default.svg';
 import { createProduct } from '../../redux/actions/createProduct';
 import Loader from '../Loader/Loader';
+import { useForm } from 'react-hook-form';
+
+interface productForm {
+  title: string;
+  price: string;
+  description: string;
+  categoryId: string;
+  image: File | undefined;
+}
 
 const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
   type
@@ -19,8 +28,6 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const { id } = useParams<{ id: string }>(); // Asegúrate de que id sea de tipo string
-
-  //   console.log('type: ', type);
 
   useEffect(() => {
     type === 'edit' && dispatch(getSingleProduct(id));
@@ -38,13 +45,15 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
     (state: any) => state.categories
   );
 
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors }
+  } = useForm<productForm>();
+
   const [showImage, setShowImage] = useState<string>(imgDefault);
   const [image, setImage] = useState<File | undefined>();
-  const [title, setTitle] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [price, setPrice] = useState<string>('');
-  const [priceError, setPriceError] = useState<boolean>(false);
-  const [category, setCategory] = useState<string>('');
 
   useEffect(() => {
     document.title =
@@ -59,12 +68,12 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
 
   useEffect(() => {
     if (product) {
-      setTitle(product.title);
-      setDescription(product.description);
-      setPrice(product.price);
-      setCategory(product.category);
+      setValue('title', product.title);
+      setValue('description', product.description);
+      setValue('price', product.price);
+      setValue('categoryId', product.category?._id);
     }
-  }, [product]);
+  }, [product, setValue]);
 
   const setFileToBase = (file: File | undefined) => {
     if (file) {
@@ -79,38 +88,11 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
   const handleFileChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = ev.target.files?.[0];
     setFileToBase(selectedFile);
-    setImage(ev.target.files?.[0]);
+    setImage(selectedFile);
   };
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setTitle(event.target.value);
-  };
-
-  const handlePriceChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = ev.target.value;
-
-    // Validar que el valor ingresado es un número o está vacío
-    setPrice(inputValue);
-    if (/^\d*\.?\d*$/.test(inputValue)) {
-      setPriceError(false);
-    } else {
-      // Puedes manejar la lógica de error aquí, como mostrar un mensaje al usuario.
-      setPriceError(true);
-    }
-  };
-
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setDescription(event.target.value);
-  };
-
-  // Manejar cambios en la selección
-  const handleSelectChange = (event: any) => {
-    setCategory(event.target.value);
-  };
-
-  const handleButton = () => {
+  const onSubmit = async (data: productForm) => {
+    const { title, price, description, categoryId } = data;
     type === 'create' &&
       dispatch(
         createProduct({
@@ -118,7 +100,7 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
           title,
           price,
           description,
-          categoryId: category
+          categoryId
         })
       );
   };
@@ -133,10 +115,10 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
       {productLoading && categoriesLoading ? (
         <SkeletonDetail />
       ) : (
-        <div className={styles.edit}>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.edit}>
           <div className={styles.image}>
             <img
-              src={!showImage ? product.image : showImage}
+              src={!Object.keys(product).length ? showImage : product.image}
               alt={product.title}
             />
             <div className={styles.editImage}>
@@ -145,68 +127,116 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
               </button>
               <input
                 type='file'
+                accept='image/*'
+                style={errors.image && { borderColor: 'red' }}
+                {...register('image', {
+                  required: {
+                    value: true,
+                    message: 'Image is required'
+                  }
+                })}
                 onChange={(ev) => {
                   handleFileChange(ev);
                 }}
               />
-            </div>
-          </div>
-
-          <div className={styles.info}>
-            <textarea
-              className={styles.title}
-              value={title}
-              placeholder='Title'
-              onChange={(ev) => {
-                handleTitleChange(ev);
-              }}
-            />
-            <div className={styles.price}>
-              $
-              <input
-                type='text'
-                value={price}
-                placeholder='0.00'
-                onChange={(ev) => {
-                  handlePriceChange(ev);
-                }}
-              />
-              {priceError && (
-                <p style={{ color: 'red', fontSize: '20px' }}>
-                  Enter a valid numerical value
-                </p>
+              {errors.image && (
+                <span className={styles.errors}>{errors.image.message}</span>
               )}
             </div>
-            <div className={styles.category}>
-              <h4>Category: </h4>
-              <select
-                value={category}
-                onChange={(ev) => {
-                  handleSelectChange(ev);
-                }}
-              >
-                {categories?.map((e: category) => (
-                  <option key={e._id} value={e._id}>
-                    {e.name}
-                  </option>
-                ))}
-              </select>
+          </div>
+          <div className={styles.info}>
+            <div style={{ flexDirection: 'column' }}>
+              <textarea
+                className={styles.title}
+                style={errors.title && { borderColor: 'red' }}
+                placeholder='Title'
+                {...register('title', {
+                  required: {
+                    value: true,
+                    message: 'Title is required'
+                  }
+                })}
+              />
+              {errors.title && (
+                <span className={styles.errors}>{errors.title.message}</span>
+              )}
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column'
+              }}
+            >
+              <div className={styles.price}>
+                $
+                <input
+                  type='text'
+                  style={errors.price && { borderColor: 'red' }}
+                  placeholder='0.00'
+                  {...register('price', {
+                    required: {
+                      value: true,
+                      message: 'Price is required'
+                    },
+                    pattern: {
+                      value: /^\d*\.?\d*$/,
+                      message: 'Enter a valid numerical value'
+                    }
+                  })}
+                />
+              </div>
+              {errors.price && (
+                <span className={styles.errors}>{errors.price.message}</span>
+              )}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div className={styles.category}>
+                <h4>Category: </h4>
+                <select
+                  {...register('categoryId', {
+                    required: {
+                      value: true,
+                      message: 'Category is required'
+                    }
+                  })}
+                >
+                  <option value={''}>None</option>
+                  {categories?.map((e: category) => (
+                    <option key={e._id} value={e._id}>
+                      {e.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {errors.categoryId && (
+                <span className={styles.errors}>
+                  {errors.categoryId.message}
+                </span>
+              )}
             </div>
             <textarea
               className={styles.description}
-              value={description}
+              style={errors.description && { borderColor: 'red' }}
               placeholder='Description'
-              onChange={(ev) => {
-                handleDescriptionChange(ev);
-              }}
+              {...register('description', {
+                required: {
+                  value: true,
+                  message: 'Description is required'
+                }
+              })}
             />
+            {errors.description && (
+              <span className={styles.errors}>
+                {errors.description.message}
+              </span>
+            )}
             <div className={styles.editProduct}>
-              <button onClick={handleButton}>
+              <button type='submit'>
                 {type === 'edit' ? 'Edit product' : 'Create'}
               </button>
             </div>
           </div>
-        </div>
+        </form>
       )}
     </>
   );
