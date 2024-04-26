@@ -6,9 +6,9 @@ import { AppDispatch } from '../../redux/store';
 import { getSingleProduct } from '../../redux/actions/getSingleProduct';
 import ProductItem from '../../components/NavBar/ProductItem/ProductItem';
 import { product } from '../../interfaces/product';
-import { clearProductState } from '../../redux/actions/clearProductState';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import SkeletonBuy from '../../components/SkeletonBuy/SkeletonBuy';
+import { clearProduct } from '../../redux/reducers/singleProductReducer';
 
 const Buy: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const Buy: React.FC = (): JSX.Element => {
       dispatch(getSingleProduct(id));
     }
     return () => {
-      dispatch(clearProductState());
+      dispatch(clearProduct());
     };
   }, [dispatch, id, cartProducts]);
 

@@ -5,6 +5,8 @@ import { postComment } from '../actions/postComment';
 import { deleteComment } from '../actions/deleteComment';
 import { createProduct } from '../actions/createProduct';
 import { deleteProduct } from '../actions/deleteProduct';
+import { updateProduct } from '../actions/updateProduct';
+import { updateProductImage } from '../actions/updateProductImage';
 
 export interface notificationState {
   type: string | null;
@@ -59,6 +61,14 @@ const notificationSlice = createSlice({
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.type = action.payload.notification.type;
         state.text = action.payload.notification.text;
+      })
+      .addCase(updateProductImage.fulfilled, (state, action) => {
+        state.type = action.payload.notification.type;
+        state.text = action.payload.notification.text;
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        state.type = action.payload.type;
+        state.text = action.payload.text;
       });
   }
 });

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { getSingleProduct } from '../../redux/actions/getSingleProduct';
-import { clearProductState } from '../../redux/actions/clearProductState';
 import { useParams } from 'react-router-dom';
 import styles from './ProductForm.module.css';
 import { FiEdit } from 'react-icons/fi';
@@ -13,6 +12,9 @@ import imgDefault from './Product default.svg';
 import { createProduct } from '../../redux/actions/createProduct';
 import Loader from '../Loader/Loader';
 import { useForm } from 'react-hook-form';
+import { updateProduct } from '../../redux/actions/updateProduct';
+import { updateProductImage } from '../../redux/actions/updateProductImage';
+import { clearProduct } from '../../redux/reducers/singleProductReducer';
 
 interface productForm {
   title: string;
@@ -33,13 +35,18 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
     type === 'edit' && dispatch(getSingleProduct(id));
     dispatch(getAllcategory());
     return () => {
-      dispatch(clearProductState());
+      dispatch(clearProduct());
     };
   }, [dispatch, id, type]);
 
-  const { product, productLoading, creating } = useSelector(
-    (state: any) => state.product
-  );
+  const {
+    product,
+    productLoading,
+    creating,
+    updating,
+    newImage,
+    updatingImage
+  } = useSelector((state: any) => state.product);
 
   const { categories, categoriesLoading } = useSelector(
     (state: any) => state.categories
@@ -54,6 +61,10 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
 
   const [showImage, setShowImage] = useState<string>(imgDefault);
   const [image, setImage] = useState<File | undefined>();
+
+  useEffect(() => {
+    Object.keys(product).length && setShowImage(product.image);
+  }, [product]);
 
   useEffect(() => {
     document.title =
@@ -84,16 +95,30 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
       };
     }
   };
+  useEffect(() => {
+    newImage && setShowImage(newImage);
+  }, [newImage]);
 
   const handleFileChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = ev.target.files?.[0];
-    setFileToBase(selectedFile);
-    setImage(selectedFile);
+    if (type === 'create') {
+      setFileToBase(selectedFile);
+      setImage(selectedFile);
+    }
+    if (type === 'edit') {
+      setFileToBase(selectedFile);
+      dispatch(
+        updateProductImage({
+          id,
+          image: selectedFile
+        })
+      );
+    }
   };
 
   const onSubmit = async (data: productForm) => {
     const { title, price, description, categoryId } = data;
-    type === 'create' &&
+    if (type === 'create') {
       dispatch(
         createProduct({
           image,
@@ -103,24 +128,37 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
           categoryId
         })
       );
+    }
+    if (type === 'edit') {
+      dispatch(
+        updateProduct({
+          id,
+          title,
+          price,
+          description,
+          categoryId
+        })
+      );
+    }
   };
 
   return (
     <>
-      {creating && (
+      {creating || updating ? (
         <div className={styles.loading}>
           <Loader color='#fff' />
         </div>
-      )}
+      ) : null}
       {productLoading && categoriesLoading ? (
         <SkeletonDetail />
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} className={styles.edit}>
           <div className={styles.image}>
-            <img
-              src={!Object.keys(product).length ? showImage : product.image}
-              alt={product.title}
-            />
+            {updatingImage ? (
+              <Loader color='#333' />
+            ) : (
+              <img src={showImage} alt={product.title} />
+            )}
             <div className={styles.editImage}>
               <button>
                 <FiEdit size={25} />
@@ -128,7 +166,6 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
               <input
                 type='file'
                 accept='image/*'
-                style={errors.image && { borderColor: 'red' }}
                 {...register('image', {
                   required: {
                     value: true,
@@ -139,10 +176,10 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
                   handleFileChange(ev);
                 }}
               />
-              {errors.image && (
-                <span className={styles.errors}>{errors.image.message}</span>
-              )}
             </div>
+            {errors.image && (
+              <span className={styles.errors}>{errors.image.message}</span>
+            )}
           </div>
           <div className={styles.info}>
             <div style={{ flexDirection: 'column' }}>
