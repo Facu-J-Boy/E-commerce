@@ -24,7 +24,7 @@ const SingleProduct: React.FC<product> = ({
     (state: any) => state.comments
   );
 
-  const { cartProducts, adding } = useSelector(
+  const { cartProducts, adding, deleting } = useSelector(
     (state: any) => state.cartProducts
   );
 
@@ -119,8 +119,13 @@ const SingleProduct: React.FC<product> = ({
                 disabled={disableButton}
                 onClick={!inCart ? handleAddToCart : handleDeleteToTheCart}
               >
-                {adding && <LoaderMini color='#333' />}
-                {!inCart ? 'Add to cart' : 'Remove from cart'}
+                {adding || deleting ? (
+                  <LoaderMini color='#333' />
+                ) : !inCart ? (
+                  'Add to cart'
+                ) : (
+                  'Remove from cart'
+                )}
               </button>
               <button
                 style={{

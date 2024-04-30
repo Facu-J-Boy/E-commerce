@@ -22,7 +22,7 @@ interface cartState {
 
 const initialState: cartState = {
   cartLoading: false,
-  adding: false,
+  adding: true,
   deleting: false,
   cartProducts: [],
   total: '0',
