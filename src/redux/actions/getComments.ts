@@ -9,9 +9,11 @@ export const getComments = createAsyncThunk(
       const response = await axiosInstance.get(`/review/${data.id}`, {
         params
       });
+      console.log('reviews: ', response.data);
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      return error.response.data;
     }
   }
 );

@@ -75,7 +75,9 @@ const ProductDetail: React.FC = (): JSX.Element => {
         </>
       )}
       <CommentsColumn />
-      <h1 style={{ color: '#333', marginLeft: '10px' }}>Similar products</h1>
+      {productsByCategory.length === 0 ? null : (
+        <h1 style={{ color: '#333', marginLeft: '10px' }}>Similar products</h1>
+      )}
       <CarrouselProducts
         products={productsByCategory}
         loading={productsByCategoryLoading}

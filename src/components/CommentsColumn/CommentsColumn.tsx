@@ -13,14 +13,10 @@ import { clearComments } from '../../redux/reducers/commentsReducer';
 const CommentsColumn: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const {
-    comments,
-    currentPage,
-    totalPages,
-    commentsLoading,
-    totalCount
-    // message
-  } = useSelector((state: any) => state.comments);
+  const { comments, currentPage, totalPages, commentsLoading, totalCount } =
+    useSelector((state: any) => state.comments);
+
+  const { error } = useSelector((state: any) => state.product);
 
   const { id } = useParams();
 
@@ -40,50 +36,56 @@ const CommentsColumn: React.FC = (): JSX.Element => {
     setPage(number);
   };
   return (
-    <div className={styles.container}>
-      <hr />
-      <h2 className={styles.title}>Comments</h2>
-      <Commentinput productId={id} />
-      <div className={styles.commentsContainer}>
-        {!commentsLoading && comments.length === 0 ? (
-          <p className={styles.message}>There are no comments</p>
-        ) : null}
-        {comments?.map((e: comment) => (
-          <Comments
-            key={e._id}
-            _id={e._id}
-            rating={e.rating}
-            text={e.text}
-            date={e.date}
-            user={e.user}
-          />
-        ))}
-        {commentsLoading && (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center'
-            }}
-          >
-            <Loader color='#333' />
-          </div>
-        )}
+    <>
+      {!error ? (
+        <div className={styles.container}>
+          <hr />
+          <h2 className={styles.title}>Comments</h2>
+          <Commentinput productId={id} />
+          <div className={styles.commentsContainer}>
+            {!commentsLoading && comments.length === 0 ? (
+              <p className={styles.message}>There are no comments</p>
+            ) : null}
+            {comments?.map((e: comment) => (
+              <Comments
+                key={e._id}
+                _id={e._id}
+                rating={e.rating}
+                text={e.text}
+                date={e.date}
+                user={e.user}
+              />
+            ))}
+            {commentsLoading && (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center'
+                }}
+              >
+                <Loader color='#333' />
+              </div>
+            )}
 
-        <button
-          className={styles.show_more_button}
-          style={
-            currentPage === totalPages || commentsLoading || totalCount === 0
-              ? { visibility: 'hidden' }
-              : {}
-          }
-          onClick={() => {
-            handleShowMore(page + 1);
-          }}
-        >
-          Show more
-        </button>
-      </div>
-    </div>
+            <button
+              className={styles.show_more_button}
+              style={
+                currentPage === totalPages ||
+                commentsLoading ||
+                totalCount === 0
+                  ? { visibility: 'hidden' }
+                  : {}
+              }
+              onClick={() => {
+                handleShowMore(page + 1);
+              }}
+            >
+              Show more
+            </button>
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 };
 

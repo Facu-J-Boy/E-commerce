@@ -2,9 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getCart } from '../actions/getCart';
 import { addToCart } from '../actions/addToCart';
 import { deleteToTheCart } from '../actions/deleteToTheCart';
+import { deleteProduct } from '../actions/deleteProduct';
 
 interface product {
-  id: string;
+  _id: string;
   title: string;
   image: string;
   price: number;
@@ -70,6 +71,12 @@ const cartSlice = createSlice({
       })
       .addCase(deleteToTheCart.rejected, (state) => {
         state.deleting = false;
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.cartProducts = state.cartProducts.filter(
+          (product: product) =>
+            product._id !== action.payload.productDeleted?._id
+        );
       });
   }
 });

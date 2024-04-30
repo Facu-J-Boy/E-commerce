@@ -44,7 +44,8 @@ const commentsSlice = createSlice({
       })
       .addCase(getComments.fulfilled, (state, action) => {
         state.commentsLoading = false;
-        state.comments.push(...action.payload.reviews);
+        action.payload.reviews &&
+          state.comments.push(...action.payload.reviews);
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.totalCount = action.payload.totalCount;

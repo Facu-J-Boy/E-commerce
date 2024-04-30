@@ -8,6 +8,7 @@ import { addToCart } from '../../redux/actions/addToCart';
 import { deleteToTheCart } from '../../redux/actions/deleteToTheCart';
 import { useNavigate } from 'react-router-dom';
 import LoaderMini from '../LoaderMini/LoaderMini';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const SingleProduct: React.FC<product> = ({
   _id,
@@ -17,6 +18,8 @@ const SingleProduct: React.FC<product> = ({
   rating,
   description
 }): JSX.Element => {
+  const { error } = useSelector((state: any) => state.product);
+
   const { totalCount, commentsLoading } = useSelector(
     (state: any) => state.comments
   );
@@ -80,50 +83,60 @@ const SingleProduct: React.FC<product> = ({
   };
 
   return (
-    <div className={styles.detailContainer}>
-      <div className={styles.imageContainer}>
-        <img src={image} alt={title} />
-      </div>
-      <div className={styles.productInfo}>
-        <h1>{title}</h1>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center'
-          }}
-        >
-          <div style={{ marginRight: 10 }}>{stars}</div>
-          <h4>
-            {rating
-              ? `${rating} ${!commentsLoading && `(${totalCount} reviews)`}`
-              : 'Rating is not available'}
-          </h4>
+    <>
+      {error ? (
+        <ErrorMessage message={error} />
+      ) : (
+        <div className={styles.detailContainer}>
+          <div className={styles.imageContainer}>
+            <img src={image} alt={title} />
+          </div>
+          <div className={styles.productInfo}>
+            <h1>{title}</h1>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              <div style={{ marginRight: 10 }}>{stars}</div>
+              <h4>
+                {rating
+                  ? `${rating} ${!commentsLoading && `(${totalCount} reviews)`}`
+                  : 'Rating is not available'}
+              </h4>
+            </div>
+            <h2>{`$${price}`}</h2>
+            <p>{description}</p>
+            <div className={styles.buttonZone}>
+              <button
+                style={{
+                  color: '#333',
+                  border: 'solid 1px #333',
+                  alignItems: 'center',
+                  justifyContent: 'spaceBetween'
+                }}
+                disabled={disableButton}
+                onClick={!inCart ? handleAddToCart : handleDeleteToTheCart}
+              >
+                {adding && <LoaderMini color='#333' />}
+                {!inCart ? 'Add to cart' : 'Remove from cart'}
+              </button>
+              <button
+                style={{
+                  backgroundColor: '#333',
+                  color: 'white',
+                  border: 'none'
+                }}
+                onClick={redirectToBuy}
+              >
+                Buy Now
+              </button>
+            </div>
+          </div>
         </div>
-        <h2>{`$${price}`}</h2>
-        <p>{description}</p>
-        <div className={styles.buttonZone}>
-          <button
-            style={{
-              color: '#333',
-              border: 'solid 1px #333',
-              alignItems: 'center',
-              justifyContent: 'spaceBetween'
-            }}
-            disabled={disableButton}
-            onClick={!inCart ? handleAddToCart : handleDeleteToTheCart}
-          >
-            {adding && <LoaderMini color='#333' />}
-            {!inCart ? 'Add to cart' : 'Remove from cart'}
-          </button>
-          <button
-            style={{ backgroundColor: '#333', color: 'white', border: 'none' }}
-            onClick={redirectToBuy}
-          >
-            Buy Now
-          </button>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

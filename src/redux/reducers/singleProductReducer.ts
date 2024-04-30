@@ -12,7 +12,7 @@ interface productState {
   updating: boolean;
   newImage: string;
   updatingImage: boolean;
-  error: null | string | undefined;
+  error: string;
 }
 
 const initialState: productState = {
@@ -22,7 +22,7 @@ const initialState: productState = {
   updating: false,
   newImage: '',
   updatingImage: false,
-  error: null
+  error: ''
 };
 
 const singleProductSlice = createSlice({
@@ -32,22 +32,24 @@ const singleProductSlice = createSlice({
     clearProduct: (state) => {
       state.product = {};
       state.newImage = '';
+      state.error = '';
     }
   },
   extraReducers: (builder) => {
     builder
       .addCase(getSingleProduct.pending, (state) => {
         state.productLoading = true;
-        state.error = null;
+        state.error = '';
       })
       .addCase(getSingleProduct.fulfilled, (state, action) => {
         state.productLoading = false;
-        state.product = action.payload;
+        state.product = action.payload.product;
+        state.error = action.payload.message;
         state.newImage = action.payload.image;
       })
       .addCase(getSingleProduct.rejected, (state, action) => {
         state.productLoading = false;
-        state.error = action.error.message;
+        state.error = '';
       })
       .addCase(createProduct.pending, (state) => {
         state.creating = true;
