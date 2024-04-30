@@ -66,6 +66,12 @@
   animation-duration: 200ms;
 }
 
+.product span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .products ol {
   padding-inline-start: 0px;
 }

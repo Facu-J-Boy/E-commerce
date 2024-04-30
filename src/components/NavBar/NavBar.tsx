@@ -18,7 +18,6 @@ const NavBar: React.FC = (): JSX.Element => {
   const [list, setList] = useState(false);
 
   const { User, userLoading } = useSelector((state: any) => state.user);
-  console.log('userId', userId.get());
   const [userData, setUserData] = useState<any>(null);
 
   const location = useLocation();

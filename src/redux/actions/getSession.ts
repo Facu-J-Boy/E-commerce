@@ -6,7 +6,6 @@ export const getSession = createAsyncThunk(
   async (id: string | undefined) => {
     try {
       const response = await axiosInstance.get(`/user/session/${id}`);
-      console.log('session: ', response.data);
       return response.data;
     } catch (error) {
       console.error(error);
