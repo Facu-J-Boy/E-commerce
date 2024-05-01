@@ -123,9 +123,13 @@
     width: 100%;
   }
 
+  .title h2 {
+    font-size: 15px;
+  }
+
   .productList {
     padding-right: 0px;
-    height: 60%;
+    height: 40vh;
   }
 
   .rightZone {
@@ -142,8 +146,17 @@
     padding: 0px;
   }
 
+  .form h4 {
+    font-size: 10px;
+    margin: 5px;
+  }
+
   .form input {
     height: 20px;
     font-size: smaller;
+  }
+
+  .form button {
+    font-size: 10px;
   }
 }
