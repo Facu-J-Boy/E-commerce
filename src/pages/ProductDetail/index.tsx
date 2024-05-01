@@ -11,6 +11,7 @@ import { getInCategory } from '../../redux/actions/getInCategory';
 import CarrouselProducts from '../../components/CarrouselProducts/CarrouselProducts';
 import { addToHistory } from '../../redux/actions/addToHistory';
 import { clearProduct } from '../../redux/reducers/singleProductReducer';
+import { product } from '../../interfaces/product';
 
 const ProductDetail: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,7 +28,7 @@ const ProductDetail: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     document.title = `${product.title ? product.title : document.title}`; // Cambia el titulo de la web por el titulo del producto
@@ -58,19 +59,19 @@ const ProductDetail: React.FC = (): JSX.Element => {
 
   return (
     <div className={styles.container}>
-      {productLoading ? (
+      {productLoading || !Object.keys(product).length ? (
         <>
           <SkeletonDetail />
         </>
       ) : (
         <>
           <SingleProduct
-            image={product.image}
-            title={product.title}
-            _id={product._id}
-            price={product.price}
-            description={product.description}
-            rating={product.rating}
+            _id={product?._id}
+            image={product?.image}
+            title={product?.title}
+            price={product?.price}
+            rating={product?.rating}
+            description={product?.description}
           />
         </>
       )}
@@ -79,7 +80,7 @@ const ProductDetail: React.FC = (): JSX.Element => {
         <h1 style={{ color: '#333', marginLeft: '10px' }}>Similar products</h1>
       )}
       <CarrouselProducts
-        products={productsByCategory}
+        products={productsByCategory.filter((p: product) => p._id !== id)}
         loading={productsByCategoryLoading}
       />
     </div>

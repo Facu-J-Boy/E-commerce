@@ -30,7 +30,7 @@ const ProductsGrid: React.FC = (): JSX.Element => {
 
   return (
     <>
-      {currentPage && <Pages />}
+      {products.length && <Pages />}
       {message && <ErrorMessage message={message} />}
       <div className={styles.container}>
         {productsLoading ? (
@@ -53,7 +53,7 @@ const ProductsGrid: React.FC = (): JSX.Element => {
           </>
         )}
       </div>
-      {currentPage && <Pages />}
+      {products.length && <Pages />}
     </>
   );
 };
