@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import // getAuth,
-// onAuthStateChanged
-// signInWithEmailAndPassword
-'firebase/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './LoginWithEmail.module.css';
 import { FormData } from '../../interfaces/formData';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { auth } from '../../Firebase';
 import logo from './google-logo.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
@@ -25,14 +20,6 @@ const LoginWhitEmail: React.FC = (): JSX.Element => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      user && navigate('/');
-    });
-  }, [navigate]);
 
   useEffect(() => {
     document.title = 'Login'; // Cambia el titulo de la web
