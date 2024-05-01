@@ -8,7 +8,6 @@ export const getInCategory = createAsyncThunk(
       const response = await axiosInstance.get(
         `/product/category/${categoryId}`
       );
-      console.log('response: ', response.data);
       return response.data;
     } catch (error) {
       console.error(error);
