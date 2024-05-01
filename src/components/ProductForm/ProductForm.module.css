@@ -70,13 +70,19 @@
 .title {
   font-size: 30px;
   font-family: sans-serif;
-  border: none;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
   overflow: hidden;
   resize: none;
   width: 90%;
   height: 100px;
   margin: 20px 0px;
   padding: 20px;
+}
+
+.title:focus {
+  outline: none;
+  border-color: #333;
 }
 
 .price {
@@ -90,8 +96,14 @@
 .price input {
   font-size: 40px;
   font-family: sans-serif;
-  border: none;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
   width: 80%;
+}
+
+.price input:focus {
+  outline: none;
+  border-color: #333;
 }
 
 .category {
@@ -109,7 +121,8 @@
 }
 
 .description {
-  border: none;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
   font-size: 16px;
   font-family: Arial, Helvetica, sans-serif;
   overflow: hidden;
@@ -118,6 +131,11 @@
   height: 200px;
   margin: 20px 0px;
   padding: 20px;
+}
+
+.description:focus {
+  outline: none;
+  border-color: #333;
 }
 
 .editProduct {
