@@ -60,13 +60,15 @@ const ProductsCard: React.FC<product> = ({ _id, image, title, price }) => {
   return (
     <div className={styles.product} onClick={handleRedirect}>
       <div className={styles.imageContainer}>
-        <button
-          className={styles.cart_icon}
-          disabled={disableButton}
-          onClick={!inCart ? handleAddToCart : handleDeleteToTheCart}
-        >
-          {!inCart ? <GrCart size={25} /> : <BsFillCartXFill size={25} />}
-        </button>
+        {User && (
+          <button
+            className={styles.cart_icon}
+            disabled={disableButton}
+            onClick={!inCart ? handleAddToCart : handleDeleteToTheCart}
+          >
+            {!inCart ? <GrCart size={25} /> : <BsFillCartXFill size={25} />}
+          </button>
+        )}
         <img src={image} alt={title} />
       </div>
       <h1>{`$${price}`}</h1>

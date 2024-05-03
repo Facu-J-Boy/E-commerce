@@ -71,10 +71,6 @@ const NavBar: React.FC = (): JSX.Element => {
     dispatch(logOut());
   };
 
-  useEffect(() => {
-    console.log(userId.get());
-  });
-
   const handleDeleteUser = () => {
     dispatch(deleteUser(User._id));
   };
