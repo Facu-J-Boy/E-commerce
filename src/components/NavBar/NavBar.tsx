@@ -11,8 +11,8 @@ import { getCart } from '../../redux/actions/getCart';
 // import { getAllcategory } from '../../redux/actions/getAllCategory';
 import { getSession } from '../../redux/actions/getSession';
 import { userId } from '../../redux/actions/userId';
-import { logOut } from '../../redux/actions/logOut';
 import LoaderMini from '../LoaderMini/LoaderMini';
+import { logOut } from '../../redux/reducers/userReducer';
 
 const NavBar: React.FC = (): JSX.Element => {
   const [list, setList] = useState(false);
@@ -47,7 +47,7 @@ const NavBar: React.FC = (): JSX.Element => {
   }, [userData, dispatch]);
 
   useEffect(() => {
-    Object.keys(User).length && dispatch(getCart(User._id));
+    User && dispatch(getCart(User._id));
     // dispatch(getAllcategory());
   }, [dispatch, User]);
 
@@ -92,7 +92,7 @@ const NavBar: React.FC = (): JSX.Element => {
           <SearchInput />
           <Cart />
         </div>
-        {Object.keys(User).length === 0 ? (
+        {!User ? (
           <button
             className={styles.login_button}
             onClick={() => {

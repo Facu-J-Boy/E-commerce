@@ -1,24 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { user } from '../../interfaces/user';
 import { getSession } from '../actions/getSession';
-import { logOut } from '../actions/logOut';
 import { logIn } from '../actions/logIn';
 import { signUp } from '../actions/signUp';
 
 export interface userState {
-  User: user | {};
+  User: user | null;
   userLoading: boolean;
 }
 
 const initialState: userState = {
-  User: {},
+  User: null,
   userLoading: false
 };
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    logOut: (state) => {
+      state.User = null;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getSession.pending, (state) => {
@@ -45,11 +48,10 @@ const userSlice = createSlice({
       })
       .addCase(signUp.rejected, (state, action) => {
         state.userLoading = false;
-      })
-      .addCase(logOut, (state, action) => {
-        state.User = action.payload;
       });
   }
 });
+
+export const { logOut } = userSlice.actions;
 
 export default userSlice.reducer;

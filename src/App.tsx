@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -12,7 +11,6 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import NavBar from './components/NavBar/NavBar';
 import AdminDashboard from './pages/AdminDashboard';
-// import Edit from './pages/Edit';
 import Footter from './components/Footter/Footter';
 import Buy from './pages/Buy';
 import { useSelector } from 'react-redux';

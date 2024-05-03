@@ -72,7 +72,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
       {userLoading ? (
         <Loadingscreen />
       ) : (
-        Object.keys(User).length && (
+        User && (
           <div className={styles.container}>
             <ul className={styles.myTab} role='tablist'>
               <li className={styles.navItem}>
