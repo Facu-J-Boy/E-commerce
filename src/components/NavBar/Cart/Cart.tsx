@@ -11,6 +11,8 @@ const Cart: React.FC = (): JSX.Element => {
     (state: any) => state.cartProducts
   );
 
+  const { User } = useSelector((state: any) => state.user);
+
   const [productList, setProductsList] = useState(false);
 
   const toggleProducts = useCallback(() => {
@@ -32,12 +34,23 @@ const Cart: React.FC = (): JSX.Element => {
     navigate('/buy/cart');
   };
 
+  const redirectToLogin = () => {
+    navigate('/login');
+  };
+
   return (
     <div className={styles.cart}>
       <GrCart size={30} onClick={toggleProducts} />
       {productList && (
         <div className={styles.product_list_container}>
-          {message ? (
+          {!User ? (
+            <ul className={styles.products}>
+              <div className={styles.login_message}>
+                <h4>Log in to your account to have a cart</h4>
+                <button onClick={redirectToLogin}>Log in</button>
+              </div>
+            </ul>
+          ) : message ? (
             <ul className={styles.products}>
               <h4
                 style={{
@@ -79,7 +92,7 @@ const Cart: React.FC = (): JSX.Element => {
       <span>
         {cartProducts.length && cartProducts.length >= 10
           ? '9+'
-          : !cartProducts.length
+          : !cartProducts.length || !User
           ? null
           : cartProducts?.length}
       </span>

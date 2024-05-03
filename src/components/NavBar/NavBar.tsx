@@ -13,6 +13,7 @@ import { getSession } from '../../redux/actions/getSession';
 import { userId } from '../../redux/actions/userId';
 import LoaderMini from '../LoaderMini/LoaderMini';
 import { logOut } from '../../redux/reducers/userReducer';
+import { deleteUser } from '../../redux/actions/deleteUser';
 
 const NavBar: React.FC = (): JSX.Element => {
   const [list, setList] = useState(false);
@@ -66,7 +67,16 @@ const NavBar: React.FC = (): JSX.Element => {
 
   const handleLogOut = () => {
     userId.set('');
+    navigate('/');
     dispatch(logOut());
+  };
+
+  useEffect(() => {
+    console.log(userId.get());
+  });
+
+  const handleDeleteUser = () => {
+    dispatch(deleteUser(User._id));
   };
 
   return (
@@ -119,6 +129,7 @@ const NavBar: React.FC = (): JSX.Element => {
                     Dashboard
                   </ol>
                   <ol onClick={handleLogOut}>Exit</ol>
+                  <ol onClick={handleDeleteUser}>Delete account</ol>
                 </ul>
               </div>
             )}
