@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Buy.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
+import { AppDispatch, storeInterface } from '../../redux/store';
 import { getSingleProduct } from '../../redux/actions/getSingleProduct';
 import ProductItem from '../../components/NavBar/ProductItem/ProductItem';
 import { product } from '../../interfaces/product';
@@ -17,11 +17,11 @@ const Buy: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { cartProducts, total } = useSelector(
-    (state: any) => state.cartProducts
+    (state: storeInterface) => state.cartProducts
   );
 
   const { product, productLoading } = useSelector(
-    (state: any) => state.product
+    (state: storeInterface) => state.product
   );
 
   const [items, setItems] = useState<product[]>([]);
@@ -36,7 +36,9 @@ const Buy: React.FC = (): JSX.Element => {
   }, [items.length]);
 
   useEffect(() => {
-    id !== 'cart' && setItems([product]);
+    if (id !== 'cart' && product) {
+      setItems([product]);
+    }
   }, [product, id]);
 
   useEffect(() => {
@@ -100,7 +102,7 @@ const Buy: React.FC = (): JSX.Element => {
             </div>
             <div className={styles.total}>
               <h3>Total: </h3>
-              <h3>{`$${id === 'cart' ? total : product.price}`}</h3>
+              <h3>{`$${id === 'cart' ? total : product?.price}`}</h3>
             </div>
             <button>CHECKOUT</button>
           </div>

@@ -8,6 +8,7 @@ import DeleteComment from './DeleteComment/DeleteComment';
 import { useSelector } from 'react-redux';
 import LoaderMini from '../LoaderMini/LoaderMini';
 import { format } from 'date-fns';
+import { storeInterface } from '../../redux/store';
 
 const Comments: React.FC<comment> = ({
   _id,
@@ -18,7 +19,9 @@ const Comments: React.FC<comment> = ({
 }): JSX.Element => {
   const [deleteMessage, setDeleteMessage] = useState<boolean>(false);
 
-  const { deletingComment } = useSelector((state: any) => state.comments);
+  const { deletingComment } = useSelector(
+    (state: storeInterface) => state.comments
+  );
 
   const toggleDelete = useCallback(() => {
     setDeleteMessage(!deleteMessage);
@@ -39,7 +42,7 @@ const Comments: React.FC<comment> = ({
     totalRating = Math.floor(rating);
   }
 
-  const { User } = useSelector((state: any) => state.user);
+  const { User } = useSelector((state: storeInterface) => state.user);
 
   const stars = Array.from({ length: 5 }, (_, index) =>
     index < totalRating ? (
@@ -66,7 +69,7 @@ const Comments: React.FC<comment> = ({
           <div className={styles.header}>
             <div style={{ marginRight: 10 }}>{stars}</div>
             <div className={styles.rigth_side}>
-              {User._id === user && (
+              {User?._id === user && (
                 <div>
                   <button>
                     <MdEdit size={20} />

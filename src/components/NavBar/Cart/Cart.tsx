@@ -5,13 +5,14 @@ import { product } from '../../../interfaces/product';
 import styles from './Cart.module.css';
 import { GrCart } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
+import { storeInterface } from '../../../redux/store';
 
 const Cart: React.FC = (): JSX.Element => {
   const { cartProducts, total, message } = useSelector(
-    (state: any) => state.cartProducts
+    (state: storeInterface) => state.cartProducts
   );
 
-  const { User } = useSelector((state: any) => state.user);
+  const { User } = useSelector((state: storeInterface) => state.user);
 
   const [productList, setProductsList] = useState(false);
 

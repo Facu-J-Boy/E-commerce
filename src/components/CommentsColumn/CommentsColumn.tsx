@@ -3,7 +3,7 @@ import Comments from '../Comments/Comments';
 import styles from './CommentsColumn.module.css';
 import Loader from '../Loader/Loader';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
+import { AppDispatch, storeInterface } from '../../redux/store';
 import { getComments } from '../../redux/actions/getComments';
 import { useParams } from 'react-router-dom';
 import { comment } from '../../interfaces/comments';
@@ -14,9 +14,9 @@ const CommentsColumn: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { comments, currentPage, totalPages, commentsLoading, totalCount } =
-    useSelector((state: any) => state.comments);
+    useSelector((state: storeInterface) => state.comments);
 
-  const { error } = useSelector((state: any) => state.product);
+  const { error } = useSelector((state: storeInterface) => state.product);
 
   const { id } = useParams();
 

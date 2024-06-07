@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getSearch } from '../actions/getSearch';
 
-interface searchState {
+export interface searchState {
   allSearchs: string[] | [];
 }
 

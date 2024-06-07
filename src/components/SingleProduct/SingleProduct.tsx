@@ -3,7 +3,7 @@ import { product } from '../../interfaces/product';
 import styles from './SingleProduct.module.css';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
+import { AppDispatch, storeInterface } from '../../redux/store';
 import { addToCart } from '../../redux/actions/addToCart';
 import { deleteToTheCart } from '../../redux/actions/deleteToTheCart';
 import { useNavigate } from 'react-router-dom';
@@ -18,17 +18,17 @@ const SingleProduct: React.FC<product> = ({
   rating,
   description
 }): JSX.Element => {
-  const { error } = useSelector((state: any) => state.product);
+  const { error } = useSelector((state: storeInterface) => state.product);
 
   const { totalCount, commentsLoading } = useSelector(
-    (state: any) => state.comments
+    (state: storeInterface) => state.comments
   );
 
   const { cartProducts, adding, deleting } = useSelector(
-    (state: any) => state.cartProducts
+    (state: storeInterface) => state.cartProducts
   );
 
-  const { User } = useSelector((state: any) => state.user);
+  const { User } = useSelector((state: storeInterface) => state.user);
 
   useEffect(() => {
     !adding && setDisableButton(adding);
@@ -58,7 +58,7 @@ const SingleProduct: React.FC<product> = ({
   const handleAddToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
     setDisableButton(true);
-    dispatch(addToCart({ userId: User._id, productId: _id }));
+    dispatch(addToCart({ userId: User?._id, productId: _id }));
     return false; // Evitar la propagación del evento de clic
   };
 
@@ -66,7 +66,7 @@ const SingleProduct: React.FC<product> = ({
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
-    dispatch(deleteToTheCart({ userId: User._id, productId: _id }));
+    dispatch(deleteToTheCart({ userId: User?._id, productId: _id }));
     return false; // Evitar la propagación del evento de clic
   };
 

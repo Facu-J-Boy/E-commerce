@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { product } from '../../interfaces/product';
 import { getInCategory } from '../actions/getInCategory';
 
-export interface productsState {
+export interface productsByCategoryState {
   productsByCategory: product[] | [];
   productsByCategoryLoading: boolean;
   error: null | string | undefined;
 }
 
-const initialState: productsState = {
+const initialState: productsByCategoryState = {
   productsByCategory: [],
   productsByCategoryLoading: false,
   error: null

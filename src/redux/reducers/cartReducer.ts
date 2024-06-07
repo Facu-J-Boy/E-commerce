@@ -11,7 +11,7 @@ interface product {
   price: number;
 }
 
-interface cartState {
+export interface cartState {
   cartLoading: boolean;
   adding: boolean;
   deleting: boolean;

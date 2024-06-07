@@ -5,7 +5,7 @@ import ProductsCard from '../ProductCard/ProductsCard';
 import Skeleton from '../Skeleton/Skeleton';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
+import { AppDispatch, storeInterface } from '../../redux/store';
 import { getAllProducts } from '../../redux/actions/getAllproducts';
 import Pages from './Pages/Pages';
 import { clearProducts } from '../../redux/reducers/productsReducer';
@@ -16,7 +16,7 @@ const ProductsGrid: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { title, products, productsLoading, currentPage, message } =
-    useSelector((state: any) => state.products);
+    useSelector((state: storeInterface) => state.products);
 
   useEffect(() => {
     dispatch(getAllProducts({ page: currentPage, title }));

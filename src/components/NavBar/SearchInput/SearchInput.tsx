@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSearch } from '../../../redux/actions/getSearch';
-import { AppDispatch } from '../../../redux/store';
+import { AppDispatch, storeInterface } from '../../../redux/store';
 import { GrHistory } from 'react-icons/gr';
 import styles from './SearchInput.module.css';
 import { deleteToSearch } from '../../../redux/actions/deleteToSearch';
@@ -15,7 +15,7 @@ const SearchInput: React.FC = (): JSX.Element => {
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
 
   // const { allProducts } = useSelector((state: any) => state.products);
-  const { allSearchs } = useSelector((state: any) => state.searchs);
+  const { allSearchs } = useSelector((state: storeInterface) => state.searchs);
 
   const [searchsFiltered, setSearchsFiltered] = useState(allSearchs);
 

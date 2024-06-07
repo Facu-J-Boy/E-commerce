@@ -16,9 +16,12 @@ import Buy from './pages/Buy';
 import { useSelector } from 'react-redux';
 import Notification from './components/Notification/Notification';
 import ProductForm from './components/ProductForm/ProductForm';
+import { storeInterface } from './redux/store';
 
 function App() {
-  const { type, text } = useSelector((state: any) => state.notification);
+  const { type, text } = useSelector(
+    (state: storeInterface) => state.notification
+  );
   return (
     <Router>
       {type && text ? <Notification type={type} text={text} /> : null}

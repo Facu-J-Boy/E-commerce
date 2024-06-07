@@ -7,8 +7,8 @@ import { deleteProduct } from '../actions/deleteProduct';
 export interface productsState {
   title: string;
   products: product[] | [];
-  currentPage?: number | null;
-  totalPages?: number | null;
+  currentPage?: number;
+  totalPages?: number;
   productsLoading?: boolean;
   deleting?: boolean;
   message: string;
@@ -18,8 +18,8 @@ export interface productsState {
 const initialState: productsState = {
   title: '',
   products: [],
-  currentPage: null,
-  totalPages: null,
+  currentPage: 0,
+  totalPages: 0,
   productsLoading: false,
   deleting: false,
   message: '',

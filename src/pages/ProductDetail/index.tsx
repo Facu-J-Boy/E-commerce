@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getSingleProduct } from '../../redux/actions/getSingleProduct';
-import { AppDispatch } from '../../redux/store';
+import { AppDispatch, storeInterface } from '../../redux/store';
 import SingleProduct from '../../components/SingleProduct/SingleProduct';
 import SkeletonDetail from '../../components/SkeletonDetail/SkeletonDetail';
 import CommentsColumn from '../../components/CommentsColumn/CommentsColumn';
@@ -17,11 +17,11 @@ const ProductDetail: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { product, productLoading } = useSelector(
-    (state: any) => state.product
+    (state: storeInterface) => state.product
   );
 
   const { productsByCategory, productsByCategoryLoading } = useSelector(
-    (state: any) => state.productsByCategory
+    (state: storeInterface) => state.productsByCategory
   );
 
   const { id } = useParams();
@@ -31,7 +31,7 @@ const ProductDetail: React.FC = (): JSX.Element => {
   }, [id]);
 
   useEffect(() => {
-    document.title = `${product.title ? product.title : document.title}`; // Cambia el titulo de la web por el titulo del producto
+    document.title = `${product ? product.title : document.title}`; // Cambia el titulo de la web por el titulo del producto
 
     return () => {
       document.title = 'E-commerce'; // Al desmontar el componente el titulo vuelve a la normalidad
@@ -53,13 +53,12 @@ const ProductDetail: React.FC = (): JSX.Element => {
   }, [dispatch]);
 
   useEffect(() => {
-    Object.keys(product).length !== 0 &&
-      dispatch(getInCategory(product.category?._id));
+    product && dispatch(getInCategory(product?.category?._id));
   }, [dispatch, product]);
 
   return (
     <div className={styles.container}>
-      {productLoading || !Object.keys(product).length ? (
+      {productLoading || !product ? (
         <>
           <SkeletonDetail />
         </>

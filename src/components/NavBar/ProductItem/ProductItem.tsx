@@ -4,7 +4,7 @@ import styles from './ProductItem.module.css';
 import { BsFillCartXFill } from 'react-icons/bs';
 import { deleteToTheCart } from '../../../redux/actions/deleteToTheCart';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../../redux/store';
+import { AppDispatch, storeInterface } from '../../../redux/store';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const ProductItem: React.FC<product> = ({
@@ -17,13 +17,13 @@ const ProductItem: React.FC<product> = ({
 
   const navigate = useNavigate();
 
-  const { User } = useSelector((state: any) => state.user);
+  const { User } = useSelector((state: storeInterface) => state.user);
 
   const handleDeleteToTheCart = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation(); // Evitar la propagación del evento de click
-    dispatch(deleteToTheCart({ userId: User._id, productId: _id }));
+    dispatch(deleteToTheCart({ userId: User?._id, productId: _id }));
     return false; // Evitar la propagación del evento de click
   };
 

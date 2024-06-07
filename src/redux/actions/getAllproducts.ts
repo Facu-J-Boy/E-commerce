@@ -4,7 +4,7 @@ import { productsState } from '../reducers/productsReducer';
 
 export const getAllProducts = createAsyncThunk(
   'getAllProducts',
-  async (data: { page: number; title: string }) => {
+  async (data: { page: number | undefined | null; title: string }) => {
     const params = { page: data.page, title: data.title, limit: 15 };
     try {
       const response = await axiosInstance.get('/product', { params });

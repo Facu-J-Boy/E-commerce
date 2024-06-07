@@ -5,8 +5,8 @@ import { createProduct } from '../actions/createProduct';
 import { updateProduct } from '../actions/updateProduct';
 import { updateProductImage } from '../actions/updateProductImage';
 
-interface productState {
-  product: product | {};
+export interface productState {
+  product: product | null;
   productLoading: boolean;
   creating: boolean;
   updating: boolean;
@@ -16,7 +16,7 @@ interface productState {
 }
 
 const initialState: productState = {
-  product: {},
+  product: null,
   productLoading: false,
   creating: false,
   updating: false,
@@ -30,7 +30,7 @@ const singleProductSlice = createSlice({
   initialState,
   reducers: {
     clearProduct: (state) => {
-      state.product = {};
+      state.product = null;
       state.newImage = '';
       state.error = '';
     }

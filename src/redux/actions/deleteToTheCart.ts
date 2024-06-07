@@ -3,7 +3,7 @@ import { axiosInstance } from '../../Config/axios';
 
 export const deleteToTheCart = createAsyncThunk(
   'deleteToTheCart',
-  async (data: { userId: string; productId: string }) => {
+  async (data: { userId: string | undefined; productId: string }) => {
     try {
       const response = await axiosInstance.delete(
         `/cart/remove/${data.userId}/${data.productId}`

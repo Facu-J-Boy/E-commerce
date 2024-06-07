@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
+import { AppDispatch, storeInterface } from '../../redux/store';
 import { getSingleProduct } from '../../redux/actions/getSingleProduct';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from './ProductForm.module.css';
 import { FiEdit } from 'react-icons/fi';
 import SkeletonDetail from '../../components/SkeletonDetail/SkeletonDetail';
 import { getAllcategory } from '../../redux/actions/getAllCategory';
 import { category } from '../../interfaces/category';
-import imgDefault from './Product default.svg';
+import ProductDefaultImage from './ProductDefaultImage.svg';
 import { createProduct } from '../../redux/actions/createProduct';
 import Loader from '../Loader/Loader';
 import { useForm } from 'react-hook-form';
 import { updateProduct } from '../../redux/actions/updateProduct';
 import { updateProductImage } from '../../redux/actions/updateProductImage';
 import { clearProduct } from '../../redux/reducers/singleProductReducer';
+import { userId } from '../../redux/actions/userId';
 
 interface productForm {
   title: string;
   price: string;
   description: string;
   categoryId: string;
-  image: File | undefined;
+  image?: File;
 }
 
 const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
@@ -30,6 +31,16 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const { id } = useParams<{ id: string }>(); // Asegúrate de que id sea de tipo string
+
+  const navigate = useNavigate();
+
+  const user = userId.get();
+
+  useEffect(() => {
+    if (!user?.length) {
+      navigate('*');
+    } // Si el usuario no está logueado lo redirige a otra pagina
+  }, [user, navigate]);
 
   useEffect(() => {
     type === 'edit' && dispatch(getSingleProduct(id));
@@ -46,10 +57,10 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
     updating,
     newImage,
     updatingImage
-  } = useSelector((state: any) => state.product);
+  } = useSelector((state: storeInterface) => state.product);
 
   const { categories, categoriesLoading } = useSelector(
-    (state: any) => state.categories
+    (state: storeInterface) => state.categories
   );
 
   const {
@@ -59,17 +70,17 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
     formState: { errors }
   } = useForm<productForm>();
 
-  const [showImage, setShowImage] = useState<string>(imgDefault);
+  const [showImage, setShowImage] = useState<string>(ProductDefaultImage);
   const [image, setImage] = useState<File | undefined>();
 
   useEffect(() => {
-    Object.keys(product).length && setShowImage(product.image);
+    setShowImage(product?.image ?? ProductDefaultImage);
   }, [product]);
 
   useEffect(() => {
     document.title =
       type === 'edit'
-        ? `Edit: ${product.title ? product.title : ''}`
+        ? `Edit: ${product?.title ? product?.title : ''}`
         : 'Create product'; // Cambia el titulo de la web
 
     return () => {
@@ -80,9 +91,9 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
   useEffect(() => {
     if (product) {
       setValue('title', product.title);
-      setValue('description', product.description);
-      setValue('price', product.price);
-      setValue('categoryId', product.category?._id);
+      setValue('description', product.description ?? '');
+      setValue('price', (product.price ?? '').toString());
+      setValue('categoryId', product?.category?._id ?? '');
     }
   }, [product, setValue]);
 
@@ -157,7 +168,7 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
             {updatingImage ? (
               <Loader color='#333' />
             ) : (
-              <img src={showImage} alt={product.title} />
+              <img src={showImage} alt={product?.title} />
             )}
             <div className={styles.editImage}>
               <button>
@@ -177,8 +188,10 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
                 }}
               />
             </div>
-            {errors.image && (
+            {errors.image ? (
               <span className={styles.errors}>{errors.image.message}</span>
+            ) : (
+              <br />
             )}
           </div>
           <div className={styles.info}>
@@ -194,8 +207,10 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
                   }
                 })}
               />
-              {errors.title && (
+              {errors.title ? (
                 <span className={styles.errors}>{errors.title.message}</span>
+              ) : (
+                <br />
               )}
             </div>
             <div
@@ -222,8 +237,10 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
                   })}
                 />
               </div>
-              {errors.price && (
+              {errors.price ? (
                 <span className={styles.errors}>{errors.price.message}</span>
+              ) : (
+                <br />
               )}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -245,10 +262,12 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
                   ))}
                 </select>
               </div>
-              {errors.categoryId && (
+              {errors.categoryId ? (
                 <span className={styles.errors}>
                   {errors.categoryId.message}
                 </span>
+              ) : (
+                <br />
               )}
             </div>
             <textarea
@@ -262,10 +281,12 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
                 }
               })}
             />
-            {errors.description && (
+            {errors.description ? (
               <span className={styles.errors}>
                 {errors.description.message}
               </span>
+            ) : (
+              <br />
             )}
             <div className={styles.editProduct}>
               <button type='submit'>

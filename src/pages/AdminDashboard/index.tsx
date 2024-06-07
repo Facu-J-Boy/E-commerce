@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AdminDashboard.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
+import { AppDispatch, storeInterface } from '../../redux/store';
 import { product } from '../../interfaces/product';
 import DashboardProducts from '../../components/DashboardProducts/DashboardProducts';
 import Loader from '../../components/Loader/Loader';
@@ -21,13 +21,15 @@ const AdminDashboard: React.FC = (): JSX.Element => {
 
   const navigate = useNavigate();
 
-  const { User, userLoading } = useSelector((state: any) => state.user);
+  const { User, userLoading } = useSelector(
+    (state: storeInterface) => state.user
+  );
 
   const { title, products, productsLoading, currentPage, deleting, message } =
-    useSelector((state: any) => state.products);
+    useSelector((state: storeInterface) => state.products);
 
   const { categories, categoriesLoading, categoriesError } = useSelector(
-    (state: any) => state.categories
+    (state: storeInterface) => state.categories
   );
 
   const dispatch = useDispatch<AppDispatch>();

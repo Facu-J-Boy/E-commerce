@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { GrCart } from 'react-icons/gr';
 import { BsFillCartXFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../../redux/store';
+import { AppDispatch, storeInterface } from '../../../redux/store';
 import { product } from '../../../interfaces/product';
 import { addToCart } from '../../../redux/actions/addToCart';
 import { deleteToTheCart } from '../../../redux/actions/deleteToTheCart';
@@ -25,10 +25,10 @@ const Product: React.FC<ProductCardProps> = ({ _id, image, title, price }) => {
     navigate(`/product/${_id}`);
   };
 
-  const { User } = useSelector((state: any) => state.user);
+  const { User } = useSelector((state: storeInterface) => state.user);
 
   const { cartProducts, adding } = useSelector(
-    (state: any) => state.cartProducts
+    (state: storeInterface) => state.cartProducts
   );
 
   const [disableButton, setDisableButton] = useState(false);
@@ -40,7 +40,7 @@ const Product: React.FC<ProductCardProps> = ({ _id, image, title, price }) => {
   const handleAddToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
     setDisableButton(true);
-    dispatch(addToCart({ userId: User._id, productId: _id }));
+    dispatch(addToCart({ userId: User?._id, productId: _id }));
     return false; // Evitar la propagación del evento de clic
   };
 
@@ -48,7 +48,7 @@ const Product: React.FC<ProductCardProps> = ({ _id, image, title, price }) => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
-    dispatch(deleteToTheCart({ userId: User._id, productId: _id }));
+    dispatch(deleteToTheCart({ userId: User?._id, productId: _id }));
     return false; // Evitar la propagación del evento de clic
   };
 

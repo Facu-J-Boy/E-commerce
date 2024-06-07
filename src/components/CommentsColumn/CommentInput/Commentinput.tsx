@@ -4,7 +4,7 @@ import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { userId } from '../../../redux/actions/userId';
 import { IoSend } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../../redux/store';
+import { AppDispatch, storeInterface } from '../../../redux/store';
 import { postComment } from '../../../redux/actions/postComment';
 import LoaderMini from '../../LoaderMini/LoaderMini';
 
@@ -17,7 +17,9 @@ const Commentinput: React.FC<{ productId: string | undefined }> = ({
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const { inputLoading } = useSelector((state: any) => state.comments);
+  const { inputLoading } = useSelector(
+    (state: storeInterface) => state.comments
+  );
 
   const handleStarClick = (value: number) => {
     setRating(value);

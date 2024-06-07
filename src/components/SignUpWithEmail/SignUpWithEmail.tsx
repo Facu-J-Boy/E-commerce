@@ -5,7 +5,7 @@ import { FormData } from '../../interfaces/formData';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
+import { AppDispatch, storeInterface } from '../../redux/store';
 import { signUp } from '../../redux/actions/signUp';
 import LoaderMini from '../LoaderMini/LoaderMini';
 
@@ -14,7 +14,7 @@ const SignUpWithEmail: React.FC = (): JSX.Element => {
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const { userLoading } = useSelector((state: any) => state.user);
+  const { userLoading } = useSelector((state: storeInterface) => state.user);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

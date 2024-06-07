@@ -6,14 +6,14 @@ import { FormData } from '../../interfaces/formData';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import logo from './google-logo.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
+import { AppDispatch, storeInterface } from '../../redux/store';
 import { logIn } from '../../redux/actions/logIn';
 import LoaderMini from '../LoaderMini/LoaderMini';
 
 const LoginWhitEmail: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { userLoading } = useSelector((state: any) => state.user);
+  const { userLoading } = useSelector((state: storeInterface) => state.user);
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
