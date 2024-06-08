@@ -5,7 +5,7 @@ import logo from './e-commerce.png';
 import userImage from './user.jpg';
 import SearchInput from './SearchInput/SearchInput';
 import Cart from './Cart/Cart';
-import { AppDispatch } from '../../redux/store';
+import { AppDispatch, storeInterface } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCart } from '../../redux/actions/getCart';
 // import { getAllcategory } from '../../redux/actions/getAllCategory';
@@ -18,7 +18,9 @@ import { deleteUser } from '../../redux/actions/deleteUser';
 const NavBar: React.FC = (): JSX.Element => {
   const [list, setList] = useState(false);
 
-  const { User, userLoading } = useSelector((state: any) => state.user);
+  const { User, userLoading } = useSelector(
+    (state: storeInterface) => state.user
+  );
   const [userData, setUserData] = useState<any>(null);
 
   const location = useLocation();
@@ -72,7 +74,7 @@ const NavBar: React.FC = (): JSX.Element => {
   };
 
   const handleDeleteUser = () => {
-    dispatch(deleteUser(User._id));
+    dispatch(deleteUser(User?._id));
   };
 
   return (
