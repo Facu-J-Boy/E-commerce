@@ -28,9 +28,8 @@ const AdminDashboard: React.FC = (): JSX.Element => {
   const { title, products, productsLoading, currentPage, deleting, message } =
     useSelector((state: storeInterface) => state.products);
 
-  const { categories, categoriesLoading, categoriesError } = useSelector(
-    (state: storeInterface) => state.categories
-  );
+  const { categories, categoriesLoading, deletingCategory, categoriesError } =
+    useSelector((state: storeInterface) => state.categories);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -66,7 +65,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
 
   return (
     <>
-      {deleting && (
+      {(deleting || deletingCategory) && (
         <div className={styles.deleting}>
           <Loader color='#fff' />
         </div>
@@ -161,7 +160,7 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                 ) : (
                   <>
                     {categories?.map((c: category) => (
-                      <Categories key={c._id} name={c.name} />
+                      <Categories key={c._id} _id={c._id} name={c.name} />
                     ))}
                   </>
                 )}
