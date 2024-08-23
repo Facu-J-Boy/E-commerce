@@ -8,8 +8,31 @@
   border: solid 1px #333;
 }
 
-.container h4 {
+.category_form {
+  display: flex;
+  flex-direction: column;
+}
+
+.category_form button {
+  color: #fff;
+  background-color: green;
+  font-size: 15px;
+  border: none;
+  height: auto;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.container input {
   margin: 10px;
+  font-size: 20px;
+}
+
+.errors {
+  color: red;
+  font-size: medium;
 }
 
 .icon {

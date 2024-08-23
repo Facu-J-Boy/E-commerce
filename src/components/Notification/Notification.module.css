@@ -9,7 +9,7 @@
   bottom: 0px;
   right: 0px;
   height: auto;
-  width: 400px;
+  width: 40vw;
   border-radius: 10px 0px 0px 10px;
   border: none;
   animation: notification 200ms;
@@ -24,5 +24,11 @@
 @keyframes notification {
   0% {
     transform: translateX(40px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .notification {
+    width: 90vw;
   }
 }

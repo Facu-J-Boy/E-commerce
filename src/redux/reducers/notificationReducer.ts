@@ -9,6 +9,7 @@ import { updateProduct } from '../actions/updateProduct';
 import { updateProductImage } from '../actions/updateProductImage';
 import { deleteUser } from '../actions/deleteUser';
 import { deleteCategory } from '../actions/deleteCategory';
+import { editCategory } from '../actions/editCategory';
 
 export interface notificationState {
   type: string | null;
@@ -77,7 +78,10 @@ const notificationSlice = createSlice({
         state.text = action.payload.notification.text;
       })
       .addCase(deleteCategory.fulfilled, (state, action) => {
-        console.log('action: ', action);
+        state.type = action.payload.notification.type;
+        state.text = action.payload.notification.text;
+      })
+      .addCase(editCategory.fulfilled, (state, action) => {
         state.type = action.payload.notification.type;
         state.text = action.payload.notification.text;
       });
