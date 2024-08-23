@@ -35,12 +35,27 @@
   font-size: medium;
 }
 
-.icon {
+.icon_button {
   cursor: pointer;
   margin: 0px 10px;
+  font-size: 25px;
   border: none;
 }
 
-.icon:hover {
+.icon_button:hover {
   color: #0000ff;
+}
+
+@media screen and (max-width: 768px) {
+  .container input {
+    margin: 5px;
+    font-size: 15px;
+    width: 40vw;
+  }
+
+  .icon_button {
+    margin: 0px;
+    padding: 0px;
+    font-size: 15px;
+  }
 }

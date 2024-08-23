@@ -30,8 +30,8 @@ const Categories: React.FC<{ _id: string; name: string }> = ({
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    name && setValue('name', name);
-  }, [setValue, name]);
+    (name || !edit) && setValue('name', name);
+  }, [setValue, name, edit]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -54,7 +54,6 @@ const Categories: React.FC<{ _id: string; name: string }> = ({
   const handleEditCategory = async (data: categorieForm) => {
     const { name } = data;
     dispatch(editCategory({ id: _id, name }));
-    setEdit(false);
   };
 
   return (
@@ -81,7 +80,7 @@ const Categories: React.FC<{ _id: string; name: string }> = ({
             </button>
           )}
         </div>
-        {errors.name ? (
+        {errors.name && edit ? (
           <span className={styles.errors}>{errors.name.message}</span>
         ) : (
           <br />
@@ -89,20 +88,20 @@ const Categories: React.FC<{ _id: string; name: string }> = ({
       </form>
       <div style={{ display: 'flex' }}>
         <button
-          className={styles.icon}
+          className={styles.icon_button}
           onClick={() => {
             setEdit(!edit);
           }}
         >
-          <BiSolidPencil size={25} style={{ margin: '0px 10px' }} />
+          <BiSolidPencil style={{ margin: '0px 10px' }} />
         </button>
         <button
-          className={styles.icon}
+          className={styles.icon_button}
           onClick={() => {
             handleDeleteCategory(_id);
           }}
         >
-          <BsFillTrashFill size={25} style={{ margin: '0px 10px' }} />
+          <BsFillTrashFill style={{ margin: '0px 10px' }} />
         </button>
       </div>
     </div>
