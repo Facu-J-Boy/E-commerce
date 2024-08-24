@@ -50,7 +50,7 @@ const categoriesSlice = createSlice({
       .addCase(editCategory.pending, (state) => {
         state.changingCategory = true;
       })
-      .addCase(editCategory.fulfilled, (state) => {
+      .addCase(editCategory.fulfilled, (state, action) => {
         state.changingCategory = false;
       })
       .addCase(editCategory.rejected, (state) => {

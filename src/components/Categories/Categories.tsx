@@ -22,16 +22,19 @@ const Categories: React.FC<{ _id: string; name: string }> = ({
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors }
   } = useForm<categorieForm>();
 
   const [edit, setEdit] = useState(false);
 
+  const [categoryName, setCategoryName] = useState(name);
+
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    (name || !edit) && setValue('name', name);
-  }, [setValue, name, edit]);
+    categoryName && setValue('name', categoryName);
+  }, [setValue, categoryName]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -41,11 +44,12 @@ const Categories: React.FC<{ _id: string; name: string }> = ({
       ) {
         // Si se hace clic fuera del componente, se ejecuta onClose
         setEdit(false);
+        setValue('name', categoryName);
       }
     };
     // Agregar el evento de clic al documento
     document.addEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [setValue, watch, categoryName]);
 
   const handleDeleteCategory = (id: string) => {
     id && dispatch(deleteCategory(id));
@@ -54,6 +58,8 @@ const Categories: React.FC<{ _id: string; name: string }> = ({
   const handleEditCategory = async (data: categorieForm) => {
     const { name } = data;
     dispatch(editCategory({ id: _id, name }));
+    setCategoryName(name);
+    setEdit(false);
   };
 
   return (
@@ -64,7 +70,10 @@ const Categories: React.FC<{ _id: string; name: string }> = ({
       >
         <div>
           <input
-            style={{ border: !edit ? 'none' : 'solid 1px', background: 'none' }}
+            style={{
+              border: !edit ? 'none' : 'solid 1px',
+              background: 'none'
+            }}
             type='text'
             readOnly={!edit}
             {...register('name', {
