@@ -50,7 +50,7 @@ const DashboardProducts: React.FC<product> = ({
       </div>
       <div style={{ display: 'flex' }}>
         <button className={styles.icon} onClick={editRedirect}>
-          <BiSolidPencil size={25} style={{ margin: '0px 10px' }} />
+          <BiSolidPencil style={{ margin: '0px 10px' }} />
         </button>
         <button
           className={styles.icon}
@@ -58,7 +58,7 @@ const DashboardProducts: React.FC<product> = ({
             handleDeleting(_id);
           }}
         >
-          <BsFillTrashFill size={25} style={{ margin: '0px 10px' }} />
+          <BsFillTrashFill style={{ margin: '0px 10px' }} />
         </button>
       </div>
     </div>
