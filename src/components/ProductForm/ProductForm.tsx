@@ -13,9 +13,9 @@ import { createProduct } from '../../redux/actions/createProduct';
 import Loader from '../Loader/Loader';
 import { useForm } from 'react-hook-form';
 import { updateProduct } from '../../redux/actions/updateProduct';
-import { updateProductImage } from '../../redux/actions/updateProductImage';
 import { clearProduct } from '../../redux/reducers/singleProductReducer';
 import { userId } from '../../redux/actions/userId';
+import LoaderMini from '../LoaderMini/LoaderMini';
 
 interface productForm {
   title: string;
@@ -106,25 +106,15 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
       };
     }
   };
+
   useEffect(() => {
     newImage && setShowImage(newImage);
   }, [newImage]);
 
   const handleFileChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = ev.target.files?.[0];
-    if (type === 'create') {
-      setFileToBase(selectedFile);
-      setImage(selectedFile);
-    }
-    if (type === 'edit') {
-      setFileToBase(selectedFile);
-      dispatch(
-        updateProductImage({
-          id,
-          image: selectedFile
-        })
-      );
-    }
+    setFileToBase(selectedFile);
+    setImage(selectedFile);
   };
 
   const onSubmit = async (data: productForm) => {
@@ -144,6 +134,7 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
       dispatch(
         updateProduct({
           id,
+          image,
           title,
           price,
           description,
@@ -155,11 +146,6 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
 
   return (
     <>
-      {creating || updating ? (
-        <div className={styles.loading}>
-          <Loader color='#fff' />
-        </div>
-      ) : null}
       {productLoading && categoriesLoading ? (
         <SkeletonDetail />
       ) : (
@@ -176,13 +162,8 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
               </button>
               <input
                 type='file'
+                disabled={creating || updating}
                 accept='image/*'
-                {...register('image', {
-                  required: {
-                    value: true,
-                    message: 'Image is required'
-                  }
-                })}
                 onChange={(ev) => {
                   handleFileChange(ev);
                 }}
@@ -197,6 +178,7 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
           <div className={styles.info}>
             <div style={{ flexDirection: 'column' }}>
               <textarea
+                readOnly={creating || updating}
                 className={styles.title}
                 style={errors.title && { borderColor: 'red' }}
                 placeholder='Title'
@@ -223,6 +205,7 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
                 $
                 <input
                   type='text'
+                  readOnly={creating || updating}
                   style={errors.price && { borderColor: 'red' }}
                   placeholder='0.00'
                   {...register('price', {
@@ -247,6 +230,7 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
               <div className={styles.category}>
                 <h4>Category: </h4>
                 <select
+                  disabled={creating || updating}
                   {...register('categoryId', {
                     required: {
                       value: true,
@@ -271,6 +255,7 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
               )}
             </div>
             <textarea
+              readOnly={creating || updating}
               className={styles.description}
               style={errors.description && { borderColor: 'red' }}
               placeholder='Description'
@@ -289,8 +274,14 @@ const ProductForm: React.FC<{ type: 'create' | 'edit' }> = ({
               <br />
             )}
             <div className={styles.editProduct}>
-              <button type='submit'>
-                {type === 'edit' ? 'Edit product' : 'Create'}
+              <button type='submit' disabled={creating || updating}>
+                {creating || updating ? (
+                  <LoaderMini color={'#fff'} />
+                ) : type === 'edit' ? (
+                  'Edit product'
+                ) : (
+                  'Create'
+                )}
               </button>
             </div>
           </div>

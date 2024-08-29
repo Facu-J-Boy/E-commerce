@@ -6,7 +6,6 @@ import { deleteComment } from '../actions/deleteComment';
 import { createProduct } from '../actions/createProduct';
 import { deleteProduct } from '../actions/deleteProduct';
 import { updateProduct } from '../actions/updateProduct';
-import { updateProductImage } from '../actions/updateProductImage';
 import { deleteUser } from '../actions/deleteUser';
 import { deleteCategory } from '../actions/deleteCategory';
 import { editCategory } from '../actions/editCategory';
@@ -62,10 +61,6 @@ const notificationSlice = createSlice({
         state.text = action.payload.text;
       })
       .addCase(deleteProduct.fulfilled, (state, action) => {
-        state.type = action.payload.notification.type;
-        state.text = action.payload.notification.text;
-      })
-      .addCase(updateProductImage.fulfilled, (state, action) => {
         state.type = action.payload.notification.type;
         state.text = action.payload.notification.text;
       })

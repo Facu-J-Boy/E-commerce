@@ -3,7 +3,6 @@ import { product } from '../../interfaces/product';
 import { getSingleProduct } from '../actions/getSingleProduct';
 import { createProduct } from '../actions/createProduct';
 import { updateProduct } from '../actions/updateProduct';
-import { updateProductImage } from '../actions/updateProductImage';
 
 export interface productState {
   product: product | null;
@@ -59,18 +58,6 @@ const singleProductSlice = createSlice({
       })
       .addCase(createProduct.rejected, (state) => {
         state.creating = false;
-      })
-      .addCase(updateProductImage.pending, (state) => {
-        state.updatingImage = true;
-      })
-      .addCase(updateProductImage.fulfilled, (state, action) => {
-        state.updatingImage = false;
-        if (action.payload.image) {
-          state.newImage = action.payload.image;
-        }
-      })
-      .addCase(updateProductImage.rejected, (state) => {
-        state.updatingImage = false;
       })
       .addCase(updateProduct.pending, (state) => {
         state.updating = true;

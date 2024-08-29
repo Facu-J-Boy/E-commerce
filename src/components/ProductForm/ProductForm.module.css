@@ -155,11 +155,6 @@
   font-family: 'Source Sans Pro', 'Arial', sans-serif;
 }
 
-.editProduct button:hover {
-  color: #333;
-  background-color: #fff;
-}
-
 .errors {
   color: red;
   font-size: medium;

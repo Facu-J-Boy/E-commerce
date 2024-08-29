@@ -20,12 +20,6 @@
   margin-bottom: 0px;
 }
 
-/* .navItem { */
-/* border: solid 1px red;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px; */
-/* } */
-
 .navLink {
   background-color: #333;
   color: #f0f0f0;
@@ -100,5 +94,9 @@
 
   .myTabContent {
     height: 700px;
+  }
+
+  .deleting {
+    height: 760px;
   }
 }
