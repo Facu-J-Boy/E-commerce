@@ -43,10 +43,15 @@
   border: none;
   background: none;
   cursor: pointer;
+  font-size: 20px;
 }
 
 @media screen and (max-width: 768px) {
   .comment p {
     font-size: small;
+  }
+
+  .header button {
+    font-size: 15px;
   }
 }

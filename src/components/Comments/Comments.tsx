@@ -3,7 +3,6 @@ import styles from './Comments.module.css';
 import { comment } from '../../interfaces/comments';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { FaTrashCan } from 'react-icons/fa6';
-import { MdEdit } from 'react-icons/md';
 import DeleteComment from './DeleteComment/DeleteComment';
 import { useSelector } from 'react-redux';
 import LoaderMini from '../LoaderMini/LoaderMini';
@@ -71,11 +70,8 @@ const Comments: React.FC<comment> = ({
             <div className={styles.rigth_side}>
               {User?._id === user && (
                 <div>
-                  <button>
-                    <MdEdit size={20} />
-                  </button>
                   <button onClick={toggleDelete}>
-                    <FaTrashCan size={20} />
+                    <FaTrashCan />
                   </button>
                 </div>
               )}
