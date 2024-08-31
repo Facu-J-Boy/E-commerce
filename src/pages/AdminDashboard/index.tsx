@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './AdminDashboard.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, storeInterface } from '../../redux/store';
@@ -15,9 +15,11 @@ import Pages from '../../components/ProductsGrid/Pages/Pages';
 import { getAllcategory } from '../../redux/actions/getAllCategory';
 import { category } from '../../interfaces/category';
 import { clearProducts } from '../../redux/reducers/productsReducer';
+import ToggleCreateCatgory from './ToggleCreateCategory/ToggleCreateCatgory';
 
 const AdminDashboard: React.FC = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState('home');
+  const [createCategory, setCreateCategory] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -63,8 +65,13 @@ const AdminDashboard: React.FC = (): JSX.Element => {
     navigate('/create');
   };
 
+  const toggleCreateCategory = useCallback(() => {
+    setCreateCategory(!createCategory);
+  }, [createCategory]);
+
   return (
     <>
+      {createCategory && <ToggleCreateCatgory onClose={toggleCreateCategory} />}
       {(deleting || changingCategory) && (
         <div className={styles.deleting}>
           <Loader color='#fff' />
@@ -116,8 +123,9 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                   className={styles.create_button}
                   onClick={createRedirect}
                 >
-                  Create product
+                  Add product
                 </button>
+                <hr />
                 {currentPage && <Pages />}
                 {message && <ErrorMessage message={message} />}
                 {productsLoading ? (
@@ -150,9 +158,16 @@ const AdminDashboard: React.FC = (): JSX.Element => {
                 }`}
                 role='tabpanel'
               >
+                <button
+                  className={styles.create_button}
+                  onClick={toggleCreateCategory}
+                >
+                  Add category
+                </button>
                 {categoriesError ? (
                   <ErrorMessage message={categoriesError.text} />
                 ) : null}
+                <hr />
                 {categoriesLoading ? (
                   <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <Loader color='#333' />

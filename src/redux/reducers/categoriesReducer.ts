@@ -4,6 +4,7 @@ import { getAllcategory } from '../actions/getAllCategory';
 import { deleteCategory } from '../actions/deleteCategory';
 import { category } from '../../interfaces/category';
 import { editCategory } from '../actions/editCategory';
+import { createCategory } from '../actions/createCategory';
 
 export interface categoriesState {
   categories?: category[] | [];
@@ -54,6 +55,21 @@ const categoriesSlice = createSlice({
         state.changingCategory = false;
       })
       .addCase(editCategory.rejected, (state) => {
+        state.changingCategory = false;
+      })
+      .addCase(createCategory.pending, (state) => {
+        state.changingCategory = true;
+      })
+      .addCase(createCategory.fulfilled, (state, action) => {
+        state.changingCategory = false;
+        const { newCategory } = action.payload;
+        if (newCategory) {
+          state.categories = state.categories
+            ? [...state.categories, newCategory]
+            : [newCategory];
+        }
+      })
+      .addCase(createCategory.rejected, (state) => {
         state.changingCategory = false;
       });
   }
