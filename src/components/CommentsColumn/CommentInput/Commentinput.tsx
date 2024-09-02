@@ -8,7 +8,7 @@ import { AppDispatch, storeInterface } from '../../../redux/store';
 import { postComment } from '../../../redux/actions/postComment';
 import LoaderMini from '../../LoaderMini/LoaderMini';
 
-const Commentinput: React.FC<{ productId: string | undefined }> = ({
+const CommentInput: React.FC<{ productId: string | undefined }> = ({
   productId
 }): JSX.Element => {
   const [rating, setRating] = useState<number>(0);
@@ -82,4 +82,4 @@ const Commentinput: React.FC<{ productId: string | undefined }> = ({
   );
 };
 
-export default Commentinput;
+export default CommentInput;

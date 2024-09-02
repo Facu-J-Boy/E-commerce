@@ -7,8 +7,8 @@ import { AppDispatch, storeInterface } from '../../redux/store';
 import { getComments } from '../../redux/actions/getComments';
 import { useParams } from 'react-router-dom';
 import { comment } from '../../interfaces/comments';
-import Commentinput from './CommentInput/Commentinput';
 import { clearComments } from '../../redux/reducers/commentsReducer';
+import CommentInput from './CommentInput/CommentInput';
 
 const CommentsColumn: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -41,7 +41,7 @@ const CommentsColumn: React.FC = (): JSX.Element => {
         <div className={styles.container}>
           <hr />
           <h2 className={styles.title}>Comments</h2>
-          <Commentinput productId={id} />
+          <CommentInput productId={id} />
           <div className={styles.commentsContainer}>
             {!commentsLoading && comments.length === 0 ? (
               <p className={styles.message}>There are no comments</p>
