@@ -11,7 +11,7 @@ import LoaderMini from '../../LoaderMini/LoaderMini';
 const Commentinput: React.FC<{ productId: string | undefined }> = ({
   productId
 }): JSX.Element => {
-  const [rating, setRating] = useState<number>(1);
+  const [rating, setRating] = useState<number>(0);
   const [text, setText] = useState<string>('');
   const user = userId.get();
 
@@ -32,7 +32,7 @@ const Commentinput: React.FC<{ productId: string | undefined }> = ({
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(postComment({ productId, userId: user, text, rating }));
-    setRating(1);
+    setRating(0);
     setText('');
   };
 
@@ -68,7 +68,11 @@ const Commentinput: React.FC<{ productId: string | undefined }> = ({
                 handleTextChange(ev);
               }}
             />
-            <button className={styles.submit_button} type='submit'>
+            <button
+              disabled={!rating || !text}
+              className={styles.submit_button}
+              type='submit'
+            >
               <IoSend size={20} />
             </button>
           </div>
