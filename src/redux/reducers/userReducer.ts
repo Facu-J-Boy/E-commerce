@@ -3,6 +3,8 @@ import { user } from '../../interfaces/user';
 import { getSession } from '../actions/getSession';
 import { logIn } from '../actions/logIn';
 import { signUp } from '../actions/signUp';
+import { deleteUser } from '../actions/deleteUser';
+import { userId } from '../actions/userId';
 
 export interface userState {
   User: user | null;
@@ -48,6 +50,12 @@ const userSlice = createSlice({
       })
       .addCase(signUp.rejected, (state, action) => {
         state.userLoading = false;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        if (action.payload.deletedUserId) {
+          userId.set('');
+          state.User = null;
+        }
       });
   }
 });

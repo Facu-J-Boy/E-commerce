@@ -74,7 +74,7 @@ const NavBar: React.FC = (): JSX.Element => {
   };
 
   const handleDeleteUser = () => {
-    dispatch(deleteUser(User?._id));
+    dispatch(deleteUser({ id: User?._id, navigate }));
   };
 
   return (
