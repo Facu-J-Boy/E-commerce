@@ -12,7 +12,7 @@ export const logIn = createAsyncThunk('logIn', async (formData: FormData) => {
   try {
     const response = await axiosInstance.post('/user/login', data);
     response && userId.set(response.data._id);
-    window.open('http://localhost:3000', '_self');
+    window.open(`${process.env.REACT_APP_CLIENT_URL}`, '_self');
   } catch (error: any) {
     throw error.response.data.error;
   }
