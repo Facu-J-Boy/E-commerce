@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -12,13 +11,20 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import NavBar from './components/NavBar/NavBar';
 import AdminDashboard from './pages/AdminDashboard';
-import Edit from './pages/Edit';
 import Footter from './components/Footter/Footter';
 import Buy from './pages/Buy';
+import { useSelector } from 'react-redux';
+import Notification from './components/Notification/Notification';
+import ProductForm from './components/ProductForm/ProductForm';
+import { storeInterface } from './redux/store';
 
 function App() {
+  const { type, text } = useSelector(
+    (state: storeInterface) => state.notification
+  );
   return (
     <Router>
+      {type && text ? <Notification type={type} text={text} /> : null}
       <NavBar /> {/* Renderiza la NavBar en todas las rutas */}
       <Routes>
         <Route path='/' element={<Home />} />
@@ -26,7 +32,8 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/signUp' element={<SignUp />} />
         <Route path='/admin' element={<AdminDashboard />} />
-        <Route path='/edit/:id' element={<Edit />} />
+        <Route path='/edit/:id' element={<ProductForm type='edit' />} />
+        <Route path='/create' element={<ProductForm type='create' />} />
         <Route path='/buy/:id' element={<Buy />} />
         {/* Ruta de error */}
         <Route path='*' element={<NotFound />} />

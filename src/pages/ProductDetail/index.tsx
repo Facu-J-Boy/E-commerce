@@ -2,40 +2,36 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getSingleProduct } from '../../redux/actions/getSingleProduct';
-import { AppDispatch } from '../../redux/store';
-import { clearProductState } from '../../redux/actions/clearProductState';
+import { AppDispatch, storeInterface } from '../../redux/store';
 import SingleProduct from '../../components/SingleProduct/SingleProduct';
 import SkeletonDetail from '../../components/SkeletonDetail/SkeletonDetail';
-import { getComments } from '../../redux/actions/getComments';
 import CommentsColumn from '../../components/CommentsColumn/CommentsColumn';
 import styles from './Detail.module.css';
 import { getInCategory } from '../../redux/actions/getInCategory';
 import CarrouselProducts from '../../components/CarrouselProducts/CarrouselProducts';
 import { addToHistory } from '../../redux/actions/addToHistory';
+import { clearProduct } from '../../redux/reducers/singleProductReducer';
+import { product } from '../../interfaces/product';
 
 const ProductDetail: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { product, productLoading } = useSelector(
-    (state: any) => state.product
-  );
-
-  const { comments, commentsLoading } = useSelector(
-    (state: any) => state.comments
+    (state: storeInterface) => state.product
   );
 
   const { productsByCategory, productsByCategoryLoading } = useSelector(
-    (state: any) => state.productsByCategory
+    (state: storeInterface) => state.productsByCategory
   );
 
   const { id } = useParams();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [id]);
 
   useEffect(() => {
-    document.title = `${product.title ? product.title : document.title}`; // Cambia el titulo de la web por el titulo del producto
+    document.title = `${product ? product.title : document.title}`; // Cambia el titulo de la web por el titulo del producto
 
     return () => {
       document.title = 'E-commerce'; // Al desmontar el componente el titulo vuelve a la normalidad
@@ -48,46 +44,42 @@ const ProductDetail: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getSingleProduct(id));
-    dispatch(getComments(id));
-    return () => {
-      dispatch(clearProductState());
-    };
   }, [dispatch, id]);
 
   useEffect(() => {
-    product && dispatch(getInCategory({ category: product.category, id: id }));
-  }, [dispatch, product, id]);
+    return () => {
+      dispatch(clearProduct());
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    product && dispatch(getInCategory(product?.category?._id));
+  }, [dispatch, product]);
 
   return (
     <div className={styles.container}>
-      {productLoading ? (
+      {productLoading || !product ? (
         <>
           <SkeletonDetail />
         </>
       ) : (
         <>
           <SingleProduct
-            image={product.image}
-            title={product.title}
-            id={product.id}
-            price={product.price}
-            description={product.description}
-            category={''}
-            rating={{
-              rate: product.rating?.rate,
-              count: product.rating?.count
-            }}
+            _id={product?._id}
+            image={product?.image}
+            title={product?.title}
+            price={product?.price}
+            rating={product?.rating}
+            description={product?.description}
           />
         </>
       )}
-      <CommentsColumn
-        comments={comments}
-        commentsLoading={commentsLoading}
-        error={undefined}
-      />
-      <h1>Similar products</h1>
+      <CommentsColumn />
+      {productsByCategory.length === 0 ? null : (
+        <h1 style={{ color: '#333', marginLeft: '10px' }}>Similar products</h1>
+      )}
       <CarrouselProducts
-        products={productsByCategory}
+        products={productsByCategory.filter((p: product) => p._id !== id)}
         loading={productsByCategoryLoading}
       />
     </div>

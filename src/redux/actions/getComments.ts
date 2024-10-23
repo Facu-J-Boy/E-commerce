@@ -1,16 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { axiosInstance } from '../../Config/axios';
 
 export const getComments = createAsyncThunk(
   'getComments',
-  async (id: string | undefined) => {
+  async (data: { id: string | undefined; page: number | null | undefined }) => {
+    const params = { page: data.page };
     try {
-      const response = await axios.get(
-        `https://jsonplaceholder.typicode.com/posts/${id}/comments`
-      );
+      const response = await axiosInstance.get(`/review/${data.id}`, {
+        params
+      });
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      return error.response.data;
     }
   }
 );

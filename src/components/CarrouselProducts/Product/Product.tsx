@@ -4,39 +4,43 @@ import { useNavigate } from 'react-router-dom';
 import { GrCart } from 'react-icons/gr';
 import { BsFillCartXFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../../redux/store';
-import { getCart } from '../../../redux/actions/getCart';
+import { AppDispatch, storeInterface } from '../../../redux/store';
 import { product } from '../../../interfaces/product';
 import { addToCart } from '../../../redux/actions/addToCart';
 import { deleteToTheCart } from '../../../redux/actions/deleteToTheCart';
 
 export interface ProductCardProps {
-  id: number;
+  _id: string;
   image: string;
   title: string;
   price: number;
 }
 
-const Product: React.FC<ProductCardProps> = ({ id, image, title, price }) => {
-  const product = {
-    id: id,
-    image: image,
-    title: title,
-    price: price
-  };
-
+const Product: React.FC<ProductCardProps> = ({ _id, image, title, price }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const navigate = useNavigate();
 
   const handleRedirect = () => {
-    navigate(`/product/${id}`);
+    navigate(`/product/${_id}`);
   };
+
+  const { User } = useSelector((state: storeInterface) => state.user);
+
+  const { cartProducts, adding } = useSelector(
+    (state: storeInterface) => state.cartProducts
+  );
+
+  const [disableButton, setDisableButton] = useState(false);
+
+  useEffect(() => {
+    !adding && setDisableButton(adding);
+  }, [adding]);
 
   const handleAddToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
-    addToCart(product);
-    dispatch(getCart());
+    setDisableButton(true);
+    dispatch(addToCart({ userId: User?._id, productId: _id }));
     return false; // Evitar la propagación del evento de clic
   };
 
@@ -44,23 +48,20 @@ const Product: React.FC<ProductCardProps> = ({ id, image, title, price }) => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation(); // Evitar la propagación del evento de clic
-    deleteToTheCart(product.id);
-    dispatch(getCart());
+    dispatch(deleteToTheCart({ userId: User?._id, productId: _id }));
     return false; // Evitar la propagación del evento de clic
   };
 
   const [inCart, setInCart] = useState(false);
 
-  const { cartProducts } = useSelector((state: any) => state.cartProducts);
-
-  const productId = id;
+  const productId = _id;
 
   useEffect(() => {
-    setInCart(cartProducts.some((p: product) => p.id === productId)); // Comprueba si el producto ya se encuentra en el carrito mediante su id
+    setInCart(cartProducts.some((p: product) => p._id === productId)); // Comprueba si el producto ya se encuentra en el carrito mediante su id
   }, [cartProducts, productId]);
 
   const redirectToBuy = () => {
-    navigate(`/buy/${id}`);
+    navigate(`/buy/${_id}`);
   };
 
   return (
@@ -68,6 +69,7 @@ const Product: React.FC<ProductCardProps> = ({ id, image, title, price }) => {
       <div className={styles.imageContainer}>
         <button
           className={styles.cart_icon}
+          disabled={disableButton}
           onClick={!inCart ? handleAddToCart : handleDeleteToTheCart}
         >
           {!inCart ? <GrCart size={25} /> : <BsFillCartXFill size={25} />}

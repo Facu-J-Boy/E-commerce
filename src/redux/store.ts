@@ -1,15 +1,39 @@
 import { configureStore } from '@reduxjs/toolkit';
-import productsReducer from './reducers/productsReducer';
-import singleProductReducer from './reducers/singleProductReducer';
-import categoriesReducer from './reducers/categoriesReducer';
-import commentsSlice from './reducers/commentsReducer';
-import cartReducer from './reducers/cartReducer';
-import productsByCategorySlice from './reducers/productsByCategoryReducer';
-import historyReducer from './reducers/historyReducer';
-import searchReducer from './reducers/searchReducer';
+import userReducer, { userState } from './reducers/userReducer';
+import productsReducer, { productsState } from './reducers/productsReducer';
+import singleProductReducer, {
+  productState
+} from './reducers/singleProductReducer';
+import categoriesReducer, {
+  categoriesState
+} from './reducers/categoriesReducer';
+import commentsSlice, { commentsState } from './reducers/commentsReducer';
+import cartReducer, { cartState } from './reducers/cartReducer';
+import productsByCategorySlice, {
+  productsByCategoryState
+} from './reducers/productsByCategoryReducer';
+import historyReducer, { historyState } from './reducers/historyReducer';
+import searchReducer, { searchState } from './reducers/searchReducer';
+import notificationReducer, {
+  notificationState
+} from './reducers/notificationReducer';
+
+export interface storeInterface {
+  user: userState;
+  products: productsState;
+  product: productState;
+  categories: categoriesState;
+  comments: commentsState;
+  cartProducts: cartState;
+  searchs: searchState;
+  productsByCategory: productsByCategoryState;
+  historyProducts: historyState;
+  notification: notificationState;
+}
 
 const store = configureStore({
   reducer: {
+    user: userReducer,
     products: productsReducer,
     product: singleProductReducer,
     categories: categoriesReducer,
@@ -17,7 +41,8 @@ const store = configureStore({
     cartProducts: cartReducer,
     searchs: searchReducer,
     productsByCategory: productsByCategorySlice,
-    historyProducts: historyReducer
+    historyProducts: historyReducer,
+    notification: notificationReducer
   }
 });
 

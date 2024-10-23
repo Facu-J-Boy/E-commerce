@@ -3,13 +3,12 @@ import { product } from '../../../interfaces/product';
 import styles from './ProductItem.module.css';
 import { BsFillCartXFill } from 'react-icons/bs';
 import { deleteToTheCart } from '../../../redux/actions/deleteToTheCart';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../redux/store';
-import { getCart } from '../../../redux/actions/getCart';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, storeInterface } from '../../../redux/store';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const ProductItem: React.FC<product> = ({
-  id,
+  _id,
   image,
   title,
   price
@@ -18,19 +17,20 @@ const ProductItem: React.FC<product> = ({
 
   const navigate = useNavigate();
 
+  const { User } = useSelector((state: storeInterface) => state.user);
+
   const handleDeleteToTheCart = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation(); // Evitar la propagación del evento de click
-    deleteToTheCart(id);
-    dispatch(getCart());
+    dispatch(deleteToTheCart({ userId: User?._id, productId: _id }));
     return false; // Evitar la propagación del evento de click
   };
 
   const location = useLocation();
 
   const handleNavigate = () => {
-    navigate(`/product/${id}`);
+    navigate(`/product/${_id}`);
   };
 
   return (

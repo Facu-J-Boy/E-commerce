@@ -1,3 +1,14 @@
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5); /* Color oscuro con transparencia */
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+}
+
 .edit {
   display: flex;
   margin: 20px;
@@ -22,6 +33,9 @@
 
 .editImage {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   border-radius: 100%;
   height: 70px;
   width: 70px;
@@ -56,7 +70,8 @@
 .title {
   font-size: 30px;
   font-family: sans-serif;
-  border: none;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
   overflow: hidden;
   resize: none;
   width: 90%;
@@ -65,7 +80,14 @@
   padding: 20px;
 }
 
+.title:focus {
+  outline: none;
+  border-color: #333;
+}
+
 .price {
+  display: flex;
+  flex-direction: row;
   font-size: 40px;
   font-family: sans-serif;
   margin-left: 25px;
@@ -74,8 +96,14 @@
 .price input {
   font-size: 40px;
   font-family: sans-serif;
-  border: none;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
   width: 80%;
+}
+
+.price input:focus {
+  outline: none;
+  border-color: #333;
 }
 
 .category {
@@ -93,7 +121,8 @@
 }
 
 .description {
-  border: none;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
   font-size: 16px;
   font-family: Arial, Helvetica, sans-serif;
   overflow: hidden;
@@ -102,6 +131,11 @@
   height: 200px;
   margin: 20px 0px;
   padding: 20px;
+}
+
+.description:focus {
+  outline: none;
+  border-color: #333;
 }
 
 .editProduct {
@@ -121,9 +155,9 @@
   font-family: 'Source Sans Pro', 'Arial', sans-serif;
 }
 
-.editProduct button:hover {
-  color: #333;
-  background-color: #fff;
+.errors {
+  color: red;
+  font-size: medium;
 }
 
 @media screen and (max-width: 768px) {
@@ -145,5 +179,9 @@
 
   .description {
     height: 300px;
+  }
+
+  .errors {
+    margin-left: 10px;
   }
 }

@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { product } from '../../interfaces/product';
 import { getInCategory } from '../actions/getInCategory';
 
-export interface productsState {
+export interface productsByCategoryState {
   productsByCategory: product[] | [];
   productsByCategoryLoading: boolean;
   error: null | string | undefined;
 }
 
-const initialState: productsState = {
+const initialState: productsByCategoryState = {
   productsByCategory: [],
   productsByCategoryLoading: false,
   error: null
@@ -26,7 +26,7 @@ const productsByCategorySlice = createSlice({
       })
       .addCase(getInCategory.fulfilled, (state, action) => {
         state.productsByCategoryLoading = false;
-        state.productsByCategory = action.payload;
+        state.productsByCategory = action.payload ? action.payload : [];
       })
       .addCase(getInCategory.rejected, (state, action) => {
         state.productsByCategoryLoading = false;

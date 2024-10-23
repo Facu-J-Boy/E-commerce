@@ -7,10 +7,17 @@
   width: 500px;
   height: 30px;
   padding-left: 10px;
-  border: solid gray 1px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+  border-radius: 15px;
   outline-color: #4d4d4d;
   font-size: large;
   margin-left: 10px;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #333;
 }
 
 .searchList {

@@ -8,12 +8,12 @@ interface product {
   price: number;
 }
 
-interface cartState {
+export interface historyState {
   historyProducts: product[] | [];
   historyProductsLoading: boolean;
 }
 
-const initialState: cartState = {
+const initialState: historyState = {
   historyProducts: [],
   historyProductsLoading: true
 };

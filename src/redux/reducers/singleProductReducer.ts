@@ -1,42 +1,76 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { product } from '../../interfaces/product';
 import { getSingleProduct } from '../actions/getSingleProduct';
-import { clearProductState } from '../actions/clearProductState';
+import { createProduct } from '../actions/createProduct';
+import { updateProduct } from '../actions/updateProduct';
 
-interface productState {
-  product: product | {};
+export interface productState {
+  product: product | null;
   productLoading: boolean;
-  error: null | string | undefined;
+  creating: boolean;
+  updating: boolean;
+  newImage: string;
+  updatingImage: boolean;
+  error: string;
 }
 
 const initialState: productState = {
-  product: {},
+  product: null,
   productLoading: false,
-  error: null
+  creating: false,
+  updating: false,
+  newImage: '',
+  updatingImage: false,
+  error: ''
 };
 
 const singleProductSlice = createSlice({
   name: 'product',
   initialState,
-  reducers: {},
+  reducers: {
+    clearProduct: (state) => {
+      state.product = null;
+      state.newImage = '';
+      state.error = '';
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getSingleProduct.pending, (state) => {
         state.productLoading = true;
-        state.error = null;
+        state.error = '';
       })
       .addCase(getSingleProduct.fulfilled, (state, action) => {
         state.productLoading = false;
-        state.product = action.payload;
+        state.product = action.payload.product;
+        state.error = action.payload.message;
+        state.newImage = action.payload.image;
       })
       .addCase(getSingleProduct.rejected, (state, action) => {
         state.productLoading = false;
-        state.error = action.error.message;
+        state.error = '';
       })
-      .addCase(clearProductState, (state, action) => {
-        state.product = action.payload;
+      .addCase(createProduct.pending, (state) => {
+        state.creating = true;
+      })
+      .addCase(createProduct.fulfilled, (state) => {
+        state.creating = false;
+      })
+      .addCase(createProduct.rejected, (state) => {
+        state.creating = false;
+      })
+      .addCase(updateProduct.pending, (state) => {
+        state.updating = true;
+      })
+      .addCase(updateProduct.fulfilled, (state) => {
+        state.updating = false;
+      })
+      .addCase(updateProduct.rejected, (state) => {
+        state.updating = false;
       });
   }
 });
+
+export const { clearProduct } = singleProductSlice.actions;
 
 export default singleProductSlice.reducer;

@@ -1,153 +1,189 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './AdminDashboard.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
-import { getAllProducts } from '../../redux/actions/getAllproducts';
+import { AppDispatch, storeInterface } from '../../redux/store';
 import { product } from '../../interfaces/product';
 import DashboardProducts from '../../components/DashboardProducts/DashboardProducts';
 import Loader from '../../components/Loader/Loader';
-import { getAllCategories } from '../../redux/actions/getAllCategories';
 import Categories from '../../components/Categories/Categories';
-import { auth } from '../../Firebase';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import { getAllProducts } from '../../redux/actions/getAllproducts';
+import Loadingscreen from '../../components/LoadingScreen/Loadingscreen';
+import { userId } from '../../redux/actions/userId';
+import Pages from '../../components/ProductsGrid/Pages/Pages';
+import { getAllcategory } from '../../redux/actions/getAllCategory';
+import { category } from '../../interfaces/category';
+import { clearProducts } from '../../redux/reducers/productsReducer';
+import ToggleCreateCatgory from './ToggleCreateCategory/ToggleCreateCatgory';
 
 const AdminDashboard: React.FC = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState('home');
-
-  const [login, setLogin] = useState<boolean | string>('pending');
+  const [createCategory, setCreateCategory] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setLogin(true);
-      } else {
-        setLogin(false);
-      }
-    });
-  }, []);
+  const { User, userLoading } = useSelector(
+    (state: storeInterface) => state.user
+  );
+
+  const { title, products, productsLoading, currentPage, deleting, message } =
+    useSelector((state: storeInterface) => state.products);
+
+  const { categories, categoriesLoading, changingCategory, categoriesError } =
+    useSelector((state: storeInterface) => state.categories);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const user = userId.get();
 
   useEffect(() => {
-    !login && navigate('*'); // Si el usuario no está logueado lo redirige a otra pagina
-  }, [login, navigate]);
+    if (!user?.length) {
+      navigate('*');
+    } // Si el usuario no está logueado lo redirige a otra pagina
+  }, [user, navigate]);
 
   const handleTabClick = (tabId: string) => {
     setActiveTab(tabId);
   };
 
-  const dispatch = useDispatch<AppDispatch>();
-
-  const { products, productsLoading, productsError } = useSelector(
-    (state: any) => state.products
-  );
-
-  const { categories, categoriesLoading, categoriesError } = useSelector(
-    (state: any) => state.categories
-  );
+  useEffect(() => {
+    dispatch(getAllProducts({ page: currentPage, title }));
+  }, [dispatch, currentPage, title]);
 
   useEffect(() => {
-    dispatch(getAllProducts());
-    dispatch(getAllCategories());
+    dispatch(getAllcategory());
   }, [dispatch]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearProducts());
+    };
+  }, [dispatch]);
+
+  const createRedirect = () => {
+    navigate('/create');
+  };
+
+  const toggleCreateCategory = useCallback(() => {
+    setCreateCategory(!createCategory);
+  }, [createCategory]);
 
   return (
     <>
-      {login === 'pending'
-        ? null
-        : login === true && (
-            <div className={styles.container}>
-              <ul className={styles.myTab} role='tablist'>
-                <li className={styles.navItem}>
-                  <button
-                    className={`${styles.navLink} ${
-                      activeTab === 'home' && styles.active
-                    }`}
-                    onClick={() => handleTabClick('home')}
-                    type='button'
-                    role='tab'
-                    aria-controls='home-tab-pane'
-                    aria-selected={activeTab === 'home'}
-                  >
-                    Products
-                  </button>
-                </li>
-                <li className={styles.navItem}>
-                  <button
-                    className={`${styles.navLink} ${
-                      activeTab === 'profile' && styles.active
-                    }`}
-                    onClick={() => handleTabClick('profile')}
-                    type='button'
-                    role='tab'
-                    aria-controls='profile-tab-pane'
-                    aria-selected={activeTab === 'profile'}
-                  >
-                    Categories
-                  </button>
-                </li>
-              </ul>
-              <div className={styles.myTabContent}>
-                <div
-                  className={`${styles.tabPane} ${
+      {createCategory && <ToggleCreateCatgory onClose={toggleCreateCategory} />}
+      {(deleting || changingCategory) && (
+        <div className={styles.deleting}>
+          <Loader color='#fff' />
+        </div>
+      )}
+      {userLoading ? (
+        <Loadingscreen />
+      ) : (
+        User && (
+          <div className={styles.container}>
+            <ul className={styles.myTab} role='tablist'>
+              <li className={styles.navItem}>
+                <button
+                  className={`${styles.navLink} ${
                     activeTab === 'home' && styles.active
                   }`}
-                  role='tabpanel'
+                  onClick={() => handleTabClick('home')}
+                  type='button'
+                  role='tab'
+                  aria-controls='home-tab-pane'
+                  aria-selected={activeTab === 'home'}
                 >
-                  {productsError ? (
-                    <ErrorMessage
-                      type={productsError.type}
-                      message={productsError.text}
-                    />
-                  ) : null}
-                  {productsLoading ? (
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                      <Loader />
-                    </div>
-                  ) : (
-                    <>
-                      {products?.map((p: product) => (
-                        <DashboardProducts
-                          key={p.id}
-                          id={p.id}
-                          image={p.image}
-                          title={p.title}
-                          price={p.price}
-                        />
-                      ))}
-                    </>
-                  )}
-                </div>
-                <div
-                  className={`${styles.tabPane} ${
+                  Products
+                </button>
+              </li>
+              <li className={styles.navItem}>
+                <button
+                  className={`${styles.navLink} ${
                     activeTab === 'profile' && styles.active
                   }`}
-                  role='tabpanel'
+                  onClick={() => handleTabClick('profile')}
+                  type='button'
+                  role='tab'
+                  aria-controls='profile-tab-pane'
+                  aria-selected={activeTab === 'profile'}
                 >
-                  {categoriesError ? (
-                    <ErrorMessage
-                      type={categoriesError.type}
-                      message={categoriesError.text}
+                  Categories
+                </button>
+              </li>
+            </ul>
+            <div className={styles.myTabContent}>
+              <div
+                className={`${styles.tabPane} ${
+                  activeTab === 'home' && styles.active
+                }`}
+                role='tabpanel'
+              >
+                <button
+                  className={styles.create_button}
+                  onClick={createRedirect}
+                >
+                  Add product
+                </button>
+                <hr />
+                {currentPage && <Pages />}
+                {message && <ErrorMessage message={message} />}
+                {productsLoading ? (
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      height: '550px'
+                    }}
+                  >
+                    <Loader color='#333' />
+                  </div>
+                ) : (
+                  products?.map((p: product, index: number) => (
+                    <DashboardProducts
+                      key={index}
+                      _id={p._id}
+                      image={p.image}
+                      title={p.title}
+                      price={p.price}
                     />
-                  ) : null}
-                  {categoriesLoading ? (
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                      <Loader />
-                    </div>
-                  ) : (
-                    <>
-                      {categories?.map(
-                        (c: string, index: React.Key | null | undefined) => (
-                          <Categories key={index} categorie={c} />
-                        )
-                      )}
-                    </>
-                  )}
-                </div>
+                  ))
+                )}
+                {currentPage && <Pages />}
+              </div>
+              <div
+                className={`${styles.tabPane} ${
+                  activeTab === 'profile' && styles.active
+                }`}
+                role='tabpanel'
+              >
+                <button
+                  className={styles.create_button}
+                  onClick={toggleCreateCategory}
+                >
+                  Add category
+                </button>
+                {categoriesError ? (
+                  <ErrorMessage message={categoriesError.text} />
+                ) : null}
+                <hr />
+                {categoriesLoading ? (
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Loader color='#333' />
+                  </div>
+                ) : (
+                  <>
+                    {categories?.map((c: category) => (
+                      <Categories key={c._id} _id={c._id} name={c.name} />
+                    ))}
+                  </>
+                )}
               </div>
             </div>
-          )}
+          </div>
+        )
+      )}
     </>
   );
 };

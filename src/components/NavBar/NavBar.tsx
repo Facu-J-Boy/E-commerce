@@ -1,39 +1,58 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './NavBar.module.css';
-import { auth } from '../../Firebase';
-import { user } from '../../interfaces/user';
-import { getAuth, signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import logo from './e-commerce.png';
 import userImage from './user.jpg';
 import SearchInput from './SearchInput/SearchInput';
 import Cart from './Cart/Cart';
-import { AppDispatch } from '../../redux/store';
-import { useDispatch } from 'react-redux';
+import { AppDispatch, storeInterface } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCart } from '../../redux/actions/getCart';
+// import { getAllcategory } from '../../redux/actions/getAllCategory';
+import { getSession } from '../../redux/actions/getSession';
+import { userId } from '../../redux/actions/userId';
+import LoaderMini from '../LoaderMini/LoaderMini';
+import { logOut } from '../../redux/reducers/userReducer';
+import { deleteUser } from '../../redux/actions/deleteUser';
 
 const NavBar: React.FC = (): JSX.Element => {
   const [list, setList] = useState(false);
-  const [user, setUser] = useState<user>({
-    photoURL: '',
-    displayName: ''
-  });
+
+  const { User, userLoading } = useSelector(
+    (state: storeInterface) => state.user
+  );
+  const [userData, setUserData] = useState<any>(null);
+
+  const location = useLocation();
 
   const dispatch = useDispatch<AppDispatch>();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser({ photoURL: user.photoURL, displayName: user.displayName });
-      }
-    });
-  }, []);
+    const id = userId.get();
+    id && dispatch(getSession(id));
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getCart());
-  }, [dispatch]);
+    const params = new URLSearchParams(location.search);
+    const userDataParam = params.get('userData');
+    if (userDataParam) {
+      setUserData(JSON.parse(decodeURIComponent(userDataParam)));
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    if (userData) {
+      dispatch(getSession(userData._id));
+      userId.set(userData._id);
+    }
+  }, [userData, dispatch]);
+
+  useEffect(() => {
+    User && dispatch(getCart(User._id));
+    // dispatch(getAllcategory());
+  }, [dispatch, User]);
 
   const toggleList = useCallback(() => {
     setList(!list);
@@ -48,15 +67,14 @@ const NavBar: React.FC = (): JSX.Element => {
     };
   }, [list, toggleList]); // Cuando la lista es visible podemos cerrarla haciendo click en cualquier lugar
 
-  const logOut = async () => {
-    try {
-      const auth = getAuth();
-      await signOut(auth).then(() => {
-        setUser({ photoURL: '', displayName: '' });
-      });
-    } catch (error) {
-      console.error('Error of close session:', error);
-    }
+  const handleLogOut = () => {
+    userId.set('');
+    navigate('/');
+    dispatch(logOut());
+  };
+
+  const handleDeleteUser = () => {
+    dispatch(deleteUser({ id: User?._id, navigate }));
   };
 
   return (
@@ -82,20 +100,20 @@ const NavBar: React.FC = (): JSX.Element => {
           <SearchInput />
           <Cart />
         </div>
-        {user.displayName === '' && user.photoURL === '' ? (
+        {!User ? (
           <button
             className={styles.login_button}
             onClick={() => {
               navigate('/login');
             }}
           >
-            Log In
+            {!userLoading ? 'Log In' : <LoaderMini color={'#333'} />}
           </button>
         ) : (
           <div className={styles.profileImg}>
             <img
-              src={!user.photoURL ? userImage : user.photoURL}
-              alt={!user.displayName ? 'undefined' : user.displayName}
+              src={!User.photo ? userImage : User.photo}
+              alt={!User.name ? 'undefined' : User.name}
               onClick={toggleList}
             />
             {list && (
@@ -108,7 +126,8 @@ const NavBar: React.FC = (): JSX.Element => {
                   >
                     Dashboard
                   </ol>
-                  <ol onClick={logOut}>Exit</ol>
+                  <ol onClick={handleLogOut}>Exit</ol>
+                  <ol onClick={handleDeleteUser}>Delete account</ol>
                 </ul>
               </div>
             )}

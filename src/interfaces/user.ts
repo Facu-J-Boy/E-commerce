@@ -1,4 +1,7 @@
 export interface user {
-  photoURL: string | null;
-  displayName: string | null;
+  _id: string;
+  googleId?: string;
+  name?: string;
+  email: string;
+  photo: string;
 }

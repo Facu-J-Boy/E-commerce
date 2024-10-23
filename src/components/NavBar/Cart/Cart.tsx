@@ -5,11 +5,14 @@ import { product } from '../../../interfaces/product';
 import styles from './Cart.module.css';
 import { GrCart } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
+import { storeInterface } from '../../../redux/store';
 
 const Cart: React.FC = (): JSX.Element => {
-  const { cartProducts, total } = useSelector(
-    (state: any) => state.cartProducts
+  const { cartProducts, total, message } = useSelector(
+    (state: storeInterface) => state.cartProducts
   );
+
+  const { User } = useSelector((state: storeInterface) => state.user);
 
   const [productList, setProductsList] = useState(false);
 
@@ -32,12 +35,23 @@ const Cart: React.FC = (): JSX.Element => {
     navigate('/buy/cart');
   };
 
+  const redirectToLogin = () => {
+    navigate('/login');
+  };
+
   return (
     <div className={styles.cart}>
       <GrCart size={30} onClick={toggleProducts} />
       {productList && (
         <div className={styles.product_list_container}>
-          {!cartProducts.length ? (
+          {!User ? (
+            <ul className={styles.products}>
+              <div className={styles.login_message}>
+                <h4>Log in to your account to have a cart</h4>
+                <button onClick={redirectToLogin}>Log in</button>
+              </div>
+            </ul>
+          ) : message ? (
             <ul className={styles.products}>
               <h4
                 style={{
@@ -47,7 +61,7 @@ const Cart: React.FC = (): JSX.Element => {
                   alignItems: 'center'
                 }}
               >
-                Your cart is empty
+                {message}
               </h4>
             </ul>
           ) : (
@@ -62,10 +76,10 @@ const Cart: React.FC = (): JSX.Element => {
                 </button>
               </div>
               {cartProducts.map((p: product) => (
-                <ol>
+                <ol key={p._id}>
                   <ProductItem
-                    key={p.id}
-                    id={p.id}
+                    key={p._id}
+                    _id={p._id}
                     title={p.title}
                     price={p.price}
                     image={p.image}
@@ -77,9 +91,9 @@ const Cart: React.FC = (): JSX.Element => {
         </div>
       )}
       <span>
-        {cartProducts.length >= 10
+        {cartProducts.length && cartProducts.length >= 10
           ? '9+'
-          : !cartProducts.length
+          : !cartProducts.length || !User
           ? null
           : cartProducts?.length}
       </span>
