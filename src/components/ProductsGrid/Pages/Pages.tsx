@@ -27,12 +27,12 @@ const Pages: React.FC = (): JSX.Element => {
         style={
           currentPage === pages[0] || !products.length
             ? {
-                visibility: 'hidden'
-              }
+              visibility: 'hidden'
+            }
             : { backgroundColor: '#333', color: '#fff' }
         }
         onClick={() => {
-          clickPage(currentPage ?? 0 - 1);
+          clickPage((currentPage ?? 0) - 1);
         }}
       >
         <MdNavigateBefore />
@@ -56,12 +56,12 @@ const Pages: React.FC = (): JSX.Element => {
         style={
           currentPage === pages[pages.length - 1] || !products.length
             ? {
-                visibility: 'hidden'
-              }
+              visibility: 'hidden'
+            }
             : { backgroundColor: '#333', color: '#fff' }
         }
         onClick={() => {
-          clickPage(currentPage ?? 0 + 1);
+          clickPage((currentPage ?? 0) + 1);
         }}
       >
         <MdNavigateNext />
