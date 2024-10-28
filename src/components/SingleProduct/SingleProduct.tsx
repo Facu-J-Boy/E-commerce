@@ -108,6 +108,7 @@ const SingleProduct: React.FC<product> = ({
             </div>
             <h2>{`$${price}`}</h2>
             <p>{description}</p>
+            {User &&
             <div className={styles.buttonZone}>
               <button
                 style={{
@@ -138,6 +139,7 @@ const SingleProduct: React.FC<product> = ({
                 Buy Now
               </button>
             </div>
+            }
           </div>
         </div>
       )}
