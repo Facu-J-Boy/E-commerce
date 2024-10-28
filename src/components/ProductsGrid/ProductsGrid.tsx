@@ -30,12 +30,11 @@ const ProductsGrid: React.FC = (): JSX.Element => {
 
   return (
     <>
-      {products.length && <Pages />}
+      <Pages />
       {message && <ErrorMessage message={message} />}
       <div className={styles.container}>
-        {
-        productsLoading 
-        ? (
+        {productsLoading ? 
+        (
           <>
             {pendingProduct.map((e) => (
               <Skeleton key={e} />
@@ -55,7 +54,7 @@ const ProductsGrid: React.FC = (): JSX.Element => {
           </>
         )}
       </div>
-      {products.length && <Pages />}
+      <Pages />
     </>
   );
 };
