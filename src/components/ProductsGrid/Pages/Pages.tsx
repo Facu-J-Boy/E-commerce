@@ -22,6 +22,9 @@ const Pages: React.FC = (): JSX.Element => {
   };
 
   return (
+    <>
+    {
+      products.length !== 0 ?
     <div className={styles.pages}>
       <button
         style={
@@ -67,6 +70,10 @@ const Pages: React.FC = (): JSX.Element => {
         <MdNavigateNext />
       </button>
     </div>
+    :
+    <div style={{height: '38px'}}></div>
+    }
+    </>
   );
 };
 
