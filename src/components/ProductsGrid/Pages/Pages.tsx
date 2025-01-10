@@ -24,7 +24,7 @@ const Pages: React.FC = (): JSX.Element => {
 
   const [searchParams] = useSearchParams();
 
-  const search = searchParams.get('search' || '');
+  const search = searchParams.get('search') ?? '';
 
   const clickPage = (number: number) => {
     location.pathname === '/admin'
