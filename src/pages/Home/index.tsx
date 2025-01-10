@@ -5,9 +5,8 @@ import ProductsGrid from '../../components/ProductsGrid/ProductsGrid';
 import Carousel from '../../components/Carousel/Carousel';
 // import CarrouselProducts from '../../components/CarrouselProducts/CarrouselProducts';
 import { getHistory } from '../../redux/actions/getHistory';
-// import styles from './Home.module.css';
 import { getSearch } from '../../redux/actions/getSearch';
-import { clearProducts } from '../../redux/reducers/productsReducer';
+// import { clearProducts } from '../../redux/reducers/productsReducer';
 
 const Home: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,9 +18,6 @@ const Home: React.FC = (): JSX.Element => {
   useEffect(() => {
     dispatch(getHistory());
     dispatch(getSearch());
-    return () => {
-      dispatch(clearProducts());
-    };
   }, [dispatch]);
 
   return (

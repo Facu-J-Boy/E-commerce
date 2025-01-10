@@ -8,7 +8,6 @@ import Cart from './Cart/Cart';
 import { AppDispatch, storeInterface } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCart } from '../../redux/actions/getCart';
-// import { getAllcategory } from '../../redux/actions/getAllCategory';
 import { getSession } from '../../redux/actions/getSession';
 import { userId } from '../../redux/actions/userId';
 import LoaderMini from '../LoaderMini/LoaderMini';
@@ -51,7 +50,6 @@ const NavBar: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     User && dispatch(getCart(User._id));
-    // dispatch(getAllcategory());
   }, [dispatch, User]);
 
   const toggleList = useCallback(() => {
@@ -83,7 +81,7 @@ const NavBar: React.FC = (): JSX.Element => {
         <img
           className={styles.logo}
           onClick={() => {
-            navigate('/');
+            navigate('/?search=&page=1');
           }}
           style={{ cursor: 'pointer' }}
           src={logo}

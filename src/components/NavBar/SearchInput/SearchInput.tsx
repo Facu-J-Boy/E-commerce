@@ -6,18 +6,30 @@ import { GrHistory } from 'react-icons/gr';
 import styles from './SearchInput.module.css';
 import { deleteToSearch } from '../../../redux/actions/deleteToSearch';
 import { changeTitle } from '../../../redux/reducers/productsReducer';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 
 const SearchInput: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
+
+  const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+
+  const location = useLocation();
+
+  const search_param = searchParams.get('search') ?? '';
 
   const [search, setSearch] = useState('');
   const [searchList, setSearchList] = useState(false);
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
 
-  // const { allProducts } = useSelector((state: any) => state.products);
   const { allSearchs } = useSelector((state: storeInterface) => state.searchs);
 
   const [searchsFiltered, setSearchsFiltered] = useState(allSearchs);
+
+  useEffect(() => {
+    setSearch(search_param);
+  }, [search_param]);
 
   useEffect(() => {
     setSearchsFiltered(
@@ -35,7 +47,9 @@ const SearchInput: React.FC = (): JSX.Element => {
 
   const searchProduct = (ev: any) => {
     ev.preventDefault();
-    dispatch(changeTitle(search));
+    location.pathname === '/admin'
+      ? dispatch(changeTitle(search))
+      : navigate(`/?search=${search}&page=1`);
   };
 
   const deleteSearchList = useCallback(() => {
