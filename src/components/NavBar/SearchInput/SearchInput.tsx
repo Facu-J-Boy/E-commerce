@@ -17,7 +17,7 @@ const SearchInput: React.FC = (): JSX.Element => {
 
   const location = useLocation();
 
-  const search_param = searchParams.get('search') ?? '';
+  const search_param = searchParams.get('search') || '';
 
   const [search, setSearch] = useState('');
   const [searchList, setSearchList] = useState(false);
