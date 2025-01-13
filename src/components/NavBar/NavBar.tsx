@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './NavBar.module.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import logo from './e-commerce.png';
 import userImage from './user.jpg';
 import SearchInput from './SearchInput/SearchInput';
@@ -27,6 +27,11 @@ const NavBar: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
   const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+
+  const search = searchParams.get('search') || '';
+  const page = parseInt(searchParams.get('page') || '1');
 
   useEffect(() => {
     const id = userId.get();
@@ -119,7 +124,7 @@ const NavBar: React.FC = (): JSX.Element => {
                 <ul className={styles.list}>
                   <ol
                     onClick={() => {
-                      navigate('/admin');
+                      navigate(`/admin?search=${search}&page=${page}`);
                     }}
                   >
                     Dashboard

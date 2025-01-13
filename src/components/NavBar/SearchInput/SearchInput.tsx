@@ -5,7 +5,6 @@ import { AppDispatch, storeInterface } from '../../../redux/store';
 import { GrHistory } from 'react-icons/gr';
 import styles from './SearchInput.module.css';
 import { deleteToSearch } from '../../../redux/actions/deleteToSearch';
-import { changeTitle } from '../../../redux/reducers/productsReducer';
 import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 
 const SearchInput: React.FC = (): JSX.Element => {
@@ -48,7 +47,8 @@ const SearchInput: React.FC = (): JSX.Element => {
   const searchProduct = (ev: any) => {
     ev.preventDefault();
     location.pathname === '/admin'
-      ? dispatch(changeTitle(search))
+      ? 
+        navigate(`/admin?search=${search}&page=1`)
       : navigate(`/?search=${search}&page=1`);
   };
 
