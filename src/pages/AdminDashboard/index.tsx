@@ -6,7 +6,7 @@ import { product } from '../../interfaces/product';
 import DashboardProducts from '../../components/DashboardProducts/DashboardProducts';
 import Loader from '../../components/Loader/Loader';
 import Categories from '../../components/Categories/Categories';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import { getAllProducts } from '../../redux/actions/getAllproducts';
 import Loadingscreen from '../../components/LoadingScreen/Loadingscreen';
@@ -14,7 +14,6 @@ import { userId } from '../../redux/actions/userId';
 import Pages from '../../components/ProductsGrid/Pages/Pages';
 import { getAllcategory } from '../../redux/actions/getAllCategory';
 import { category } from '../../interfaces/category';
-import { clearProducts } from '../../redux/reducers/productsReducer';
 import ToggleCreateCatgory from './ToggleCreateCategory/ToggleCreateCatgory';
 
 const AdminDashboard: React.FC = (): JSX.Element => {
@@ -22,6 +21,11 @@ const AdminDashboard: React.FC = (): JSX.Element => {
   const [createCategory, setCreateCategory] = useState<boolean>(false);
 
   const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+
+  const page = parseInt(searchParams.get('page') || '1');
+  const search = searchParams.get('search') ?? '';
 
   const { User, userLoading } = useSelector(
     (state: storeInterface) => state.user
@@ -48,18 +52,13 @@ const AdminDashboard: React.FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    dispatch(getAllProducts({ page: currentPage, title }));
-  }, [dispatch, currentPage, title]);
-
-  useEffect(() => {
     dispatch(getAllcategory());
   }, [dispatch]);
 
   useEffect(() => {
-    return () => {
-      dispatch(clearProducts());
-    };
-  }, [dispatch]);
+    (page !== currentPage || search !== title) &&
+      dispatch(getAllProducts({ page, title: search }));
+  }, [dispatch, page, currentPage, search, title]);
 
   const createRedirect = () => {
     navigate('/create');

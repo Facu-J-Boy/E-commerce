@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { getAllProducts } from '../actions/getAllproducts';
 import { product } from '../../interfaces/product';
 import { error } from '../../interfaces/error';
@@ -29,18 +29,7 @@ const initialState: productsState = {
 const productsSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {
-    changeTitle: (state, action: PayloadAction<string>) => {
-      state.title = action.payload;
-      state.currentPage = 1;
-    },
-    changePage: (state, action: PayloadAction<number>) => {
-      state.currentPage = action.payload;
-    },
-    clearProducts: (state) => {
-      state.products = [];
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getAllProducts.pending, (state) => {
@@ -89,7 +78,5 @@ const productsSlice = createSlice({
       });
   }
 });
-
-export const { changeTitle, changePage, clearProducts } = productsSlice.actions;
 
 export default productsSlice.reducer;

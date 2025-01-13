@@ -2,9 +2,8 @@ import React from 'react';
 import { MdNavigateBefore } from 'react-icons/md';
 import { MdNavigateNext } from 'react-icons/md';
 import styles from './Pages.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, storeInterface } from '../../../redux/store';
-import { changePage } from '../../../redux/reducers/productsReducer';
+import { useSelector } from 'react-redux';
+import { storeInterface } from '../../../redux/store';
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 
 const Pages: React.FC = (): JSX.Element => {
@@ -16,8 +15,6 @@ const Pages: React.FC = (): JSX.Element => {
 
   const location = useLocation();
 
-  const dispatch = useDispatch<AppDispatch>();
-
   const total_pages = totalPages ?? 0;
 
   const pages = Array.from({ length: total_pages }, (_, index) => index + 1);
@@ -27,9 +24,7 @@ const Pages: React.FC = (): JSX.Element => {
   const search = searchParams.get('search') ?? '';
 
   const clickPage = (number: number) => {
-    location.pathname === '/admin'
-      ? dispatch(changePage(number))
-      : navigate(`/?search=${search}&page=${number}`);
+    navigate(`${location.pathname}?search=${search}&page=${number}`);
   };
 
   return (

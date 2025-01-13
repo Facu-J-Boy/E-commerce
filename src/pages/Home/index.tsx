@@ -6,7 +6,6 @@ import Carousel from '../../components/Carousel/Carousel';
 // import CarrouselProducts from '../../components/CarrouselProducts/CarrouselProducts';
 import { getHistory } from '../../redux/actions/getHistory';
 import { getSearch } from '../../redux/actions/getSearch';
-// import { clearProducts } from '../../redux/reducers/productsReducer';
 
 const Home: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
